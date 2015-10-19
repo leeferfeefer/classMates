@@ -1,0 +1,30 @@
+//
+//  classMates-PrefixHeader.pch
+//  classMates
+//
+//  Created by Lee Fincher on 10/17/15.
+//  Copyright © 2015 GT - CS 4261. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif /* PrefixHeader_pch */
+
+
+#import <Availability.h>
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+    #import <SystemConfiguration/SystemConfiguration.h>
+    #import <MobileCoreServices/MobileCoreServices.h>
+    #import <QuickBlox/Quickblox.h>
+    #import <FBSDKCoreKit/FBSDKCoreKit.h>
+    #import <Accounts/Accounts.h>
+    #import <MSCollectionViewCalendarLayout/MSCollectionViewCalendarLayout.h>
+    #import "AppDelegate.h"
+#endif

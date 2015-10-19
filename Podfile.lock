@@ -1,0 +1,13 @@
+PODS:
+  - MSCollectionViewCalendarLayout (0.1.5)
+  - QuickBlox (2.4.5)
+
+DEPENDENCIES:
+  - MSCollectionViewCalendarLayout
+  - QuickBlox (~> 2.4.5)
+
+SPEC CHECKSUMS:
+  MSCollectionViewCalendarLayout: 9c52894930d6b712951f18873618fc32c00cd4fa
+  QuickBlox: 672f5eb8b2beeba1ff208807ddc42c2b2b3b1c49
+
+COCOAPODS: 0.39.0
