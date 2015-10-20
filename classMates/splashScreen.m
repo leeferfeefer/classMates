@@ -26,11 +26,12 @@
     
     //TODO: REMOVE -- ONLY TEMPORARY
     
+    
     double delayInSeconds = 2.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [_splashLoading stopAnimating];
-        [self performSegueWithIdentifier:@"logIn" sender:nil];
+        [self performSegueWithIdentifier:@"login" sender:nil];
     });
 }
 
@@ -42,7 +43,6 @@
 
 
 #pragma mark - Button Methods
-
 
 
 

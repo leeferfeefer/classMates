@@ -17,6 +17,7 @@
 		1781967E1BD5462900702C2D /* registration.m in Sources */ = {isa = PBXBuildFile; fileRef = 1781967D1BD5462900702C2D /* registration.m */; settings = {ASSET_TAGS = (); }; };
 		178196811BD5503700702C2D /* classes.m in Sources */ = {isa = PBXBuildFile; fileRef = 178196801BD5503700702C2D /* classes.m */; settings = {ASSET_TAGS = (); }; };
 		17890D6E1BD5765B002F751A /* detailClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 17890D6D1BD5765B002F751A /* detailClass.m */; settings = {ASSET_TAGS = (); }; };
+		17890D711BD58BAE002F751A /* createNewSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 17890D701BD58BAE002F751A /* createNewSchedule.m */; settings = {ASSET_TAGS = (); }; };
 		17F89A741BB0649A00E2A615 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 17F89A731BB0649A00E2A615 /* main.m */; };
 		17F89A771BB0649A00E2A615 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 17F89A761BB0649A00E2A615 /* AppDelegate.m */; };
 		17F89A7A1BB0649A00E2A615 /* splashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 17F89A791BB0649A00E2A615 /* splashScreen.m */; };
@@ -63,6 +64,8 @@
 		178196801BD5503700702C2D /* classes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = classes.m; sourceTree = "<group>"; };
 		17890D6C1BD5765B002F751A /* detailClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = detailClass.h; sourceTree = "<group>"; };
 		17890D6D1BD5765B002F751A /* detailClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = detailClass.m; sourceTree = "<group>"; };
+		17890D6F1BD58BAE002F751A /* createNewSchedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = createNewSchedule.h; sourceTree = "<group>"; };
+		17890D701BD58BAE002F751A /* createNewSchedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = createNewSchedule.m; sourceTree = "<group>"; };
 		17F89A6F1BB0649A00E2A615 /* classMates.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = classMates.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17F89A731BB0649A00E2A615 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		17F89A751BB0649A00E2A615 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -148,6 +151,8 @@
 				1781967D1BD5462900702C2D /* registration.m */,
 				1781967F1BD5503700702C2D /* classes.h */,
 				178196801BD5503700702C2D /* classes.m */,
+				17890D6F1BD58BAE002F751A /* createNewSchedule.h */,
+				17890D701BD58BAE002F751A /* createNewSchedule.m */,
 			);
 			name = Registration;
 			sourceTree = "<group>";
@@ -479,6 +484,7 @@
 				17F89A741BB0649A00E2A615 /* main.m in Sources */,
 				17890D6E1BD5765B002F751A /* detailClass.m in Sources */,
 				178196521BD2DF7D00702C2D /* logIn.m in Sources */,
+				17890D711BD58BAE002F751A /* createNewSchedule.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

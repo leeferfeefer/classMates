@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface splashScreen : UIViewController
 
 
 //Activity Indicators
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *splashLoading;
+
 
 
 //Labels
