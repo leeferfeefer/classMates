@@ -25,6 +25,5 @@
     #import <QuickBlox/Quickblox.h>
     #import <FBSDKCoreKit/FBSDKCoreKit.h>
     #import <Accounts/Accounts.h>
-    #import <MSCollectionViewCalendarLayout/MSCollectionViewCalendarLayout.h>
     #import "AppDelegate.h"
 #endif

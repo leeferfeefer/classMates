@@ -24,8 +24,8 @@
     [_scheduleCollectionView setHidden:YES];
     _scheduleCollectionView.alpha = 0;
     
-    self.collectionViewCalendarLayout = (MSCollectionViewCalendarLayout *)self.scheduleCollectionView.collectionViewLayout;
-    self.collectionViewCalendarLayout.delegate = self;
+//    self.collectionViewCalendarLayout = (MSCollectionViewCalendarLayout *)self.scheduleCollectionView.collectionViewLayout;
+//    self.collectionViewCalendarLayout.delegate = self;
     
     //Animate deselection of cell upon returning to schedule screen
     [_scheduleTableView deselectRowAtIndexPath:[_scheduleTableView indexPathForSelectedRow] animated:YES];
@@ -38,7 +38,7 @@
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     
-    [self.collectionViewCalendarLayout scrollCollectionViewToClosetSectionToCurrentTimeAnimated:YES];
+//    [self.collectionViewCalendarLayout scrollCollectionViewToClosetSectionToCurrentTimeAnimated:YES];
 }
 
 

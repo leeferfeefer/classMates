@@ -7,15 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 @interface logIn : UIViewController <UITextFieldDelegate>
 
 
 
 //Class Properties
+@property BOOL fromSignUp;
+@property BOOL fromLogIn;
 @property (strong, nonatomic) AppDelegate *appDelegate;
+@property (strong, nonatomic) NSString *sessionTicket;
 
+
+//Spinners
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loginSpinner;
 
 
 //Labels
@@ -30,6 +37,24 @@
 //Text Fields
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
+
+
+
+//Buttons
+@property (strong, nonatomic) IBOutlet UIButton *signUpButton;
+@property (strong, nonatomic) IBOutlet UIButton *logInButton;
+
+
+//Button Methods
+- (IBAction)signUpButtonPressed:(UIButton *)sender;
+- (IBAction)logInButtonPressed:(UIButton *)sender;
+
+
+//Switch
+@property (strong, nonatomic) IBOutlet UISwitch *loginSwitch;
+
+//Switch Methods
+- (IBAction)switchChanged:(UISwitch *)sender;
 
 
 @end

@@ -7,17 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		178196521BD2DF7D00702C2D /* logIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 178196511BD2DF7D00702C2D /* logIn.m */; settings = {ASSET_TAGS = (); }; };
-		1781965F1BD2EF4400702C2D /* masterTab.m in Sources */ = {isa = PBXBuildFile; fileRef = 1781965E1BD2EF4300702C2D /* masterTab.m */; settings = {ASSET_TAGS = (); }; };
-		178196671BD2FBA200702C2D /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 178196641BD2FBA100702C2D /* FBSDKCoreKit.framework */; settings = {ASSET_TAGS = (); }; };
-		178196681BD2FBA200702C2D /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 178196651BD2FBA100702C2D /* FBSDKLoginKit.framework */; settings = {ASSET_TAGS = (); }; };
-		178196691BD2FBA200702C2D /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 178196661BD2FBA200702C2D /* FBSDKShareKit.framework */; settings = {ASSET_TAGS = (); }; };
+		174C20261BE72DA000B51129 /* addMeetingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 174C20251BE72DA000B51129 /* addMeetingView.m */; };
+		174C20281BE7310700B51129 /* addMeetingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 174C20271BE7310700B51129 /* addMeetingView.xib */; };
+		174C202B1BE7C81900B51129 /* scheduleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 174C202A1BE7C81900B51129 /* scheduleCell.xib */; };
+		174C202E1BE7C83900B51129 /* scheduleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 174C202D1BE7C83900B51129 /* scheduleCell.m */; };
+		174C20341BE7CC0100B51129 /* detailClassCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 174C20331BE7CC0100B51129 /* detailClassCell.m */; };
+		178196521BD2DF7D00702C2D /* logIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 178196511BD2DF7D00702C2D /* logIn.m */; };
+		1781965F1BD2EF4400702C2D /* masterTab.m in Sources */ = {isa = PBXBuildFile; fileRef = 1781965E1BD2EF4300702C2D /* masterTab.m */; };
+		178196671BD2FBA200702C2D /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 178196641BD2FBA100702C2D /* FBSDKCoreKit.framework */; };
+		178196681BD2FBA200702C2D /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 178196651BD2FBA100702C2D /* FBSDKLoginKit.framework */; };
+		178196691BD2FBA200702C2D /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 178196661BD2FBA200702C2D /* FBSDKShareKit.framework */; };
 		1781966D1BD3472300702C2D /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1781966C1BD3472300702C2D /* Accounts.framework */; };
-		1781967B1BD4498B00702C2D /* scheduleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1781967A1BD4498B00702C2D /* scheduleView.m */; settings = {ASSET_TAGS = (); }; };
-		1781967E1BD5462900702C2D /* registration.m in Sources */ = {isa = PBXBuildFile; fileRef = 1781967D1BD5462900702C2D /* registration.m */; settings = {ASSET_TAGS = (); }; };
-		178196811BD5503700702C2D /* classes.m in Sources */ = {isa = PBXBuildFile; fileRef = 178196801BD5503700702C2D /* classes.m */; settings = {ASSET_TAGS = (); }; };
-		17890D6E1BD5765B002F751A /* detailClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 17890D6D1BD5765B002F751A /* detailClass.m */; settings = {ASSET_TAGS = (); }; };
-		17890D711BD58BAE002F751A /* createNewSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 17890D701BD58BAE002F751A /* createNewSchedule.m */; settings = {ASSET_TAGS = (); }; };
+		1781967B1BD4498B00702C2D /* scheduleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1781967A1BD4498B00702C2D /* scheduleView.m */; };
+		1781967E1BD5462900702C2D /* registration.m in Sources */ = {isa = PBXBuildFile; fileRef = 1781967D1BD5462900702C2D /* registration.m */; };
+		178196811BD5503700702C2D /* classes.m in Sources */ = {isa = PBXBuildFile; fileRef = 178196801BD5503700702C2D /* classes.m */; };
+		17890D711BD58BAE002F751A /* createNewSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 17890D701BD58BAE002F751A /* createNewSchedule.m */; };
+		17C4A1861BE67252005F8EAF /* schedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 17C4A1851BE67252005F8EAF /* schedule.m */; };
+		17C4A1AB1BE6774E005F8EAF /* CLWeeklyCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 17C4A19E1BE6774E005F8EAF /* CLWeeklyCalendarView.m */; };
+		17C4A1AC1BE6774E005F8EAF /* DailyCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 17C4A1A01BE6774E005F8EAF /* DailyCalendarView.m */; };
+		17C4A1AD1BE6774E005F8EAF /* DayTitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 17C4A1A21BE6774E005F8EAF /* DayTitleLabel.m */; };
+		17C4A1AE1BE6774E005F8EAF /* NSDate+CL.m in Sources */ = {isa = PBXBuildFile; fileRef = 17C4A1A41BE6774E005F8EAF /* NSDate+CL.m */; };
+		17C4A1AF1BE6774E005F8EAF /* NSDictionary+CL.m in Sources */ = {isa = PBXBuildFile; fileRef = 17C4A1A61BE6774E005F8EAF /* NSDictionary+CL.m */; };
+		17C4A1B01BE6774E005F8EAF /* UIColor+CL.m in Sources */ = {isa = PBXBuildFile; fileRef = 17C4A1A81BE6774E005F8EAF /* UIColor+CL.m */; };
+		17C4A1B11BE6774E005F8EAF /* UIImage+CL.m in Sources */ = {isa = PBXBuildFile; fileRef = 17C4A1AA1BE6774E005F8EAF /* UIImage+CL.m */; };
+		17C4A1B51BE67E08005F8EAF /* addClassView.m in Sources */ = {isa = PBXBuildFile; fileRef = 17C4A1B41BE67E08005F8EAF /* addClassView.m */; };
+		17C4A1B71BE68331005F8EAF /* addClassView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 17C4A1B61BE68331005F8EAF /* addClassView.xib */; };
+		17C4A1C91BE71DF3005F8EAF /* detailClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 17C4A1C81BE71DF3005F8EAF /* detailClass.m */; };
 		17F89A741BB0649A00E2A615 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 17F89A731BB0649A00E2A615 /* main.m */; };
 		17F89A771BB0649A00E2A615 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 17F89A761BB0649A00E2A615 /* AppDelegate.m */; };
 		17F89A7A1BB0649A00E2A615 /* splashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 17F89A791BB0649A00E2A615 /* splashScreen.m */; };
@@ -47,6 +62,14 @@
 
 /* Begin PBXFileReference section */
 		05D8CCF0F99219EA01E1905E /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		174C20241BE72DA000B51129 /* addMeetingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = addMeetingView.h; sourceTree = "<group>"; };
+		174C20251BE72DA000B51129 /* addMeetingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = addMeetingView.m; sourceTree = "<group>"; };
+		174C20271BE7310700B51129 /* addMeetingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = addMeetingView.xib; sourceTree = "<group>"; };
+		174C202A1BE7C81900B51129 /* scheduleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = scheduleCell.xib; sourceTree = "<group>"; };
+		174C202C1BE7C83900B51129 /* scheduleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scheduleCell.h; sourceTree = "<group>"; };
+		174C202D1BE7C83900B51129 /* scheduleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = scheduleCell.m; sourceTree = "<group>"; };
+		174C20321BE7CC0100B51129 /* detailClassCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = detailClassCell.h; sourceTree = "<group>"; };
+		174C20331BE7CC0100B51129 /* detailClassCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = detailClassCell.m; sourceTree = "<group>"; };
 		178196501BD2DF7D00702C2D /* logIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logIn.h; sourceTree = "<group>"; };
 		178196511BD2DF7D00702C2D /* logIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = logIn.m; sourceTree = "<group>"; };
 		1781965D1BD2EF4300702C2D /* masterTab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = masterTab.h; sourceTree = "<group>"; };
@@ -62,10 +85,29 @@
 		1781967D1BD5462900702C2D /* registration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = registration.m; sourceTree = "<group>"; };
 		1781967F1BD5503700702C2D /* classes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = classes.h; sourceTree = "<group>"; };
 		178196801BD5503700702C2D /* classes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = classes.m; sourceTree = "<group>"; };
-		17890D6C1BD5765B002F751A /* detailClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = detailClass.h; sourceTree = "<group>"; };
-		17890D6D1BD5765B002F751A /* detailClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = detailClass.m; sourceTree = "<group>"; };
 		17890D6F1BD58BAE002F751A /* createNewSchedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = createNewSchedule.h; sourceTree = "<group>"; };
 		17890D701BD58BAE002F751A /* createNewSchedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = createNewSchedule.m; sourceTree = "<group>"; };
+		17C4A1841BE67252005F8EAF /* schedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = schedule.h; sourceTree = "<group>"; };
+		17C4A1851BE67252005F8EAF /* schedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = schedule.m; sourceTree = "<group>"; };
+		17C4A19D1BE6774E005F8EAF /* CLWeeklyCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLWeeklyCalendarView.h; sourceTree = "<group>"; };
+		17C4A19E1BE6774E005F8EAF /* CLWeeklyCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLWeeklyCalendarView.m; sourceTree = "<group>"; };
+		17C4A19F1BE6774E005F8EAF /* DailyCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DailyCalendarView.h; sourceTree = "<group>"; };
+		17C4A1A01BE6774E005F8EAF /* DailyCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DailyCalendarView.m; sourceTree = "<group>"; };
+		17C4A1A11BE6774E005F8EAF /* DayTitleLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DayTitleLabel.h; sourceTree = "<group>"; };
+		17C4A1A21BE6774E005F8EAF /* DayTitleLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DayTitleLabel.m; sourceTree = "<group>"; };
+		17C4A1A31BE6774E005F8EAF /* NSDate+CL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+CL.h"; sourceTree = "<group>"; };
+		17C4A1A41BE6774E005F8EAF /* NSDate+CL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+CL.m"; sourceTree = "<group>"; };
+		17C4A1A51BE6774E005F8EAF /* NSDictionary+CL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+CL.h"; sourceTree = "<group>"; };
+		17C4A1A61BE6774E005F8EAF /* NSDictionary+CL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+CL.m"; sourceTree = "<group>"; };
+		17C4A1A71BE6774E005F8EAF /* UIColor+CL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+CL.h"; sourceTree = "<group>"; };
+		17C4A1A81BE6774E005F8EAF /* UIColor+CL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+CL.m"; sourceTree = "<group>"; };
+		17C4A1A91BE6774E005F8EAF /* UIImage+CL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+CL.h"; sourceTree = "<group>"; };
+		17C4A1AA1BE6774E005F8EAF /* UIImage+CL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+CL.m"; sourceTree = "<group>"; };
+		17C4A1B31BE67E08005F8EAF /* addClassView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = addClassView.h; sourceTree = "<group>"; };
+		17C4A1B41BE67E08005F8EAF /* addClassView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = addClassView.m; sourceTree = "<group>"; };
+		17C4A1B61BE68331005F8EAF /* addClassView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = addClassView.xib; sourceTree = "<group>"; };
+		17C4A1C71BE71DF3005F8EAF /* detailClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = detailClass.h; sourceTree = "<group>"; };
+		17C4A1C81BE71DF3005F8EAF /* detailClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = detailClass.m; sourceTree = "<group>"; };
 		17F89A6F1BB0649A00E2A615 /* classMates.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = classMates.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17F89A731BB0649A00E2A615 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		17F89A751BB0649A00E2A615 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -115,6 +157,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		174C201F1BE72A0C00B51129 /* Detail Class */ = {
+			isa = PBXGroup;
+			children = (
+				17C4A1C71BE71DF3005F8EAF /* detailClass.h */,
+				17C4A1C81BE71DF3005F8EAF /* detailClass.m */,
+				174C20321BE7CC0100B51129 /* detailClassCell.h */,
+				174C20331BE7CC0100B51129 /* detailClassCell.m */,
+				174C20231BE72D9000B51129 /* Meetings */,
+			);
+			name = "Detail Class";
+			sourceTree = "<group>";
+		};
+		174C20231BE72D9000B51129 /* Meetings */ = {
+			isa = PBXGroup;
+			children = (
+				174C20241BE72DA000B51129 /* addMeetingView.h */,
+				174C20251BE72DA000B51129 /* addMeetingView.m */,
+				174C20271BE7310700B51129 /* addMeetingView.xib */,
+			);
+			name = Meetings;
+			sourceTree = "<group>";
+		};
+		174C20291BE7C80900B51129 /* Schedule Cell */ = {
+			isa = PBXGroup;
+			children = (
+				174C202A1BE7C81900B51129 /* scheduleCell.xib */,
+				174C202C1BE7C83900B51129 /* scheduleCell.h */,
+				174C202D1BE7C83900B51129 /* scheduleCell.m */,
+			);
+			name = "Schedule Cell";
+			sourceTree = "<group>";
+		};
 		1781964E1BD2DF4900702C2D /* Splash Screen */ = {
 			isa = PBXGroup;
 			children = (
@@ -129,6 +203,11 @@
 			children = (
 				178196501BD2DF7D00702C2D /* logIn.h */,
 				178196511BD2DF7D00702C2D /* logIn.m */,
+				17C4A1841BE67252005F8EAF /* schedule.h */,
+				17C4A1851BE67252005F8EAF /* schedule.m */,
+				174C20291BE7C80900B51129 /* Schedule Cell */,
+				174C201F1BE72A0C00B51129 /* Detail Class */,
+				17C4A1B21BE67DEA005F8EAF /* Add Class View */,
 			);
 			name = "Log In";
 			sourceTree = "<group>";
@@ -162,18 +241,39 @@
 			children = (
 				178196791BD4498B00702C2D /* scheduleView.h */,
 				1781967A1BD4498B00702C2D /* scheduleView.m */,
-				17890D6B1BD5764B002F751A /* Class Detail */,
 			);
 			name = Schedule;
 			sourceTree = "<group>";
 		};
-		17890D6B1BD5764B002F751A /* Class Detail */ = {
+		17C4A1871BE676F9005F8EAF /* Github Calendar */ = {
 			isa = PBXGroup;
 			children = (
-				17890D6C1BD5765B002F751A /* detailClass.h */,
-				17890D6D1BD5765B002F751A /* detailClass.m */,
+				17C4A19D1BE6774E005F8EAF /* CLWeeklyCalendarView.h */,
+				17C4A19E1BE6774E005F8EAF /* CLWeeklyCalendarView.m */,
+				17C4A19F1BE6774E005F8EAF /* DailyCalendarView.h */,
+				17C4A1A01BE6774E005F8EAF /* DailyCalendarView.m */,
+				17C4A1A11BE6774E005F8EAF /* DayTitleLabel.h */,
+				17C4A1A21BE6774E005F8EAF /* DayTitleLabel.m */,
+				17C4A1A31BE6774E005F8EAF /* NSDate+CL.h */,
+				17C4A1A41BE6774E005F8EAF /* NSDate+CL.m */,
+				17C4A1A51BE6774E005F8EAF /* NSDictionary+CL.h */,
+				17C4A1A61BE6774E005F8EAF /* NSDictionary+CL.m */,
+				17C4A1A71BE6774E005F8EAF /* UIColor+CL.h */,
+				17C4A1A81BE6774E005F8EAF /* UIColor+CL.m */,
+				17C4A1A91BE6774E005F8EAF /* UIImage+CL.h */,
+				17C4A1AA1BE6774E005F8EAF /* UIImage+CL.m */,
 			);
-			name = "Class Detail";
+			name = "Github Calendar";
+			sourceTree = "<group>";
+		};
+		17C4A1B21BE67DEA005F8EAF /* Add Class View */ = {
+			isa = PBXGroup;
+			children = (
+				17C4A1B31BE67E08005F8EAF /* addClassView.h */,
+				17C4A1B41BE67E08005F8EAF /* addClassView.m */,
+				17C4A1B61BE68331005F8EAF /* addClassView.xib */,
+			);
+			name = "Add Class View";
 			sourceTree = "<group>";
 		};
 		17F89A661BB0649A00E2A615 = {
@@ -204,6 +304,7 @@
 				17F89AA71BB064C600E2A615 /* Images */,
 				17F89AA51BB064AE00E2A615 /* Storyboards */,
 				17F89AA61BB064B900E2A615 /* App Delegate */,
+				17C4A1871BE676F9005F8EAF /* Github Calendar */,
 				17F89AA81BB064E800E2A615 /* Views */,
 				17F89A831BB0649A00E2A615 /* Info.plist */,
 				17F89A721BB0649A00E2A615 /* Supporting Files */,
@@ -401,7 +502,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				174C20281BE7310700B51129 /* addMeetingView.xib in Resources */,
 				17F89A7F1BB0649A00E2A615 /* Assets.xcassets in Resources */,
+				17C4A1B71BE68331005F8EAF /* addClassView.xib in Resources */,
+				174C202B1BE7C81900B51129 /* scheduleCell.xib in Resources */,
 				17F89A7D1BB0649A00E2A615 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -475,16 +579,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17C4A1B01BE6774E005F8EAF /* UIColor+CL.m in Sources */,
+				17C4A1C91BE71DF3005F8EAF /* detailClass.m in Sources */,
 				178196811BD5503700702C2D /* classes.m in Sources */,
+				17C4A1AE1BE6774E005F8EAF /* NSDate+CL.m in Sources */,
 				1781967E1BD5462900702C2D /* registration.m in Sources */,
+				17C4A1AC1BE6774E005F8EAF /* DailyCalendarView.m in Sources */,
 				17F89A7A1BB0649A00E2A615 /* splashScreen.m in Sources */,
+				17C4A1AD1BE6774E005F8EAF /* DayTitleLabel.m in Sources */,
 				17F89A771BB0649A00E2A615 /* AppDelegate.m in Sources */,
 				1781967B1BD4498B00702C2D /* scheduleView.m in Sources */,
 				1781965F1BD2EF4400702C2D /* masterTab.m in Sources */,
 				17F89A741BB0649A00E2A615 /* main.m in Sources */,
-				17890D6E1BD5765B002F751A /* detailClass.m in Sources */,
+				174C202E1BE7C83900B51129 /* scheduleCell.m in Sources */,
 				178196521BD2DF7D00702C2D /* logIn.m in Sources */,
+				17C4A1B51BE67E08005F8EAF /* addClassView.m in Sources */,
 				17890D711BD58BAE002F751A /* createNewSchedule.m in Sources */,
+				174C20261BE72DA000B51129 /* addMeetingView.m in Sources */,
+				174C20341BE7CC0100B51129 /* detailClassCell.m in Sources */,
+				17C4A1AF1BE6774E005F8EAF /* NSDictionary+CL.m in Sources */,
+				17C4A1AB1BE6774E005F8EAF /* CLWeeklyCalendarView.m in Sources */,
+				17C4A1B11BE6774E005F8EAF /* UIImage+CL.m in Sources */,
+				17C4A1861BE67252005F8EAF /* schedule.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -630,7 +746,7 @@
 					"\"${PODS_ROOT}/Headers/Public/QuickBlox\"",
 				);
 				INFOPLIST_FILE = classMates/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = self.edu.classMates;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -656,7 +772,7 @@
 					"\"${PODS_ROOT}/Headers/Public/QuickBlox\"",
 				);
 				INFOPLIST_FILE = classMates/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = self.edu.classMates;
 				PRODUCT_NAME = "$(TARGET_NAME)";

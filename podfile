@@ -1,2 +1,2 @@
-pod 'QuickBlox', '~> 2.4.5'
-pod 'MSCollectionViewCalendarLayout'
+pod 'QuickBlox'
+

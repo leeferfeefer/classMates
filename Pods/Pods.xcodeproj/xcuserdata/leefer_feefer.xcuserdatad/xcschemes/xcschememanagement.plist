@@ -4,11 +4,6 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>MSCollectionViewCalendarLayout.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -17,12 +12,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>874E804E3E80E110082AF8CE4589C2CF</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F72C242B0BA641508695E08A008F646C</key>
+		<key>1469924FC52F60B0068FA24EEFCB3EFC</key>
 		<dict>
 			<key>primary</key>
 			<true/>

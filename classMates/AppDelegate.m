@@ -43,6 +43,7 @@
                              didFinishLaunchingWithOptions:launchOptions];
     
     
+    
     /*
             Quickblox
      
@@ -54,6 +55,9 @@
     [QBConnection registerServiceSecret:@"q2-4n7TYtWHL3pb"];
     [QBSettings setAccountKey:@"Q1o2xYSLQYmszqWRy2Da"];
     
+    self.myMeetings = [NSMutableArray new];
+    self.myMeetingIDs = [NSMutableArray new];
+    self.idForMeeting = [NSMutableDictionary new];
     
     
     //    DISABLE LOG STATEMENTS
@@ -79,14 +83,14 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    [FBSDKAppEvents activateApp];
+
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
-
-
-
 
 
 

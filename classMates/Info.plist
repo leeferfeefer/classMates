@@ -47,5 +47,9 @@
     <string>870246169748873</string>
     <key>FacebookDisplayName</key>
     <string>classMates</string>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>fbauth2</string>
+    </array>
 </dict>
 </plist>

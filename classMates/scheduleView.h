@@ -11,7 +11,7 @@
 
 
 
-@interface scheduleView : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDataSource, UITableViewDelegate, MSCollectionViewDelegateCalendarLayout>
+@interface scheduleView : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDataSource, UITableViewDelegate>
 
 
 
@@ -20,7 +20,7 @@
 @property (strong, nonatomic) NSMutableDictionary *schedule;
 @property (strong, nonatomic) IBOutlet UICollectionView *scheduleCollectionView;
 @property (strong, nonatomic) IBOutlet UITableView *scheduleTableView;
-@property (strong, nonatomic) MSCollectionViewCalendarLayout *collectionViewCalendarLayout;
+
 @property (strong, nonatomic) NSString *selectedClass;
 
 
