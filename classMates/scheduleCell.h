@@ -14,7 +14,7 @@
 //Labels
 @property (strong, nonatomic) IBOutlet UILabel *classNameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *classTimeLabel;
-@property (strong, nonatomic) IBOutlet UILabel *classOccurenceLabel;
+@property (strong, nonatomic) IBOutlet UILabel *classOccurrenceLabel;
 @property (strong, nonatomic) IBOutlet UILabel *meetingClassName;
 
 

@@ -1,5 +1,5 @@
 //
-//  detailClassCell.h
+//  meetingCell.h
 //  classMates
 //
 //  Created by Lee Fincher on 11/2/15.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface detailClassCell : UITableViewCell
+@interface meetingCell : UITableViewCell
 
 
 //Labels

@@ -20,10 +20,9 @@
 @property (strong, nonatomic) CLWeeklyCalendarView *calendarView;
 @property (strong, nonatomic) addClassView *classView;
 @property (strong, nonatomic) UITableView *classEventTableView;
-@property (strong, nonatomic) NSMutableArray *currentClasses;
-@property (strong, nonatomic) NSMutableArray *currentMeetings;
-@property (strong, nonatomic) NSString *selectedClass;
-
+@property (strong, nonatomic) NSMutableDictionary *selectedClass;
+@property (strong, nonatomic) NSMutableArray *classesForDay;
+@property (strong, nonatomic) NSMutableArray *meetingsForDay;
 
 //Button Properties
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *addClassButton;

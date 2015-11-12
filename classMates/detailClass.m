@@ -60,9 +60,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     static NSString *CellIdentifier = @"meetingCell";
-    detailClassCell *cell = (detailClassCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    meetingCell *cell = (meetingCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[detailClassCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[meetingCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
     cell.meetingNameLabel.text = _meetings[indexPath.row][@"meetingName"];
@@ -87,9 +87,11 @@
 #pragma mark - UITableView Delegate Methods
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-
+    
+    //If meeting is already in user's meetings
     if ([appDelegate.myMeetings containsObject:_meetings[indexPath.row]]) {
         
+        //User owns this meeting
         if ([appDelegate.myMeetingIDs containsObject:[appDelegate.idForMeeting objectForKey:_meetings[indexPath.row]]]) {
             
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"classMates" message:@"This is your meeting. Do you want to edit it?" preferredStyle:UIAlertControllerStyleAlert];
@@ -102,8 +104,7 @@
             UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 [_meetingsTableView deselectRowAtIndexPath:[_meetingsTableView indexPathForSelectedRow] animated:YES];
                 
-                //Present add meeting with data in it
-                
+                [self presentCreateMeetingisEdit:YES andSelectedMeeting:_meetings[indexPath.row]];
                 [alertController dismissViewControllerAnimated:YES completion:nil];
             }];
             
@@ -116,6 +117,7 @@
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"classMates" message:@"You have already RSVP'ed for this meeting." preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                [_meetingsTableView deselectRowAtIndexPath:[_meetingsTableView indexPathForSelectedRow] animated:YES];
                 [alertController dismissViewControllerAnimated:YES completion:nil];
             }];
             
@@ -123,11 +125,9 @@
             [self presentViewController:alertController animated:YES completion:nil];
         }
         
-        
-        
     } else {
         
-        //
+        //Add meeting to list of meetings (in this case, this meeting does not belong to user)
         
     }
 }
@@ -141,7 +141,7 @@
 
 - (IBAction)addMeetingButtonPressed:(UIBarButtonItem *)sender {
     _addMeetingButton.enabled = NO;
-    [self presentCreateMeeting];
+    [self presentCreateMeetingisEdit:NO andSelectedMeeting:nil];
 }
 
 
@@ -151,7 +151,7 @@
 
 #pragma mark - Create Meeting Methods
 
--(void)presentCreateMeeting{
+-(void)presentCreateMeetingisEdit:(BOOL)edit andSelectedMeeting:(NSMutableDictionary *)meeting{
     
     CGFloat meetingViewWidth = 350;
     CGFloat meetingViewHeight = 400;
@@ -160,7 +160,23 @@
     self.meetingView = [nibContents lastObject];
     self.meetingView.frame = CGRectMake(self.view.frame.size.width/2 - meetingViewWidth/2, self.view.frame.size.height, meetingViewWidth, meetingViewHeight);
     self.meetingView.delegateMeetingView = self;
-    self.meetingView.selectedClassName = [_selectedClass componentsSeparatedByString:@"&"][0];
+    self.meetingView.selectedClassName = _selectedClass[@"className"];
+    
+    //Fill in data
+    if (edit) {
+        [self.meetingView.deleteMeetingButton setHidden:NO];
+        self.meetingView.selectedMeeting = meeting;
+        self.meetingView.editing = YES;
+        
+        self.meetingView.meetingNameField.text = meeting[@"meetingName"];
+        self.meetingView.typeField.text = meeting[@"meetingType"];
+        self.meetingView.dateAndTimeField.text = meeting[@"dateAndTime"];
+        self.meetingView.locationField.text = meeting[@"location"];
+    } else {
+        self.meetingView.editing = NO;
+        [self.meetingView.deleteMeetingButton setHidden:YES];
+    }
+    
     [self.view addSubview:_meetingView];
     
     CGRect newFrame = _meetingView.frame;
@@ -194,25 +210,30 @@
 
 -(void)pullMeetings{
     [_meetings removeAllObjects];
-    NSString *className = [_selectedClass componentsSeparatedByString:@"&"][0];
     
     //Retreive all meetings with class name
     NSMutableDictionary *getRequest = [NSMutableDictionary dictionary];
-    [getRequest setObject:className forKey:@"className"];
+    [getRequest setObject:_selectedClass[@"className"] forKey:@"className"];
     
     [QBRequest objectsWithClassName:@"Meetings" extendedRequest:getRequest successBlock:^(QBResponse * _Nonnull response, NSArray<QBCOCustomObject *> * _Nullable objects, QBResponsePage * _Nullable page) {
         
         if ([objects count] > 0) {
             for (QBCOCustomObject *meeting in objects) {
+                [meeting.fields setObject:meeting.ID forKey:@"MeetingID"];
                 [_meetings addObject:meeting.fields];
             }
-            [_meetingSpinner stopAnimating];
-            [_meetingsTableView reloadData];
-        } else {
-            [_meetingSpinner stopAnimating];
             
+            
+            //Filter meetings here to see if they need to be deleted
+            
+            
+        } else {
             //Present no meetings Create One alert
         }
+        
+        [_meetingsTableView reloadData];
+        [_meetingSpinner stopAnimating];
+        
     } errorBlock:^(QBResponse * _Nonnull response) {
         [_meetingSpinner stopAnimating];
         NSLog(@"error pulling meeting data");

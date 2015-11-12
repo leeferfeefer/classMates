@@ -28,6 +28,8 @@ alpha:1.0]
 @property (strong, nonatomic) NSMutableArray *myMeetings;
 @property (strong, nonatomic) NSMutableArray *myMeetingIDs;
 @property (strong, nonatomic) NSMutableDictionary *idForMeeting;
+@property (strong, nonatomic) NSMutableArray *myClasses;
+@property (strong, nonatomic) NSMutableArray *myClassIDs;
 
 
 @end

@@ -25,7 +25,7 @@
 //Class Properties
 @property (strong, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) NSArray *departments;
-@property (strong, nonatomic) NSArray *weeklyOccurences;
+@property (strong, nonatomic) NSArray *weeklyOccurrences;
 
 
 

@@ -58,10 +58,12 @@
     self.myMeetings = [NSMutableArray new];
     self.myMeetingIDs = [NSMutableArray new];
     self.idForMeeting = [NSMutableDictionary new];
+    self.myClasses = [NSMutableArray new];
+    self.myClassIDs = [NSMutableArray new];
     
     
     //    DISABLE LOG STATEMENTS
-//    [QBSettings setLogLevel:QBLogLevelNothing];
+    [QBSettings setLogLevel:QBLogLevelNothing];
     
     
     return YES;

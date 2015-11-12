@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "detailClassCell.h"
+#import "meetingCell.h"
 #import "addMeetingView.h"
 #import "UIImage+CL.h"
 
@@ -16,7 +16,7 @@
 
 //Class properties
 @property (strong, nonatomic) AppDelegate *appDelegate;
-@property (strong, nonatomic) NSString *selectedClass;
+@property (strong, nonatomic) NSMutableDictionary *selectedClass;
 @property (strong, nonatomic) IBOutlet UITableView *meetingsTableView;
 @property (strong, nonatomic) NSMutableArray *meetings;
 @property (strong, nonatomic) addMeetingView *meetingView;

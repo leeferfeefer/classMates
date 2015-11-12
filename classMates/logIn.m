@@ -314,11 +314,10 @@ static NSString * const userCommentsService = @"http://dev.m.gatech.edu/api/user
     [QBRequest objectsWithClassName:@"userData" extendedRequest:getRequest successBlock:^(QBResponse * _Nonnull response, NSArray<QBCOCustomObject *> * _Nullable objects, QBResponsePage * _Nullable page) {
         
         if ([objects count] > 0) {
-            
             appDelegate.userInfo = objects[0].fields;
             [appDelegate.userInfo setObject:objects[0].ID forKey:@"ID"];
             
-            [self getUserMeetings:getRequest];
+            [self getUserClasses:getRequest];
             
         } else {
             NSLog(@"creating user data object on quickblox");
@@ -330,9 +329,29 @@ static NSString * const userCommentsService = @"http://dev.m.gatech.edu/api/user
         NSLog(@"error pulling data from quicblox");
     }];
 }
+-(void)getUserClasses:(NSMutableDictionary *)getRequest{
+    
+    NSLog(@"pulling user classes");
+
+    [QBRequest objectsWithClassName:@"userClasses" extendedRequest:getRequest successBlock:^(QBResponse * _Nonnull response, NSArray<QBCOCustomObject *> * _Nullable objects, QBResponsePage * _Nullable page) {
+        
+        if ([objects count] > 0) {
+            for (QBCOCustomObject *userClass in objects) {
+                [appDelegate.myClasses addObject:userClass.fields];
+                [appDelegate.myClassIDs addObject:userClass.ID];
+            }
+        }
+        
+        [self getUserMeetings:getRequest];
+
+    } errorBlock:^(QBResponse * _Nonnull response) {
+        [_loginSpinner stopAnimating];
+        NSLog(@"Errorr pulling user classes");
+    }];
+}
 -(void)getUserMeetings:(NSMutableDictionary *)getRequest{
     
-    NSLog(@"pulling user data from quickblox");
+    NSLog(@"pulling user meetings");
 
     [QBRequest objectsWithClassName:@"userMeetings" extendedRequest:getRequest successBlock:^(QBResponse * _Nonnull response, NSArray<QBCOCustomObject *> * _Nullable objects, QBResponsePage * _Nullable page) {
         
@@ -348,7 +367,7 @@ static NSString * const userCommentsService = @"http://dev.m.gatech.edu/api/user
         
     } errorBlock:^(QBResponse * _Nonnull response) {
         [_loginSpinner stopAnimating];
-        NSLog(@"error pulling data from quicblox");
+        NSLog(@"error pulling user meetings");
     }];
 }
 -(void)pullFromFacebook{

@@ -1,14 +1,14 @@
 //
-//  detailClassCell.m
+//  meetingCell.m
 //  classMates
 //
 //  Created by Lee Fincher on 11/2/15.
 //  Copyright © 2015 GT - CS 4261. All rights reserved.
 //
 
-#import "detailClassCell.h"
+#import "meetingCell.h"
 
-@implementation detailClassCell
+@implementation meetingCell
 
 - (void)awakeFromNib {
     // Initialization code

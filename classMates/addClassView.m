@@ -23,7 +23,7 @@
     self.backgroundColor = [UIColor grayColor];
     
 
-    [self.closeButton addTarget:self action:@selector(closeButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    [self.closeButton addTarget:self action:@selector(doneButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [self.closeButton setTitle:@"Done" forState:UIControlStateNormal];
     [self.closeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.closeButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
@@ -33,7 +33,7 @@
     _departmentField.delegate = self;
     
     self.departments = [self createDepartmentArray];
-    self.weeklyOccurences = [self createOccurenceArray];
+    self.weeklyOccurrences = [self createOccurenceArray];
     
     self.departmentPicker = [[UIPickerView alloc] init];
     self.departmentPicker.dataSource = self;
@@ -62,14 +62,17 @@
     [_timeStartField setInputAccessoryView:_pickerDoneBar];
     [_timeEndField setInputView:_datePicker];
     [_timeEndField setInputAccessoryView:_pickerDoneBar];
+    [_departmentField setInputAccessoryView:_pickerDoneBar];
+    [_weeklyOccurenceField setInputAccessoryView:_pickerDoneBar];
 }
 
 
 
 #pragma mark - Button Methods
 
--(void)closeButtonPressed{
+-(void)doneButtonPressed{
     
+    //Redo!!!
     if ([_courseNumberField.text isEqualToString:@""] || [_departmentField.text isEqualToString:@""]) {
         if (self.delegateClassView && [self.delegateClassView respondsToSelector:@selector(closeAddClassView)]) {
             [self.delegateClassView closeAddClassView];
@@ -77,26 +80,25 @@
     } else {
      
         //Add Class to QB
-        QBCOCustomObject *userObject = [QBCOCustomObject customObject];
-        userObject.className = @"userData";
-        userObject.ID = appDelegate.userInfo[@"ID"];
+        QBCOCustomObject *classObject = [QBCOCustomObject customObject];
+        classObject.className = @"userClasses";
         
-        NSString *newClass = [NSString stringWithFormat:@"%@/%@&%@|%@?%@",_departmentField.text,_courseNumberField.text, _timeStartField.text, _timeEndField.text, _weeklyOccurenceField.text];
-        NSMutableArray *classes = [NSMutableArray arrayWithArray:appDelegate.userInfo[@"Schedule"]];
-        [classes addObject:newClass];
+        [classObject.fields setObject:[NSString stringWithFormat:@"%@ - %@", _departmentField.text, _courseNumberField.text] forKey:@"className"];
+        [classObject.fields setObject:_timeStartField.text forKey:@"timeStart"];
+        [classObject.fields setObject:_timeEndField.text forKey:@"timeEnd"];
+        [classObject.fields setObject:_weeklyOccurenceField.text forKey:@"weeklyOccurrence"];
         
-        [userObject.fields setObject:classes forKey:@"Schedule"];
-        
-        [QBRequest updateObject:userObject successBlock:^(QBResponse * _Nonnull response, QBCOCustomObject * _Nullable object) {
+        [QBRequest createObject:classObject successBlock:^(QBResponse * _Nonnull response, QBCOCustomObject * _Nullable object) {
             
-            appDelegate.userInfo = object.fields;
-            [appDelegate.userInfo setObject:object.ID forKey:@"ID"];
+            [appDelegate.myClasses addObject:object.fields];
+            [appDelegate.myClassIDs addObject:object.ID];
             
             if (self.delegateClassView && [self.delegateClassView respondsToSelector:@selector(closeAddClassView)]) {
                 [self.delegateClassView closeAddClassView];
             }
+            
         } errorBlock:^(QBResponse * _Nonnull response) {
-            NSLog(@"could not update user object with classes");
+            NSLog(@"error creating class object");
         }];
     }
 }
@@ -131,28 +133,28 @@
     if (pickerView == _departmentPicker) {
         return [_departments count];
     } else {
-        return [_weeklyOccurences count];
+        return [_weeklyOccurrences count];
     }
 }
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
     if (pickerView == _departmentPicker) {
         return _departments[row];
     } else {
-        return _weeklyOccurences[row];
+        return _weeklyOccurrences[row];
     }
 }
 
 #pragma mark - UIPickerView Delegate Methods
 
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
-    if (pickerView == _departmentPicker) {
-        [_departmentField setText:_departments[row]];
-        [_departmentField resignFirstResponder];
-    } else {
-        [_weeklyOccurenceField setText:_weeklyOccurences[row]];
-        [_weeklyOccurenceField resignFirstResponder];
-    }
-}
+//- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
+//    if (pickerView == _departmentPicker) {
+//        [_departmentField setText:_departments[row]];
+//        [_departmentField resignFirstResponder];
+//    } else {
+//        [_weeklyOccurenceField setText:_weeklyOccurrences[row]];
+//        [_weeklyOccurenceField resignFirstResponder];
+//    }
+//}
 
 
 
@@ -170,6 +172,12 @@
     } else if ([_timeEndField isEditing]) {
         [_timeEndField setText:[dateFormatter stringFromDate:_datePicker.date]];
         [_timeEndField endEditing:YES];
+    } else if ([_departmentField isEditing]) {
+        [_departmentField setText:_departments[[_departmentPicker selectedRowInComponent:0]]];
+        [_departmentField endEditing:YES];
+    } else if ([_weeklyOccurenceField isEditing]) {
+        [_weeklyOccurenceField setText:_weeklyOccurrences[[_weeklyOccurencePicker selectedRowInComponent:0]]];
+        [_weeklyOccurenceField endEditing:YES];
     }
 }
 

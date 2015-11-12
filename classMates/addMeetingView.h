@@ -26,6 +26,8 @@
 @property (strong, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) NSArray *types;
 @property (strong, nonatomic) NSString *selectedClassName;
+@property (strong, nonatomic) NSMutableDictionary *selectedMeeting;
+@property BOOL editing;
 
 
 //Text Fields
@@ -35,15 +37,14 @@
 @property (strong, nonatomic) IBOutlet UITextField *meetingNameField;
 
 
-
-
 //Button Properties
 @property (strong, nonatomic) IBOutlet UIButton *doneButton;
+@property (strong, nonatomic) IBOutlet UIButton *deleteMeetingButton;
 
 
 //Button Methods
 - (IBAction)doneButtonPressed:(UIButton *)sender;
-
+- (IBAction)deleteMeetingButtonPressed:(UIButton *)sender;
 
 
 //Toolbar
