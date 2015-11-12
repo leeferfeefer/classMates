@@ -17,6 +17,11 @@ static NSString * const courseCritiqueService = @"https://critique.gatech.edu";
 static NSString * const seatmeService = @"http://dev.m.gatech.edu/api/seatme/buildings";
 static NSString * const userCommentsService = @"http://dev.m.gatech.edu/api/usercomments/user";
 
+//Other api call that may be the oen
+static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
+//http://m.gatech.edu/widget/gtplaces/content/api/buildings
+//http://m.gatech.edu/widget/coursecatalog/content/api/term
+
 
 
 @interface logIn ()
@@ -216,6 +221,7 @@ static NSString * const userCommentsService = @"http://dev.m.gatech.edu/api/user
         [getRequest setObject:[NSNumber numberWithInteger:user.ID] forKey:@"user_id"];
         [self getUserData:getRequest];
         
+        
     } errorBlock:^(QBResponse * _Nonnull response) {
         NSLog(@"Error logging in");
         NSLog(@"the response is %@", response);
@@ -371,36 +377,10 @@ static NSString * const userCommentsService = @"http://dev.m.gatech.edu/api/user
     }];
 }
 -(void)pullFromFacebook{
-
-    // Get facebook account from Settings.app
-    
-    ACAccountStore *accountStore = [[ACAccountStore alloc] init];
-    ACAccountType *facebookAccountType =  [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierFacebook];
-    
-    NSDictionary *dictFB = [NSDictionary dictionaryWithObjectsAndKeys:@"870246169748873", ACFacebookAppIdKey,@[@"email"],ACFacebookPermissionsKey, nil];
-    [accountStore requestAccessToAccountsWithType:facebookAccountType options:dictFB completion:
-     ^(BOOL granted, NSError *e) {
-         if (granted) {
-             NSArray *facebookAccounts = [accountStore accountsWithAccountType:facebookAccountType];
-             
-             NSLog(@"facebook accounts =%@", facebookAccounts);
-             
-             [self updateUserWith:facebookAccounts[0]];
-             
-             //Save facebook acoount / upload to account
-         } else {
-             //Error
-             NSLog(@"error getting permission %@",e);
-             
-             //Not logged in on phone ALERT HERE
-         }
-     }];
-}
--(void)updateUserWith:(NSString *)facebookID{
     
     FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
     [loginManager logOut];
-    [loginManager logInWithReadPermissions: @[@"public_profile"]
+    [loginManager logInWithReadPermissions:@[@"user_friends"]
                  fromViewController:self
                             handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
                                 if (error) {
@@ -409,37 +389,53 @@ static NSString * const userCommentsService = @"http://dev.m.gatech.edu/api/user
                                 } else if (result.isCancelled) {
                                     NSLog(@"Cancelled");
                                 } else {
-                                    NSLog(@"Logged in %@", result);
-                                    
-                                    if ([FBSDKAccessToken currentAccessToken]) {
-                                        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me/friends" parameters:@{@"fields": @"id, name, friends"}]
-                                         startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-                                             if (!error) {
-                                                 NSLog(@"fetched user:%@", result);
+                                    FBSDKGraphRequest *meRequest = [[FBSDKGraphRequest alloc]
+                                                                  initWithGraphPath:@"/me"
+                                                                  parameters:@{@"fields": @"id, name"}
+                                                                  HTTPMethod:@"GET"];
+                                    [meRequest startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection,
+                                                                          id meResult,
+                                                                          NSError *meError) {
+                                        if (!meError) {
+                                            FBSDKGraphRequest *friendsRequest = [[FBSDKGraphRequest alloc]
+                                                                                 initWithGraphPath:@"/me/friends?limit=5000"
+                                                                                 parameters:@{@"fields": @"id, name"}
+                                                                                 HTTPMethod:@"GET"];
+                                            [friendsRequest startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection,
+                                                                                         id friendResult,
+                                                                                         NSError *friendError) {
                                                 
-                                                 QBCOCustomObject *userObject = [QBCOCustomObject customObject];
-                                                 userObject.className = @"userData";
-                                                 userObject.ID = appDelegate.userInfo[@"ID"];
-                                                 [userObject.fields setObject:facebookID forKey:@"facebookID"];
-                                                 
-                                                 [QBRequest updateObject:userObject successBlock:^(QBResponse *response, QBCOCustomObject *object) {
-                                                     
-                                                     [_loginSpinner stopAnimating];
-                                                     [self performSegueWithIdentifier:@"loginSuccess" sender:nil];
-                                                     
-                                                 } errorBlock:^(QBResponse *response) {
-                                                     // error handling
-                                                     [_loginSpinner stopAnimating];
-                                                     NSLog(@"error updating user data object");
-                                                     NSLog(@"Response error: %@",response);
-                                                 }];
+                                                if (!friendError) {
+                                                    NSMutableArray *friends = [NSMutableArray new];
+                                                    for (NSMutableDictionary *friend in friendResult[@"data"]) {
+                                                        [friends addObject: friend[@"id"]];
+                                                    }
+                                                    
+                                                    QBCOCustomObject *userObject = [QBCOCustomObject customObject];
+                                                    userObject.className = @"userData";
+                                                    userObject.ID = appDelegate.userInfo[@"ID"];
+                                                    [userObject.fields setObject:meResult[@"id"] forKey:@"facebookID"];
+                                                    [userObject.fields setObject:friends forKey:@"Friends"];
+                                                    
+                                                    [QBRequest updateObject:userObject successBlock:^(QBResponse *response, QBCOCustomObject *object) {
 
-                                             } else {
-                                                 NSLog(@"errir is %@", error);
-                                             }
-                                         }];
-                                    }
-                                    
+                                                        [_loginSpinner stopAnimating];
+                                                        [self performSegueWithIdentifier:@"loginSuccess" sender:nil];
+
+                                                    } errorBlock:^(QBResponse *response) {
+                                                        // error handling
+                                                        [_loginSpinner stopAnimating];
+                                                        NSLog(@"error updating user data object");
+                                                        NSLog(@"Response error: %@",response);
+                                                    }];
+                                                } else {
+                                                    NSLog(@"the error retrieving friends is %@", friendError);
+                                                }
+                                            }];
+                                        } else {
+                                            NSLog(@"the error retrieving me is %@", meError);
+                                        }
+                                    }];
                                 }
                             }];
     

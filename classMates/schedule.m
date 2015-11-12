@@ -60,7 +60,10 @@
     self.noEventsLabelBottom.font = [UIFont systemFontOfSize:22];
     [self.noEventsLabelBottom setHidden:YES];
     [self.noEventsLabelBottom setTextAlignment:NSTextAlignmentCenter];
+    self.noEventsLabelBottom.adjustsFontSizeToFitWidth = YES;
     [self.view addSubview:self.noEventsLabelBottom];
+    
+    
     
 }
 
