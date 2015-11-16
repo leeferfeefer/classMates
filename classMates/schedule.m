@@ -21,6 +21,7 @@
     [self.navigationController.navigationBar setHidden:NO];
     [self.navigationItem setHidesBackButton:YES];
     [_classEventTableView deselectRowAtIndexPath:[_classEventTableView indexPathForSelectedRow] animated:YES];
+    [_classEventTableView reloadData];
 }
 
 - (void)viewDidLoad {
@@ -329,70 +330,19 @@
     [_meetingsForDay removeAllObjects];
     
     NSDateFormatter *dateFormatter = [NSDateFormatter new];
-    [dateFormatter setDateFormat:@"E"];
-    NSString *dayOfTheWeek = [dateFormatter stringFromDate:date];
-    NSString *firstLetter = [dayOfTheWeek substringToIndex:1];
-    
-    //Tuesday and Thursday
-    if ([firstLetter isEqualToString:@"T"]) {
-        NSString *secondLetter = [dayOfTheWeek substringWithRange:NSMakeRange(1, 1)];
-        
-        //Tuesday
-        if ([secondLetter isEqualToString:@"u"]) {
-            for (NSMutableDictionary *meeting in appDelegate.myMeetings) {
-                NSString *meetingDay = [meeting[@"dateAndTime"] componentsSeparatedByString:@" "][0];
-                meetingDay = [meetingDay substringToIndex:3];
-                if ([meetingDay rangeOfString:@"T"].location != NSNotFound) {
-                    [_meetingsForDay addObject:meeting];
-                }
-            }
-        //Thursday
-        } else if ([secondLetter isEqualToString:@"h"]){
-            for (NSMutableDictionary *meeting in appDelegate.myMeetings) {
-                NSString *meetingDay = [meeting[@"dateAndTime"] componentsSeparatedByString:@" "][0];
-                meetingDay = [meetingDay substringToIndex:3];
-                if ([meetingDay rangeOfString:@"H"].location != NSNotFound) {
-                    [_meetingsForDay addObject:meeting];
-                }
-            }
-        }
-        
-    //Saturday and Sunday
-    } else if ([firstLetter isEqualToString:@"S"]) {
-        
-        NSString *secondLetter = [dayOfTheWeek substringWithRange:NSMakeRange(1, 1)];
+    [dateFormatter setDateFormat:@"EEEE, MMMM dd, yyyy"];
 
-        //Saturday
-        if ([secondLetter isEqualToString:@"a"]) {
-            for (NSMutableDictionary *meeting in appDelegate.myMeetings) {
-                NSString *meetingDay = [meeting[@"dateAndTime"] componentsSeparatedByString:@" "][0];
-                meetingDay = [meetingDay substringToIndex:3];
-                if ([meetingDay isEqualToString:@"Sat"]) {
-                    [_meetingsForDay addObject:meeting];
-                }
-            }
-        //Sunday
-        } else if ([secondLetter isEqualToString:@"u"]){
-            for (NSMutableDictionary *meeting in appDelegate.myMeetings) {
-                NSString *meetingDay = [meeting[@"dateAndTime"] componentsSeparatedByString:@" "][0];
-                meetingDay = [meetingDay substringToIndex:3];
-                if ([meetingDay isEqualToString:@"Sun"]) {
-                    [_meetingsForDay addObject:meeting];
-                }
-            }
-        }
-        
-    //Every other day
-    } else {
-        for (NSMutableDictionary *meeting in appDelegate.myMeetings) {
-            NSString *meetingDay = [meeting[@"dateAndTime"] componentsSeparatedByString:@" "][0];
-            meetingDay = [meetingDay substringToIndex:3];
-            if ([meetingDay rangeOfString:firstLetter].location != NSNotFound) {
+    for (NSMutableDictionary *meeting in appDelegate.myMeetings) {
+        NSString *meetingDate = [NSString stringWithFormat:@"%@ %@ %@ %@",
+                                 [meeting[@"dateAndTime"] componentsSeparatedByString:@" "][0],
+                                 [meeting[@"dateAndTime"] componentsSeparatedByString:@" "][1],
+                                 [meeting[@"dateAndTime"] componentsSeparatedByString:@" "][2],
+                                 [meeting[@"dateAndTime"] componentsSeparatedByString:@" "][3]];
+        if ([[dateFormatter stringFromDate:date] isEqualToString:meetingDate]) {
                 [_meetingsForDay addObject:meeting];
-            }
         }
     }
-
+    
     
     //Sort meetings Here
     [self sortMeetings];

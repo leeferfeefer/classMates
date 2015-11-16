@@ -20,6 +20,7 @@
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar setHidden:NO];
     self.meetings = [NSMutableArray new];
+    self.meetingsToBeDeleted = [NSMutableArray new];
 }
 
 - (void)viewDidLoad {
@@ -114,9 +115,9 @@
             
         } else {
             
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"classMates" message:@"You have already RSVP'ed for this meeting." preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"classMates" message:@"You have already joined for this meeting. Do you want to unjoin?" preferredStyle:UIAlertControllerStyleAlert];
             
-            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
                 [_meetingsTableView deselectRowAtIndexPath:[_meetingsTableView indexPathForSelectedRow] animated:YES];
                 [alertController dismissViewControllerAnimated:YES completion:nil];
             }];
@@ -127,8 +128,34 @@
         
     } else {
         
-        //Add meeting to list of meetings (in this case, this meeting does not belong to user)
+        QBCOCustomObject *meetingObject = [QBCOCustomObject customObject];
+        meetingObject.className = @"userMeetings";
         
+        [meetingObject.fields setObject:_meetings[indexPath.row][@"meetingName"] forKey:@"meetingName"];
+        [meetingObject.fields setObject:_meetings[indexPath.row][@"dateAndTime"] forKey:@"dateAndTime"];
+        [meetingObject.fields setObject:_meetings[indexPath.row][@"location"] forKey:@"location"];
+        [meetingObject.fields setObject:_meetings[indexPath.row][@"meetingType"] forKey:@"meetingType"];
+        [meetingObject.fields setObject:_meetings[indexPath.row][@"className"]forKey:@"className"];
+        
+        [QBRequest createObject:meetingObject successBlock:^(QBResponse * _Nonnull response, QBCOCustomObject * _Nullable object) {
+            
+            [appDelegate.myMeetings addObject:object.fields];
+            [appDelegate.myMeetingIDs addObject:object.ID];
+
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"classMates" message:@"You have joined this meeting" preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                [_meetingsTableView deselectRowAtIndexPath:[_meetingsTableView indexPathForSelectedRow] animated:YES];
+                [alertController dismissViewControllerAnimated:YES completion:nil];
+            }];
+            
+            [alertController addAction:cancelAction];
+            [self presentViewController:alertController animated:YES completion:nil];
+
+            
+        } errorBlock:^(QBResponse * _Nonnull response) {
+            NSLog(@"creating meeting object error for joining meeting");
+        }];
     }
 }
 
@@ -141,6 +168,8 @@
 
 - (IBAction)addMeetingButtonPressed:(UIBarButtonItem *)sender {
     _addMeetingButton.enabled = NO;
+    [self.navigationController.navigationBar setUserInteractionEnabled:NO];
+    [self.navigationController.navigationBar setTintColor:[UIColor grayColor]];
     [self presentCreateMeetingisEdit:NO andSelectedMeeting:nil];
 }
 
@@ -200,6 +229,8 @@
         [self.meetingView removeFromSuperview];
         self.meetingView = nil;
         _addMeetingButton.enabled = YES;
+        [self.navigationController.navigationBar setUserInteractionEnabled:YES];
+        [self.navigationController.navigationBar setTintColor:[UIColor blueColor]];
     }];
 }
 
@@ -217,28 +248,48 @@
     
     [QBRequest objectsWithClassName:@"Meetings" extendedRequest:getRequest successBlock:^(QBResponse * _Nonnull response, NSArray<QBCOCustomObject *> * _Nullable objects, QBResponsePage * _Nullable page) {
         
+        NSDateFormatter *dateFormatter = [NSDateFormatter new];
+        [dateFormatter setDateFormat:@"EEEE, MMMM dd, yyyy hh:mm a"];
+        
         if ([objects count] > 0) {
             for (QBCOCustomObject *meeting in objects) {
-                [meeting.fields setObject:meeting.ID forKey:@"MeetingID"];
-                [_meetings addObject:meeting.fields];
+            
+                if ([[dateFormatter dateFromString:meeting.fields[@"dateAndTime"]] timeIntervalSinceReferenceDate] < [[NSDate date] timeIntervalSinceReferenceDate]) {
+                    [_meetingsToBeDeleted addObject:meeting.ID];
+                } else {
+                    [meeting.fields setObject:meeting.ID forKey:@"MeetingID"];
+                    [_meetings addObject:meeting.fields];
+                }
             }
-            
-            
-            //Filter meetings here to see if they need to be deleted
-            
-            
         } else {
             //Present no meetings Create One alert
+            
         }
         
         [_meetingsTableView reloadData];
         [_meetingSpinner stopAnimating];
+        
+        if ([_meetingsToBeDeleted count] > 0) {
+            [self deleteMeetings];
+        }
         
     } errorBlock:^(QBResponse * _Nonnull response) {
         [_meetingSpinner stopAnimating];
         NSLog(@"error pulling meeting data");
     }];
 }
+-(void)deleteMeetings{
+    [QBRequest deleteObjectsWithIDs:_meetingsToBeDeleted className:@"Meetings" successBlock:^(QBResponse * _Nonnull response, NSArray<NSString *> * _Nullable deletedObjectsIDs, NSArray<NSString *> * _Nullable notFoundObjectsIDs, NSArray<NSString *> * _Nullable wrongPermissionsObjectsIDs) {
+        [_meetingsToBeDeleted removeAllObjects];
+        NSLog(@"the meetings were deleted :)");
+    } errorBlock:^(QBResponse * _Nonnull response) {
+        NSLog(@"could not delete the meetings");
+    }];
+}
+
+
+
+
 
 /*
 #pragma mark - Navigation

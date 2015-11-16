@@ -264,7 +264,7 @@
             @"SPAN" , nil];
 }
 -(NSArray *)createOccurenceArray{
-    return [NSArray arrayWithObjects:@"MWF", @"TTH", @"M", @"T", @"W", @"TH", @"F", nil];
+    return [NSArray arrayWithObjects:@"MWF", @"MW", @"TTH", @"M", @"T", @"W", @"TH", @"F", nil];
 }
 
 

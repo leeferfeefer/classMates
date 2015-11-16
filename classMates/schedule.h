@@ -24,6 +24,7 @@
 @property (strong, nonatomic) NSMutableArray *classesForDay;
 @property (strong, nonatomic) NSMutableArray *meetingsForDay;
 
+
 //Button Properties
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *addClassButton;
 

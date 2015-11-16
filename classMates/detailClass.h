@@ -20,6 +20,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *meetingsTableView;
 @property (strong, nonatomic) NSMutableArray *meetings;
 @property (strong, nonatomic) addMeetingView *meetingView;
+@property (strong, nonatomic) NSMutableArray *meetingsToBeDeleted;
 
 
 //Spinners
