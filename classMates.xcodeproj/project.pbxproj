@@ -13,15 +13,10 @@
 		174C202E1BE7C83900B51129 /* scheduleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 174C202D1BE7C83900B51129 /* scheduleCell.m */; };
 		174C20341BE7CC0100B51129 /* meetingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 174C20331BE7CC0100B51129 /* meetingCell.m */; };
 		178196521BD2DF7D00702C2D /* logIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 178196511BD2DF7D00702C2D /* logIn.m */; };
-		1781965F1BD2EF4400702C2D /* masterTab.m in Sources */ = {isa = PBXBuildFile; fileRef = 1781965E1BD2EF4300702C2D /* masterTab.m */; };
 		178196671BD2FBA200702C2D /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 178196641BD2FBA100702C2D /* FBSDKCoreKit.framework */; };
 		178196681BD2FBA200702C2D /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 178196651BD2FBA100702C2D /* FBSDKLoginKit.framework */; };
 		178196691BD2FBA200702C2D /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 178196661BD2FBA200702C2D /* FBSDKShareKit.framework */; };
 		1781966D1BD3472300702C2D /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1781966C1BD3472300702C2D /* Accounts.framework */; };
-		1781967B1BD4498B00702C2D /* scheduleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1781967A1BD4498B00702C2D /* scheduleView.m */; };
-		1781967E1BD5462900702C2D /* registration.m in Sources */ = {isa = PBXBuildFile; fileRef = 1781967D1BD5462900702C2D /* registration.m */; };
-		178196811BD5503700702C2D /* classes.m in Sources */ = {isa = PBXBuildFile; fileRef = 178196801BD5503700702C2D /* classes.m */; };
-		17890D711BD58BAE002F751A /* createNewSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 17890D701BD58BAE002F751A /* createNewSchedule.m */; };
 		17C4A1861BE67252005F8EAF /* schedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 17C4A1851BE67252005F8EAF /* schedule.m */; };
 		17C4A1AB1BE6774E005F8EAF /* CLWeeklyCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 17C4A19E1BE6774E005F8EAF /* CLWeeklyCalendarView.m */; };
 		17C4A1AC1BE6774E005F8EAF /* DailyCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 17C4A1A01BE6774E005F8EAF /* DailyCalendarView.m */; };
@@ -72,21 +67,11 @@
 		174C20331BE7CC0100B51129 /* meetingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = meetingCell.m; sourceTree = "<group>"; };
 		178196501BD2DF7D00702C2D /* logIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logIn.h; sourceTree = "<group>"; };
 		178196511BD2DF7D00702C2D /* logIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = logIn.m; sourceTree = "<group>"; };
-		1781965D1BD2EF4300702C2D /* masterTab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = masterTab.h; sourceTree = "<group>"; };
-		1781965E1BD2EF4300702C2D /* masterTab.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = masterTab.m; sourceTree = "<group>"; };
 		178196611BD2F53D00702C2D /* classMates-PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "classMates-PrefixHeader.pch"; sourceTree = "<group>"; };
 		178196641BD2FBA100702C2D /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = classMates/FacebookFramework/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		178196651BD2FBA100702C2D /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = classMates/FacebookFramework/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		178196661BD2FBA200702C2D /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = classMates/FacebookFramework/FBSDKShareKit.framework; sourceTree = "<group>"; };
 		1781966C1BD3472300702C2D /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
-		178196791BD4498B00702C2D /* scheduleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scheduleView.h; sourceTree = "<group>"; };
-		1781967A1BD4498B00702C2D /* scheduleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = scheduleView.m; sourceTree = "<group>"; };
-		1781967C1BD5462900702C2D /* registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = registration.h; sourceTree = "<group>"; };
-		1781967D1BD5462900702C2D /* registration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = registration.m; sourceTree = "<group>"; };
-		1781967F1BD5503700702C2D /* classes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = classes.h; sourceTree = "<group>"; };
-		178196801BD5503700702C2D /* classes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = classes.m; sourceTree = "<group>"; };
-		17890D6F1BD58BAE002F751A /* createNewSchedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = createNewSchedule.h; sourceTree = "<group>"; };
-		17890D701BD58BAE002F751A /* createNewSchedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = createNewSchedule.m; sourceTree = "<group>"; };
 		17C4A1841BE67252005F8EAF /* schedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = schedule.h; sourceTree = "<group>"; };
 		17C4A1851BE67252005F8EAF /* schedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = schedule.m; sourceTree = "<group>"; };
 		17C4A19D1BE6774E005F8EAF /* CLWeeklyCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLWeeklyCalendarView.h; sourceTree = "<group>"; };
@@ -210,39 +195,6 @@
 				17C4A1B21BE67DEA005F8EAF /* Add Class View */,
 			);
 			name = "Log In";
-			sourceTree = "<group>";
-		};
-		178196531BD2E46D00702C2D /* Tabbed Views */ = {
-			isa = PBXGroup;
-			children = (
-				1781965D1BD2EF4300702C2D /* masterTab.h */,
-				1781965E1BD2EF4300702C2D /* masterTab.m */,
-				178196571BD2E49500702C2D /* Registration */,
-				178196581BD2E49E00702C2D /* Schedule */,
-			);
-			name = "Tabbed Views";
-			sourceTree = "<group>";
-		};
-		178196571BD2E49500702C2D /* Registration */ = {
-			isa = PBXGroup;
-			children = (
-				1781967C1BD5462900702C2D /* registration.h */,
-				1781967D1BD5462900702C2D /* registration.m */,
-				1781967F1BD5503700702C2D /* classes.h */,
-				178196801BD5503700702C2D /* classes.m */,
-				17890D6F1BD58BAE002F751A /* createNewSchedule.h */,
-				17890D701BD58BAE002F751A /* createNewSchedule.m */,
-			);
-			name = Registration;
-			sourceTree = "<group>";
-		};
-		178196581BD2E49E00702C2D /* Schedule */ = {
-			isa = PBXGroup;
-			children = (
-				178196791BD4498B00702C2D /* scheduleView.h */,
-				1781967A1BD4498B00702C2D /* scheduleView.m */,
-			);
-			name = Schedule;
 			sourceTree = "<group>";
 		};
 		17C4A1871BE676F9005F8EAF /* Github Calendar */ = {
@@ -369,7 +321,6 @@
 			children = (
 				1781964E1BD2DF4900702C2D /* Splash Screen */,
 				1781964F1BD2DF5700702C2D /* Log In */,
-				178196531BD2E46D00702C2D /* Tabbed Views */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -581,20 +532,15 @@
 			files = (
 				17C4A1B01BE6774E005F8EAF /* UIColor+CL.m in Sources */,
 				17C4A1C91BE71DF3005F8EAF /* detailClass.m in Sources */,
-				178196811BD5503700702C2D /* classes.m in Sources */,
 				17C4A1AE1BE6774E005F8EAF /* NSDate+CL.m in Sources */,
-				1781967E1BD5462900702C2D /* registration.m in Sources */,
 				17C4A1AC1BE6774E005F8EAF /* DailyCalendarView.m in Sources */,
 				17F89A7A1BB0649A00E2A615 /* splashScreen.m in Sources */,
 				17C4A1AD1BE6774E005F8EAF /* DayTitleLabel.m in Sources */,
 				17F89A771BB0649A00E2A615 /* AppDelegate.m in Sources */,
-				1781967B1BD4498B00702C2D /* scheduleView.m in Sources */,
-				1781965F1BD2EF4400702C2D /* masterTab.m in Sources */,
 				17F89A741BB0649A00E2A615 /* main.m in Sources */,
 				174C202E1BE7C83900B51129 /* scheduleCell.m in Sources */,
 				178196521BD2DF7D00702C2D /* logIn.m in Sources */,
 				17C4A1B51BE67E08005F8EAF /* addClassView.m in Sources */,
-				17890D711BD58BAE002F751A /* createNewSchedule.m in Sources */,
 				174C20261BE72DA000B51129 /* addMeetingView.m in Sources */,
 				174C20341BE7CC0100B51129 /* meetingCell.m in Sources */,
 				17C4A1AF1BE6774E005F8EAF /* NSDictionary+CL.m in Sources */,

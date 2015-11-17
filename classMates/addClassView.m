@@ -18,16 +18,15 @@
     appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
     self.layer.cornerRadius = 10;
-//    self.alpha = .6;
-    
-    self.backgroundColor = [UIColor grayColor];
-    
+    self.layer.masksToBounds = YES;
+
 
     [self.closeButton addTarget:self action:@selector(doneButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [self.closeButton setTitle:@"Done" forState:UIControlStateNormal];
-    [self.closeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.closeButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
-    [self addSubview:self.closeButton];
+    
+    _closeButton.layer.cornerRadius = 5;
+    _closeButton.layer.masksToBounds = YES;
     
     _courseNumberField.delegate = self;
     _departmentField.delegate = self;

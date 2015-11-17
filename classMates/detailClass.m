@@ -188,7 +188,7 @@
 -(void)presentCreateMeetingisEdit:(BOOL)edit andSelectedMeeting:(NSMutableDictionary *)meeting{
     
     CGFloat meetingViewWidth = 350;
-    CGFloat meetingViewHeight = 400;
+    CGFloat meetingViewHeight = 270;
     NSArray *nibContents = [[NSBundle mainBundle] loadNibNamed:@"addMeetingView" owner:self options:nil];
     self.meetingView = [[addMeetingView alloc] init];
     self.meetingView = [nibContents lastObject];
@@ -214,7 +214,7 @@
     [self.view addSubview:_meetingView];
     
     CGRect newFrame = _meetingView.frame;
-    newFrame.origin.y = (self.view.frame.size.height/2 - _meetingView.frame.size.height/2) - 100;
+    newFrame.origin.y = (self.view.frame.size.height/2 - _meetingView.frame.size.height/2);
     [UIView animateWithDuration:.3 animations:^{
         _meetingView.frame = newFrame;
     }];
@@ -235,7 +235,7 @@
         self.meetingView = nil;
         _addMeetingButton.enabled = YES;
         [self.navigationController.navigationBar setUserInteractionEnabled:YES];
-        [self.navigationController.navigationBar setTintColor:[UIColor blueColor]];
+        [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     }];
 }
 
@@ -267,8 +267,15 @@
                 }
             }
         } else {
-            //Present no meetings Create One alert
             
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"classMates" message:@"There are no meetings yet! Tap the 'Add Meeting' button at the top to be the first!" preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                [alertController dismissViewControllerAnimated:YES completion:nil];
+            }];
+            
+            [alertController addAction:cancelAction];
+            [self presentViewController:alertController animated:YES completion:nil];
         }
         
         [_meetingsTableView reloadData];

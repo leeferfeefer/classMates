@@ -48,6 +48,7 @@
     CGFloat tableViewY = 136;
     self.classEventTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, tableViewY, 414, self.view.frame.size.height - tableViewY)];
     self.classEventTableView.backgroundColor = [UIColor clearColor];
+    [self.classEventTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     self.classEventTableView.dataSource = self;
     self.classEventTableView.delegate = self;
     [self.view addSubview:_classEventTableView];
@@ -267,7 +268,7 @@
 -(void)presentAddClassView{
     
     CGFloat classViewWidth = 350;
-    CGFloat classViewHeight = 400;
+    CGFloat classViewHeight = 206;
     NSArray *nibContents = [[NSBundle mainBundle] loadNibNamed:@"addClassView" owner:self options:nil];
     self.classView = [[addClassView alloc] init];
     self.classView = [nibContents lastObject];
@@ -276,7 +277,7 @@
     [self.view addSubview:_classView];
     
     CGRect newFrame = self.classView.frame;
-    newFrame.origin.y = (self.view.frame.size.height/2 - _classView.frame.size.height/2) - 100;
+    newFrame.origin.y = (self.view.frame.size.height/2 - _classView.frame.size.height/2);
     [UIView animateWithDuration:.3 animations:^{
         _classView.frame = newFrame;
     }];

@@ -17,22 +17,25 @@
     appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
 
     self.layer.cornerRadius = 10;
-    self.backgroundColor = [UIColor grayColor];
+    self.layer.masksToBounds = YES;
     
     self.types = [self createTypeArray];
 
     
     [self.doneButton setTitle:@"Done" forState:UIControlStateNormal];
-    [self.doneButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.doneButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     
     [self.deleteMeetingButton setTitle:@"Delete Meeting" forState:UIControlStateNormal];
-    [self.deleteMeetingButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.deleteMeetingButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
 
 
     _locationField.autocorrectionType = UITextAutocorrectionTypeNo;
     _meetingNameField.autocorrectionType = UITextAutocorrectionTypeNo;
+    
+    _doneButton.layer.cornerRadius = 5;
+    _doneButton.layer.masksToBounds = YES;
+    _deleteMeetingButton.layer.cornerRadius = 5;
+    _deleteMeetingButton.layer.masksToBounds = YES;
     
     
     self.pickerDoneBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 414, 44)];
@@ -149,6 +152,13 @@
     [QBRequest deleteObjectWithID:_selectedMeeting[@"MeetingID"] className:@"Meetings" successBlock:^(QBResponse * _Nonnull response) {
         
         [QBRequest deleteObjectWithID:appDelegate.idForMeeting[_selectedMeeting] className:@"userMeetings" successBlock:^(QBResponse * _Nonnull response) {
+            
+            NSUInteger deletedIndex = [appDelegate.myMeetings indexOfObject:_selectedMeeting];
+            //Remove meeting from list of meetings
+            [appDelegate.myMeetings removeObjectAtIndex:deletedIndex];
+            [appDelegate.myMeetingIDs removeObjectAtIndex:deletedIndex];
+            [appDelegate.idForMeeting removeObjectForKey:_selectedMeeting];
+            
             if (self.delegateMeetingView && [self.delegateMeetingView respondsToSelector:@selector(closeAddMeetingViewDidAdd:)]) {
                 [self.delegateMeetingView closeAddMeetingViewDidAdd:YES];
             }
