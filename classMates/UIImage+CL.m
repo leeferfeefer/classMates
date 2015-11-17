@@ -14,7 +14,7 @@
 + (UIImage *)calendarBackgroundImage : (float)height {
     UIColor *topColor = [UIColor colorWithHex:0x1b92d1];
     UIColor *bottomColor = [UIColor colorWithHex:0x344D53];
-    return [self gradientImageWithBounds:CGRectMake(0, 0, SCREEN_WIDTH, height) colors:@[(id)[topColor CGColor], (id)[bottomColor CGColor]]];
+    return [self gradientImageWithBounds:CGRectMake(0, 0, SCREEN_WIDTH, height) colors:@[(id)[bottomColor CGColor], (id)[topColor CGColor]]];
 }
 
 + (UIImage *)gradientImageWithBounds:(CGRect)bounds colors:(NSArray *)colors {

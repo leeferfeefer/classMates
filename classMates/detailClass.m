@@ -32,6 +32,11 @@
     _meetingsTableView.dataSource = self;
     _meetingsTableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage calendarBackgroundImage:_meetingsTableView.frame.size.height]];
     
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Bar_Image"] forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.topItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    
+    
     CGFloat spinnerWidth = 37;
     _meetingSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     [_meetingSpinner setHidesWhenStopped:YES];

@@ -348,6 +348,8 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
             }
         }
         
+        NSLog(@"the classes are %@", objects);
+        
         [self getUserMeetings:getRequest];
 
     } errorBlock:^(QBResponse * _Nonnull response) {

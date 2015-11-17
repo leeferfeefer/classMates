@@ -29,17 +29,23 @@
     
     appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
-    _calendarView = [[CLWeeklyCalendarView alloc] initWithFrame:CGRectMake(0, 64, self.view.bounds.size.width, self.view.bounds.size.height)];
+    _calendarView = [[CLWeeklyCalendarView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
     _calendarView.delegate = self;
     [self.view addSubview:self.calendarView];
+    
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Bar_Image"] forBarMetrics:UIBarMetricsDefault];
     
 
     _classesForDay = [NSMutableArray new];
     _meetingsForDay = [NSMutableArray new];
     
     
+    [_addClassButton setTintColor:[UIColor whiteColor]];
+    
+    
     //Classes and Events Table view:
-    CGFloat tableViewY = 200;
+    CGFloat tableViewY = 136;
     self.classEventTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, tableViewY, 414, self.view.frame.size.height - tableViewY)];
     self.classEventTableView.backgroundColor = [UIColor clearColor];
     self.classEventTableView.dataSource = self;
@@ -131,7 +137,12 @@
         NSMutableDictionary *classData = _classesForDay[indexPath.row];
         
         cell.classNameLabel.text = classData[@"className"];
-        cell.classTimeLabel.text = [NSString stringWithFormat:@"%@ - %@", classData[@"timeStart"], classData[@"timeEnd"]];
+        
+        if (![cell.classNameLabel.text isEqualToString:@"No classes"]) {
+            cell.classTimeLabel.text = [NSString stringWithFormat:@"%@ - %@", classData[@"timeStart"], classData[@"timeEnd"]];
+        } else {
+            cell.classTimeLabel.text = @"";
+        }
         cell.classOccurrenceLabel.text = classData[@"weeklyOccurrence"];
         
         cell.classNameLabel.textColor = [UIColor whiteColor];
@@ -145,10 +156,16 @@
         NSMutableDictionary *meetingData = _meetingsForDay[indexPath.row];
     
         cell.classNameLabel.text = meetingData[@"meetingName"];
-        NSArray *timeArray = [meetingData[@"dateAndTime"] componentsSeparatedByString:@" "];
-        cell.classTimeLabel.text = [NSString stringWithFormat:@"%@ %@", timeArray[4], timeArray[5]];
+
+        if (![cell.classNameLabel.text isEqualToString:@"No meetings"]) {
+            NSArray *timeArray = [meetingData[@"dateAndTime"] componentsSeparatedByString:@" "];
+            cell.classTimeLabel.text = [NSString stringWithFormat:@"%@ %@", timeArray[4], timeArray[5]];
+        } else {
+            cell.classTimeLabel.text = @"";
+        }
         cell.classOccurrenceLabel.text = meetingData[@"meetingType"];
         cell.meetingClassName.text = meetingData[@"className"];
+
 
         cell.classNameLabel.textColor = [UIColor whiteColor];
         cell.classTimeLabel.textColor = [UIColor whiteColor];
@@ -216,7 +233,18 @@
         [_noEventsLabelTop setHidden:YES];
         [_noEventsLabelBottom setHidden:YES];
         [_classEventTableView setHidden:NO];
+        
+        if ([_classesForDay count] == 0) {
+            NSMutableDictionary *none = [NSMutableDictionary new];
+            [none setObject:@"No classes" forKey:@"className"];
+            [_classesForDay addObject:none];
+        } else if ([_meetingsForDay count] == 0) {
+            NSMutableDictionary *none = [NSMutableDictionary new];
+            [none setObject:@"No meetings" forKey:@"meetingName"];
+            [_meetingsForDay addObject:none];
+        }
     }
+    [_classEventTableView reloadData];
 }
 
 
@@ -318,8 +346,6 @@
     
     //Sort classes Here
     [self sortClasses];
-    
-    [_classEventTableView reloadData];
 }
 -(void)sortClasses{
     
@@ -346,8 +372,6 @@
     
     //Sort meetings Here
     [self sortMeetings];
-    
-    [_classEventTableView reloadData];
 }
 -(void)sortMeetings{
     
