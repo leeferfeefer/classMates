@@ -225,11 +225,19 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Capacity" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uEG-kt-oRQ">
+                                                    <rect key="frame" x="361" y="50" width="45" height="21"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <animations/>
                                         </tableViewCellContentView>
                                         <animations/>
                                         <connections>
+                                            <outlet property="capacityLabel" destination="uEG-kt-oRQ" id="D3I-XJ-HJc"/>
                                             <outlet property="meetingLocationLabel" destination="9b9-0X-1rM" id="yS2-c8-XDM"/>
                                             <outlet property="meetingNameLabel" destination="SHj-Fx-UCc" id="LaN-EC-gB5"/>
                                             <outlet property="meetingTimeLabel" destination="JBj-NM-MJQ" id="2eD-b0-pVG"/>

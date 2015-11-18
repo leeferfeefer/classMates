@@ -16,6 +16,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *meetingLocationLabel;
 @property (strong, nonatomic) IBOutlet UILabel *meetingTimeLabel;
 @property (strong, nonatomic) IBOutlet UILabel *meetingTypeLabel;
+@property (strong, nonatomic) IBOutlet UILabel *capacityLabel;
 
 
 

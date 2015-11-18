@@ -25,6 +25,7 @@
 //Class Properties
 @property (strong, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) NSArray *types;
+@property (strong, nonatomic) NSArray *capacities;
 @property (strong, nonatomic) NSString *selectedClassName;
 @property (strong, nonatomic) NSMutableDictionary *selectedMeeting;
 @property BOOL editing;
@@ -35,6 +36,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *locationField;
 @property (strong, nonatomic) IBOutlet UITextField *typeField;
 @property (strong, nonatomic) IBOutlet UITextField *meetingNameField;
+@property (strong, nonatomic) IBOutlet UITextField *capacityField;
 
 
 //Button Properties
@@ -52,6 +54,7 @@
 
 //Pickers
 @property (strong, nonatomic) UIPickerView *typePicker;
+@property (strong, nonatomic) UIPickerView *capacityPicker;
 @property (strong, nonatomic) UIDatePicker *datePicker;
 
 

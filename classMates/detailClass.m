@@ -75,12 +75,14 @@
     cell.meetingLocationLabel.text = _meetings[indexPath.row][@"location"];
     cell.meetingTimeLabel.text = _meetings[indexPath.row][@"dateAndTime"];
     cell.meetingTypeLabel.text = _meetings[indexPath.row][@"meetingType"];
+    cell.capacityLabel.text = _meetings[indexPath.row][@"capacity"];
     
     cell.meetingNameLabel.textColor = [UIColor whiteColor];
     cell.meetingLocationLabel.textColor = [UIColor whiteColor];
     cell.meetingTimeLabel.textColor = [UIColor whiteColor];
     cell.meetingTypeLabel.textColor = [UIColor whiteColor];
-    
+    cell.capacityLabel.textColor = [UIColor whiteColor];
+
     return cell;
 }
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -140,6 +142,7 @@
         [meetingObject.fields setObject:_meetings[indexPath.row][@"dateAndTime"] forKey:@"dateAndTime"];
         [meetingObject.fields setObject:_meetings[indexPath.row][@"location"] forKey:@"location"];
         [meetingObject.fields setObject:_meetings[indexPath.row][@"meetingType"] forKey:@"meetingType"];
+        [meetingObject.fields setObject:_meetings[indexPath.row][@"capacity"] forKey:@"capacity"];
         [meetingObject.fields setObject:_meetings[indexPath.row][@"className"]forKey:@"className"];
         
         [QBRequest createObject:meetingObject successBlock:^(QBResponse * _Nonnull response, QBCOCustomObject * _Nullable object) {
@@ -206,6 +209,7 @@
         self.meetingView.typeField.text = meeting[@"meetingType"];
         self.meetingView.dateAndTimeField.text = meeting[@"dateAndTime"];
         self.meetingView.locationField.text = meeting[@"location"];
+        self.meetingView.capacityField.text = meeting[@"capacity"];
     } else {
         self.meetingView.editing = NO;
         [self.meetingView.deleteMeetingButton setHidden:YES];

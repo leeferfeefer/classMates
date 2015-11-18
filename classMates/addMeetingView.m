@@ -20,7 +20,7 @@
     self.layer.masksToBounds = YES;
     
     self.types = [self createTypeArray];
-
+    self.capacities = [self createCapacityArray];
     
     [self.doneButton setTitle:@"Done" forState:UIControlStateNormal];
     [self.doneButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
@@ -51,6 +51,10 @@
     self.typePicker.dataSource = self;
     self.typePicker.delegate = self;
     
+    self.capacityPicker = [[UIPickerView alloc] init];
+    self.capacityPicker.dataSource = self;
+    self.capacityPicker.delegate = self;
+    
     self.datePicker = [[UIDatePicker alloc] init];
     self.datePicker.datePickerMode = UIDatePickerModeDateAndTime;
 
@@ -58,6 +62,8 @@
     [_typeField setInputAccessoryView:_pickerDoneBar];
     [_dateAndTimeField setInputView:_datePicker];
     [_dateAndTimeField setInputAccessoryView:_pickerDoneBar];
+    [_capacityField setInputView:_capacityPicker];
+    [_capacityField setInputAccessoryView:_pickerDoneBar];
 }
 
 
@@ -84,6 +90,7 @@
             [meetingObject.fields setObject:_locationField.text forKey:@"location"];
             [meetingObject.fields setObject:_typeField.text forKey:@"meetingType"];
             [meetingObject.fields setObject:_selectedClassName forKey:@"className"];
+            [meetingObject.fields setObject:_capacityField.text forKey:@"capacity"];
             meetingObject.ID = _selectedMeeting[@"MeetingID"];
             
             [QBRequest updateObject:meetingObject successBlock:^(QBResponse * _Nonnull response, QBCOCustomObject * _Nullable object) {
@@ -120,6 +127,7 @@
             [meetingObject.fields setObject:_locationField.text forKey:@"location"];
             [meetingObject.fields setObject:_typeField.text forKey:@"meetingType"];
             [meetingObject.fields setObject:_selectedClassName forKey:@"className"];
+            [meetingObject.fields setObject:_capacityField.text forKey:@"capacity"];
 
             [QBRequest createObject:meetingObject successBlock:^(QBResponse * _Nonnull response, QBCOCustomObject * _Nullable object) {
                 
@@ -177,10 +185,18 @@
     return 1;
 }
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    return [_types count];
+    if (pickerView == _typePicker) {
+        return [_types count];
+    } else {
+        return [_capacities count];
+    }
 }
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    return _types[row];
+    if (pickerView == _typePicker) {
+        return _types[row];
+    } else {
+        return _capacities[row];
+    }
 }
 
 #pragma mark - UIPickerView Delegate Methods
@@ -205,6 +221,9 @@
     } else if ([_typeField isEditing]) {
         [_typeField setText:_types[[_typePicker selectedRowInComponent:0]]];
         [_typeField endEditing:YES];
+    } else if ([_capacityField isEditing]) {
+        [_capacityField setText:_capacities[[_capacityPicker selectedRowInComponent:0]]];
+        [_capacityField endEditing:YES];
     }
 }
 
@@ -214,6 +233,9 @@
 
 -(NSArray *)createTypeArray {
     return [NSArray arrayWithObjects:@"Homework", @"Test", @"Project", @"Other", nil];
+}
+-(NSArray *)createCapacityArray {
+    return [NSArray arrayWithObjects:@"1", @"2", @"3", @"4", @"5", @"10", @"15", @"20", @"None", nil];
 }
 
 @end
