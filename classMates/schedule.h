@@ -23,6 +23,7 @@
 @property (strong, nonatomic) NSMutableDictionary *selectedClass;
 @property (strong, nonatomic) NSMutableArray *classesForDay;
 @property (strong, nonatomic) NSMutableArray *meetingsForDay;
+@property (strong, nonatomic) NSDate *selectedDate;
 
 
 //Button Properties

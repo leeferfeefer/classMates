@@ -141,8 +141,10 @@
         
         if (![cell.classNameLabel.text isEqualToString:@"No classes"]) {
             cell.classTimeLabel.text = [NSString stringWithFormat:@"%@ - %@", classData[@"timeStart"], classData[@"timeEnd"]];
+            cell.selectionStyle = UITableViewCellSelectionStyleDefault;
         } else {
             cell.classTimeLabel.text = @"";
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         cell.classOccurrenceLabel.text = classData[@"weeklyOccurrence"];
         
@@ -161,8 +163,10 @@
         if (![cell.classNameLabel.text isEqualToString:@"No meetings"]) {
             NSArray *timeArray = [meetingData[@"dateAndTime"] componentsSeparatedByString:@" "];
             cell.classTimeLabel.text = [NSString stringWithFormat:@"%@ %@", timeArray[4], timeArray[5]];
+            cell.selectionStyle = UITableViewCellSelectionStyleDefault;
         } else {
             cell.classTimeLabel.text = @"";
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         cell.classOccurrenceLabel.text = meetingData[@"meetingType"];
         cell.meetingClassName.text = meetingData[@"className"];
@@ -184,13 +188,18 @@
 #pragma mark - UITableView Delegate Methods
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    //Classes
-    if (indexPath.section == 0) {
-        self.selectedClass = _classesForDay[indexPath.row];
-        [self performSegueWithIdentifier:@"showDetailClass" sender:nil];
-    //Meetings
-    } else {
-        //Present detail view for meeting
+    scheduleCell *selectedCell = (scheduleCell *)[_classEventTableView cellForRowAtIndexPath:indexPath];
+    if (selectedCell.selectionStyle != UITableViewCellSelectionStyleNone) {
+        //Classes
+        if (indexPath.section == 0) {
+            self.selectedClass = _classesForDay[indexPath.row];
+            [self performSegueWithIdentifier:@"showDetailClass" sender:nil];
+            //Meetings
+        } else {
+            //Present detail view for meeting
+            
+            
+        }
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -219,6 +228,7 @@
 }
 
 -(void)dailyCalendarViewDidSelect:(NSDate *)date{
+    _selectedDate = date;
     [self classesForDate:date];
     [self meetingsForDate:date];
     
@@ -290,6 +300,8 @@
 #pragma mark - Add Class View Delegate Methods
 
 -(void)closeAddClassView{
+    [self classesForDate:_selectedDate];
+    [_classEventTableView reloadData];
     CGRect newFrame = self.classView.frame;
     newFrame.origin.y = self.view.frame.size.height;
     [UIView animateWithDuration:.3 animations:^{
