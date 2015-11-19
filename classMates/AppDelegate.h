@@ -30,7 +30,7 @@ alpha:1.0]
 @property (strong, nonatomic) NSMutableDictionary *idForMeeting;
 @property (strong, nonatomic) NSMutableArray *myClasses;
 @property (strong, nonatomic) NSMutableArray *myClassIDs;
-
+@property NSUInteger userID;
 
 @end
 

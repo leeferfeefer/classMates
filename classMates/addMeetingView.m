@@ -121,6 +121,9 @@
             //Add Meeting to QB
             QBCOCustomObject *meetingObject = [QBCOCustomObject customObject];
             meetingObject.className = @"Meetings";
+            QBCOPermissions *permissions = [QBCOPermissions permissions];
+            permissions.updateAccess = QBCOPermissionsAccessOpen;
+            meetingObject.permissions = permissions;
         
             [meetingObject.fields setObject:_meetingNameField.text forKey:@"meetingName"];
             [meetingObject.fields setObject:_dateAndTimeField.text forKey:@"dateAndTime"];
@@ -128,6 +131,7 @@
             [meetingObject.fields setObject:_typeField.text forKey:@"meetingType"];
             [meetingObject.fields setObject:_selectedClassName forKey:@"className"];
             [meetingObject.fields setObject:_capacityField.text forKey:@"capacity"];
+            [meetingObject.fields setObject:@(0) forKey:@"participants"];
 
             [QBRequest createObject:meetingObject successBlock:^(QBResponse * _Nonnull response, QBCOCustomObject * _Nullable object) {
                 

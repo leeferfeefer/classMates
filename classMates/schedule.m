@@ -163,11 +163,13 @@
         if (![cell.classNameLabel.text isEqualToString:@"No meetings"]) {
             NSArray *timeArray = [meetingData[@"dateAndTime"] componentsSeparatedByString:@" "];
             cell.classTimeLabel.text = [NSString stringWithFormat:@"%@ %@", timeArray[4], timeArray[5]];
-            cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+//            cell.selectionStyle = UITableViewCellSelectionStyleDefault;
         } else {
             cell.classTimeLabel.text = @"";
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
         cell.classOccurrenceLabel.text = meetingData[@"meetingType"];
         cell.meetingClassName.text = meetingData[@"className"];
 

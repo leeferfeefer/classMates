@@ -75,7 +75,12 @@
     cell.meetingLocationLabel.text = _meetings[indexPath.row][@"location"];
     cell.meetingTimeLabel.text = _meetings[indexPath.row][@"dateAndTime"];
     cell.meetingTypeLabel.text = _meetings[indexPath.row][@"meetingType"];
-    cell.capacityLabel.text = _meetings[indexPath.row][@"capacity"];
+    
+    if (![_meetings[indexPath.row][@"capacity"] isEqualToString:@"None"]) {
+        cell.capacityLabel.text = [NSString stringWithFormat:@"%@/%@", _meetings[indexPath.row][@"participants"], _meetings[indexPath.row][@"capacity"]];
+    } else {
+        cell.capacityLabel.text = _meetings[indexPath.row][@"capacity"];
+    }
     
     cell.meetingNameLabel.textColor = [UIColor whiteColor];
     cell.meetingLocationLabel.textColor = [UIColor whiteColor];
@@ -96,33 +101,39 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    //If meeting is already in user's meetings
-    if ([appDelegate.myMeetings containsObject:_meetings[indexPath.row]]) {
+    
+    //User owns this meeting
+    if ([_meetings[indexPath.row][@"owner"] integerValue] == appDelegate.userID) {
         
-        //User owns this meeting
-        if ([appDelegate.myMeetingIDs containsObject:[appDelegate.idForMeeting objectForKey:_meetings[indexPath.row]]]) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"classMates" message:@"This is your meeting. Do you want to edit it?" preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            [_meetingsTableView deselectRowAtIndexPath:[_meetingsTableView indexPathForSelectedRow] animated:YES];
+            [alertController dismissViewControllerAnimated:YES completion:nil];
+        }];
+        
+        UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [_meetingsTableView deselectRowAtIndexPath:[_meetingsTableView indexPathForSelectedRow] animated:YES];
             
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"classMates" message:@"This is your meeting. Do you want to edit it?" preferredStyle:UIAlertControllerStyleAlert];
-            
-            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-                [_meetingsTableView deselectRowAtIndexPath:[_meetingsTableView indexPathForSelectedRow] animated:YES];
-                [alertController dismissViewControllerAnimated:YES completion:nil];
-            }];
-            
-            UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                [_meetingsTableView deselectRowAtIndexPath:[_meetingsTableView indexPathForSelectedRow] animated:YES];
-                
-                [self presentCreateMeetingisEdit:YES andSelectedMeeting:_meetings[indexPath.row]];
-                [alertController dismissViewControllerAnimated:YES completion:nil];
-            }];
-            
-            [alertController addAction:cancelAction];
-            [alertController addAction:yesAction];
-            [self presentViewController:alertController animated:YES completion:nil];
-            
-        } else {
-            
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"classMates" message:@"You have already joined for this meeting. Do you want to unjoin?" preferredStyle:UIAlertControllerStyleAlert];
+            [self presentCreateMeetingisEdit:YES andSelectedMeeting:_meetings[indexPath.row]];
+            [alertController dismissViewControllerAnimated:YES completion:nil];
+        }];
+        
+        [alertController addAction:cancelAction];
+        [alertController addAction:yesAction];
+        [self presentViewController:alertController animated:YES completion:nil];
+        
+    } else {
+        
+        NSMutableDictionary *tempMeeting = [NSMutableDictionary new];
+        tempMeeting = _meetings[indexPath.row];
+        [tempMeeting removeObjectForKey:@"owner"];
+        
+        NSLog(@"the selected meeting is %@", _meetings[indexPath.row]);
+        
+        
+        if ([appDelegate.myMeetings containsObject:tempMeeting]) {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"classMates" message:@"You have already joined this meeting. Do you want to unjoin?" preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"NO" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
                 [_meetingsTableView deselectRowAtIndexPath:[_meetingsTableView indexPathForSelectedRow] animated:YES];
@@ -131,60 +142,100 @@
             
             UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 [_meetingsTableView deselectRowAtIndexPath:[_meetingsTableView indexPathForSelectedRow] animated:YES];
-                
                 [alertController dismissViewControllerAnimated:YES completion:nil];
+                
+                //Update meeting object
+                QBCOCustomObject *meetingObject = [QBCOCustomObject customObject];
+                meetingObject.className = @"Meetings";
+                meetingObject.ID = _meetings[indexPath.row][@"MeetingID"];
+                
+                NSMutableDictionary *operators = [NSMutableDictionary new];
+                [operators setObject:@(-1) forKey:@"inc[participants]"];
+                
+                [QBRequest updateObject:meetingObject specialUpdateOperators:operators successBlock:^(QBResponse *response, QBCOCustomObject *object) {
+                    
+                    NSInteger indexOfDeletedMeeting = [appDelegate.myMeetings indexOfObject:tempMeeting];
+                    
+                    [QBRequest deleteObjectWithID:[appDelegate.myMeetingIDs objectAtIndex:indexOfDeletedMeeting] className:@"userMeetings" successBlock:^(QBResponse * _Nonnull response) {
+                        
+                        [appDelegate.myMeetings removeObjectAtIndex:indexOfDeletedMeeting];
+                        [appDelegate.myMeetingIDs removeObjectAtIndex:indexOfDeletedMeeting];
+                        [appDelegate.idForMeeting removeObjectForKey:tempMeeting];
+                        
+                        [self pullMeetings];
+                        
+                        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"classMates" message:@"You have unjoined this meeting!" preferredStyle:UIAlertControllerStyleAlert];
+                        
+                        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                            [_meetingsTableView deselectRowAtIndexPath:[_meetingsTableView indexPathForSelectedRow] animated:YES];
+                            [alertController dismissViewControllerAnimated:YES completion:nil];
+                        }];
+                        
+                        [alertController addAction:cancelAction];
+                        [self presentViewController:alertController animated:YES completion:nil];
+                        
+                    } errorBlock:^(QBResponse * _Nonnull response) {
+                        NSLog(@"error deleting user meeting obejct when unjoining meeting");
+                    }];
+                } errorBlock:^(QBResponse * _Nonnull response) {
+                    NSLog(@"error updating participants in meeting object");
+                }];
             }];
             
             [alertController addAction:cancelAction];
             [alertController addAction:yesAction];
             [self presentViewController:alertController animated:YES completion:nil];
-        }
-        
-    } else {
-        
-        QBCOCustomObject *userMeetingObject = [QBCOCustomObject customObject];
-        userMeetingObject.className = @"userMeetings";
-        
-        [userMeetingObject.fields setObject:_meetings[indexPath.row][@"meetingName"] forKey:@"meetingName"];
-        [userMeetingObject.fields setObject:_meetings[indexPath.row][@"dateAndTime"] forKey:@"dateAndTime"];
-        [userMeetingObject.fields setObject:_meetings[indexPath.row][@"location"] forKey:@"location"];
-        [userMeetingObject.fields setObject:_meetings[indexPath.row][@"meetingType"] forKey:@"meetingType"];
-        [userMeetingObject.fields setObject:_meetings[indexPath.row][@"capacity"] forKey:@"capacity"];
-        [userMeetingObject.fields setObject:_meetings[indexPath.row][@"className"]forKey:@"className"];
-        
-        [QBRequest createObject:userMeetingObject successBlock:^(QBResponse * _Nonnull response, QBCOCustomObject * _Nullable object) {
-            
-            [appDelegate.myMeetings addObject:object.fields];
-            [appDelegate.myMeetingIDs addObject:object.ID];
+
+        } else {
             
             //Update meeting object
             QBCOCustomObject *meetingObject = [QBCOCustomObject customObject];
-            object.className = @"Meetings";
-            object.ID = _meetings[indexPath.row][@"MeetingID"];
+            meetingObject.className = @"Meetings";
+            meetingObject.ID = _meetings[indexPath.row][@"MeetingID"];
             
-            NSMutableDictionary *operators = [NSMutableDictionary dictionary];
+            NSMutableDictionary *operators = [NSMutableDictionary new];
             [operators setObject:@(1) forKey:@"inc[participants]"];
             
             [QBRequest updateObject:meetingObject specialUpdateOperators:operators successBlock:^(QBResponse *response, QBCOCustomObject *object) {
                 
-                [self pullMeetings];
-               
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"classMates" message:@"You have joined this meeting" preferredStyle:UIAlertControllerStyleAlert];
+                QBCOCustomObject *userMeetingObject = [QBCOCustomObject customObject];
+                userMeetingObject.className = @"userMeetings";
                 
-                UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-                    [_meetingsTableView deselectRowAtIndexPath:[_meetingsTableView indexPathForSelectedRow] animated:YES];
-                    [alertController dismissViewControllerAnimated:YES completion:nil];
+                [userMeetingObject.fields setObject:_meetings[indexPath.row][@"meetingName"] forKey:@"meetingName"];
+                [userMeetingObject.fields setObject:_meetings[indexPath.row][@"dateAndTime"] forKey:@"dateAndTime"];
+                [userMeetingObject.fields setObject:_meetings[indexPath.row][@"location"] forKey:@"location"];
+                [userMeetingObject.fields setObject:_meetings[indexPath.row][@"meetingType"] forKey:@"meetingType"];
+                [userMeetingObject.fields setObject:_meetings[indexPath.row][@"capacity"] forKey:@"capacity"];
+                [userMeetingObject.fields setObject:_meetings[indexPath.row][@"className"]forKey:@"className"];
+                [userMeetingObject.fields setObject:_meetings[indexPath.row][@"MeetingID"]forKey:@"MeetingID"];
+                NSInteger participants = [_meetings[indexPath.row][@"participants"] integerValue];
+                [userMeetingObject.fields setObject:[NSNumber numberWithInteger:++participants] forKey:@"participants"];
+                
+                [QBRequest createObject:userMeetingObject successBlock:^(QBResponse * _Nonnull response, QBCOCustomObject * _Nullable object) {
+                    
+                    [appDelegate.myMeetings addObject:object.fields];
+                    [appDelegate.myMeetingIDs addObject:object.ID];
+                    [appDelegate.idForMeeting setObject:object.ID forKey:object.fields];
+                    
+                    [self pullMeetings];
+                    
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"classMates" message:@"You have joined this meeting!" preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                        [_meetingsTableView deselectRowAtIndexPath:[_meetingsTableView indexPathForSelectedRow] animated:YES];
+                        [alertController dismissViewControllerAnimated:YES completion:nil];
+                    }];
+                    
+                    [alertController addAction:cancelAction];
+                    [self presentViewController:alertController animated:YES completion:nil];
+                    
+                } errorBlock:^(QBResponse * _Nonnull response) {
+                    NSLog(@"creating user meeting object error for joining meeting");
                 }];
-                
-                [alertController addAction:cancelAction];
-                [self presentViewController:alertController animated:YES completion:nil];
-                
             } errorBlock:^(QBResponse *response) {
-                NSLog(@"Response error: %@", [response.error description]);
+                NSLog(@"error updating MEeting obejct");
             }];
-        } errorBlock:^(QBResponse * _Nonnull response) {
-            NSLog(@"creating meeting object error for joining meeting");
-        }];
+        }
     }
 }
 
@@ -283,7 +334,7 @@
         
         if ([objects count] > 0) {
             for (QBCOCustomObject *meeting in objects) {
-            
+                [meeting.fields setObject:[NSNumber numberWithInteger:meeting.userID] forKey:@"owner"];
                 if ([[dateFormatter dateFromString:meeting.fields[@"dateAndTime"]] timeIntervalSinceReferenceDate] < [[NSDate date] timeIntervalSinceReferenceDate]) {
                     [_meetingsToBeDeleted addObject:meeting.ID];
                 } else {

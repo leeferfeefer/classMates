@@ -215,6 +215,7 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
         NSLog(@"login success");
         NSLog(@"Now pulling from QB");
         
+        appDelegate.userID = user.ID;
         
         //Request to pull user information
         NSMutableDictionary *getRequest = [NSMutableDictionary new];
@@ -365,6 +366,7 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
         
         if ([objects count] > 0) {
             for (QBCOCustomObject *userMeeting in objects) {
+                [userMeeting.fields setObject:[NSNumber numberWithInteger:appDelegate.userID] forKey:@"owner"];
                 [appDelegate.myMeetings addObject:userMeeting.fields];
                 [appDelegate.myMeetingIDs addObject:userMeeting.ID];
                 [appDelegate.idForMeeting setObject:userMeeting.ID forKey:userMeeting.fields];
