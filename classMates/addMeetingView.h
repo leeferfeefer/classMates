@@ -19,8 +19,7 @@
 
 
 //Protocol Properties
-@property (strong, nonatomic) id <addMeetingViewDelegate> delegateMeetingView;
-@property BOOL changed;
+@property (strong, nonatomic) id <addMeetingViewDelegate> delegateAddMeetingView;
 
 //Class Properties
 @property (strong, nonatomic) AppDelegate *appDelegate;
@@ -29,6 +28,7 @@
 @property (strong, nonatomic) NSString *selectedClassName;
 @property (strong, nonatomic) NSMutableDictionary *selectedMeeting;
 @property BOOL editing;
+@property BOOL changed;
 
 
 //Text Fields

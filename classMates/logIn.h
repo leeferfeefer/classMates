@@ -20,8 +20,9 @@
 @property BOOL fromLogIn;
 @property (strong, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) NSString *sessionTicket;
-@property NSMutableArray *friendsInClass;
-@property NSMutableArray *friends;
+@property (strong, nonatomic) NSMutableArray *friendsInClass;
+@property (strong, nonatomic) NSMutableArray *friends;
+@property BOOL matched;
 
 //Spinners
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loginSpinner;

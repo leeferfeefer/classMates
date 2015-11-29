@@ -11,7 +11,7 @@
 @implementation scheduleCell
 
 - (void)awakeFromNib {
-    // Initialization code
+    self.friendImage.image = [UIImage imageNamed:@"friendIcon"];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

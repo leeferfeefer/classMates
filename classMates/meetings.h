@@ -1,5 +1,5 @@
 //
-//  detailClass.h
+//  meetings.h
 //  classMates
 //
 //  Created by Lee Fincher on 11/1/15.
@@ -12,7 +12,7 @@
 #import "UIImage+CL.h"
 
 
-@interface detailClass : UIViewController <UITableViewDataSource, UITableViewDelegate, addMeetingViewDelegate>
+@interface meetings : UIViewController <UITableViewDataSource, UITableViewDelegate, addMeetingViewDelegate>
 
 //Class properties
 @property (strong, nonatomic) AppDelegate *appDelegate;

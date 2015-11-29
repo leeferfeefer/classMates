@@ -235,10 +235,10 @@
 
 
 -(void)closeMeetingViewDidAdd:(BOOL)didAdd{
-    if (self.delegateMeetingView && [self.delegateMeetingView respondsToSelector:@selector(closeAddMeetingViewDidAdd:)]) {
+    if (self.delegateAddMeetingView && [self.delegateAddMeetingView respondsToSelector:@selector(closeAddMeetingViewDidAdd:)]) {
         [_meetingSpinner stopAnimating];
         [_doneButton setEnabled:YES];
-        [self.delegateMeetingView closeAddMeetingViewDidAdd:didAdd];
+        [self.delegateAddMeetingView closeAddMeetingViewDidAdd:didAdd];
     }
 }
 

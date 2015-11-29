@@ -9,18 +9,23 @@
 #import <UIKit/UIKit.h>
 #import "CLWeeklyCalendarView.h"
 #import "addClassView.h"
-#import "detailClass.h"
+#import "meetings.h"
 #import "scheduleCell.h"
+#import "detailClassView.h"
+#import "detailMeetingView.h"
 
-@interface schedule : UIViewController <CLWeeklyCalendarViewDelegate, classViewDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface schedule : UIViewController <CLWeeklyCalendarViewDelegate, classViewDelegate, UITableViewDataSource, UITableViewDelegate, detailClassViewDelegate, detailMeetingViewDelegate>
 
 
 //Class Properties
 @property (strong, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) CLWeeklyCalendarView *calendarView;
 @property (strong, nonatomic) addClassView *classView;
+@property (strong, nonatomic) detailMeetingView *detailMeetingView;
+@property (strong, nonatomic) detailClassView *detailClassView;
 @property (strong, nonatomic) UITableView *classEventTableView;
 @property (strong, nonatomic) NSMutableDictionary *selectedClass;
+@property (strong, nonatomic) NSMutableDictionary *selectedMeeting;
 @property (strong, nonatomic) NSMutableArray *classesForDay;
 @property (strong, nonatomic) NSMutableArray *meetingsForDay;
 @property (strong, nonatomic) NSDate *selectedDate;

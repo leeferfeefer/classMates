@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		171F1DDF1C0B748500BE1606 /* detailMeetingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 171F1DDE1C0B748500BE1606 /* detailMeetingView.m */; };
+		171F1DE21C0B749500BE1606 /* detailClassView.m in Sources */ = {isa = PBXBuildFile; fileRef = 171F1DE11C0B749500BE1606 /* detailClassView.m */; };
+		171F1DE41C0B74AC00BE1606 /* detailMeetingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 171F1DE31C0B74AC00BE1606 /* detailMeetingView.xib */; };
+		171F1DE61C0B74B400BE1606 /* detailClassView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 171F1DE51C0B74B400BE1606 /* detailClassView.xib */; };
 		174C20261BE72DA000B51129 /* addMeetingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 174C20251BE72DA000B51129 /* addMeetingView.m */; };
 		174C20281BE7310700B51129 /* addMeetingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 174C20271BE7310700B51129 /* addMeetingView.xib */; };
 		174C202B1BE7C81900B51129 /* scheduleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 174C202A1BE7C81900B51129 /* scheduleCell.xib */; };
@@ -27,7 +31,7 @@
 		17C4A1B11BE6774E005F8EAF /* UIImage+CL.m in Sources */ = {isa = PBXBuildFile; fileRef = 17C4A1AA1BE6774E005F8EAF /* UIImage+CL.m */; };
 		17C4A1B51BE67E08005F8EAF /* addClassView.m in Sources */ = {isa = PBXBuildFile; fileRef = 17C4A1B41BE67E08005F8EAF /* addClassView.m */; };
 		17C4A1B71BE68331005F8EAF /* addClassView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 17C4A1B61BE68331005F8EAF /* addClassView.xib */; };
-		17C4A1C91BE71DF3005F8EAF /* detailClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 17C4A1C81BE71DF3005F8EAF /* detailClass.m */; };
+		17C4A1C91BE71DF3005F8EAF /* meetings.m in Sources */ = {isa = PBXBuildFile; fileRef = 17C4A1C81BE71DF3005F8EAF /* meetings.m */; };
 		17F89A741BB0649A00E2A615 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 17F89A731BB0649A00E2A615 /* main.m */; };
 		17F89A771BB0649A00E2A615 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 17F89A761BB0649A00E2A615 /* AppDelegate.m */; };
 		17F89A7A1BB0649A00E2A615 /* splashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 17F89A791BB0649A00E2A615 /* splashScreen.m */; };
@@ -57,6 +61,12 @@
 
 /* Begin PBXFileReference section */
 		05D8CCF0F99219EA01E1905E /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		171F1DDD1C0B748500BE1606 /* detailMeetingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = detailMeetingView.h; sourceTree = "<group>"; };
+		171F1DDE1C0B748500BE1606 /* detailMeetingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = detailMeetingView.m; sourceTree = "<group>"; };
+		171F1DE01C0B749500BE1606 /* detailClassView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = detailClassView.h; sourceTree = "<group>"; };
+		171F1DE11C0B749500BE1606 /* detailClassView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = detailClassView.m; sourceTree = "<group>"; };
+		171F1DE31C0B74AC00BE1606 /* detailMeetingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = detailMeetingView.xib; sourceTree = "<group>"; };
+		171F1DE51C0B74B400BE1606 /* detailClassView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = detailClassView.xib; sourceTree = "<group>"; };
 		174C20241BE72DA000B51129 /* addMeetingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = addMeetingView.h; sourceTree = "<group>"; };
 		174C20251BE72DA000B51129 /* addMeetingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = addMeetingView.m; sourceTree = "<group>"; };
 		174C20271BE7310700B51129 /* addMeetingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = addMeetingView.xib; sourceTree = "<group>"; };
@@ -91,8 +101,8 @@
 		17C4A1B31BE67E08005F8EAF /* addClassView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = addClassView.h; sourceTree = "<group>"; };
 		17C4A1B41BE67E08005F8EAF /* addClassView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = addClassView.m; sourceTree = "<group>"; };
 		17C4A1B61BE68331005F8EAF /* addClassView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = addClassView.xib; sourceTree = "<group>"; };
-		17C4A1C71BE71DF3005F8EAF /* detailClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = detailClass.h; sourceTree = "<group>"; };
-		17C4A1C81BE71DF3005F8EAF /* detailClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = detailClass.m; sourceTree = "<group>"; };
+		17C4A1C71BE71DF3005F8EAF /* meetings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = meetings.h; sourceTree = "<group>"; };
+		17C4A1C81BE71DF3005F8EAF /* meetings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = meetings.m; sourceTree = "<group>"; };
 		17F89A6F1BB0649A00E2A615 /* classMates.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = classMates.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17F89A731BB0649A00E2A615 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		17F89A751BB0649A00E2A615 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -142,26 +152,67 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		174C201F1BE72A0C00B51129 /* Detail Class */ = {
+		1717854C1C0B694100C5580C /* Schedule */ = {
 			isa = PBXGroup;
 			children = (
-				17C4A1C71BE71DF3005F8EAF /* detailClass.h */,
-				17C4A1C81BE71DF3005F8EAF /* detailClass.m */,
-				174C20321BE7CC0100B51129 /* meetingCell.h */,
-				174C20331BE7CC0100B51129 /* meetingCell.m */,
-				174C20231BE72D9000B51129 /* Meetings */,
+				17C4A1841BE67252005F8EAF /* schedule.h */,
+				17C4A1851BE67252005F8EAF /* schedule.m */,
+				17C4A1B21BE67DEA005F8EAF /* Add Class View */,
+				174C20291BE7C80900B51129 /* Schedule Cell */,
+				171F1DDB1C0B745400BE1606 /* Detail Meeting View */,
+				171F1DDC1C0B746200BE1606 /* Detail Class View */,
 			);
-			name = "Detail Class";
+			name = Schedule;
 			sourceTree = "<group>";
 		};
-		174C20231BE72D9000B51129 /* Meetings */ = {
+		171F1DDB1C0B745400BE1606 /* Detail Meeting View */ = {
+			isa = PBXGroup;
+			children = (
+				171F1DDD1C0B748500BE1606 /* detailMeetingView.h */,
+				171F1DDE1C0B748500BE1606 /* detailMeetingView.m */,
+				171F1DE31C0B74AC00BE1606 /* detailMeetingView.xib */,
+			);
+			name = "Detail Meeting View";
+			sourceTree = "<group>";
+		};
+		171F1DDC1C0B746200BE1606 /* Detail Class View */ = {
+			isa = PBXGroup;
+			children = (
+				171F1DE01C0B749500BE1606 /* detailClassView.h */,
+				171F1DE11C0B749500BE1606 /* detailClassView.m */,
+				171F1DE51C0B74B400BE1606 /* detailClassView.xib */,
+			);
+			name = "Detail Class View";
+			sourceTree = "<group>";
+		};
+		171F1DE71C0B75B600BE1606 /* Meetings Cell */ = {
+			isa = PBXGroup;
+			children = (
+				174C20321BE7CC0100B51129 /* meetingCell.h */,
+				174C20331BE7CC0100B51129 /* meetingCell.m */,
+			);
+			name = "Meetings Cell";
+			sourceTree = "<group>";
+		};
+		174C201F1BE72A0C00B51129 /* Meetings */ = {
+			isa = PBXGroup;
+			children = (
+				17C4A1C71BE71DF3005F8EAF /* meetings.h */,
+				17C4A1C81BE71DF3005F8EAF /* meetings.m */,
+				171F1DE71C0B75B600BE1606 /* Meetings Cell */,
+				174C20231BE72D9000B51129 /* Add Meeting View */,
+			);
+			name = Meetings;
+			sourceTree = "<group>";
+		};
+		174C20231BE72D9000B51129 /* Add Meeting View */ = {
 			isa = PBXGroup;
 			children = (
 				174C20241BE72DA000B51129 /* addMeetingView.h */,
 				174C20251BE72DA000B51129 /* addMeetingView.m */,
 				174C20271BE7310700B51129 /* addMeetingView.xib */,
 			);
-			name = Meetings;
+			name = "Add Meeting View";
 			sourceTree = "<group>";
 		};
 		174C20291BE7C80900B51129 /* Schedule Cell */ = {
@@ -188,11 +239,6 @@
 			children = (
 				178196501BD2DF7D00702C2D /* logIn.h */,
 				178196511BD2DF7D00702C2D /* logIn.m */,
-				17C4A1841BE67252005F8EAF /* schedule.h */,
-				17C4A1851BE67252005F8EAF /* schedule.m */,
-				174C20291BE7C80900B51129 /* Schedule Cell */,
-				174C201F1BE72A0C00B51129 /* Detail Class */,
-				17C4A1B21BE67DEA005F8EAF /* Add Class View */,
 			);
 			name = "Log In";
 			sourceTree = "<group>";
@@ -321,6 +367,8 @@
 			children = (
 				1781964E1BD2DF4900702C2D /* Splash Screen */,
 				1781964F1BD2DF5700702C2D /* Log In */,
+				174C201F1BE72A0C00B51129 /* Meetings */,
+				1717854C1C0B694100C5580C /* Schedule */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -454,10 +502,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				174C20281BE7310700B51129 /* addMeetingView.xib in Resources */,
+				171F1DE61C0B74B400BE1606 /* detailClassView.xib in Resources */,
 				17F89A7F1BB0649A00E2A615 /* Assets.xcassets in Resources */,
 				17C4A1B71BE68331005F8EAF /* addClassView.xib in Resources */,
 				174C202B1BE7C81900B51129 /* scheduleCell.xib in Resources */,
 				17F89A7D1BB0649A00E2A615 /* Main.storyboard in Resources */,
+				171F1DE41C0B74AC00BE1606 /* detailMeetingView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -531,10 +581,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				17C4A1B01BE6774E005F8EAF /* UIColor+CL.m in Sources */,
-				17C4A1C91BE71DF3005F8EAF /* detailClass.m in Sources */,
+				17C4A1C91BE71DF3005F8EAF /* meetings.m in Sources */,
 				17C4A1AE1BE6774E005F8EAF /* NSDate+CL.m in Sources */,
+				171F1DDF1C0B748500BE1606 /* detailMeetingView.m in Sources */,
 				17C4A1AC1BE6774E005F8EAF /* DailyCalendarView.m in Sources */,
 				17F89A7A1BB0649A00E2A615 /* splashScreen.m in Sources */,
+				171F1DE21C0B749500BE1606 /* detailClassView.m in Sources */,
 				17C4A1AD1BE6774E005F8EAF /* DayTitleLabel.m in Sources */,
 				17F89A771BB0649A00E2A615 /* AppDelegate.m in Sources */,
 				17F89A741BB0649A00E2A615 /* main.m in Sources */,

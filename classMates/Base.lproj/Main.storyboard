@@ -167,17 +167,17 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addClassButton" destination="i5m-5K-JII" id="8Mf-pU-uwO"/>
-                        <segue destination="VBV-lY-1aD" kind="show" identifier="showDetailClass" id="27h-ij-cXS"/>
+                        <segue destination="VBV-lY-1aD" kind="show" identifier="showMeetings" id="27h-ij-cXS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gZX-e1-XDV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2631" y="138"/>
         </scene>
-        <!--Detail Class-->
+        <!--Meetings-->
         <scene sceneID="6dm-ys-zNb">
             <objects>
-                <viewController id="VBV-lY-1aD" customClass="detailClass" sceneMemberID="viewController">
+                <viewController id="VBV-lY-1aD" customClass="meetings" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="kxR-IM-LL3"/>
                         <viewControllerLayoutGuide type="bottom" id="jjS-Wa-t4h"/>

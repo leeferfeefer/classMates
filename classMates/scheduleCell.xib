@@ -42,6 +42,10 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ClB-tg-ePa">
+                        <rect key="frame" x="376" y="8" width="30" height="30"/>
+                        <animations/>
+                    </imageView>
                 </subviews>
                 <animations/>
             </tableViewCellContentView>
@@ -50,6 +54,7 @@
                 <outlet property="classNameLabel" destination="3Fa-XE-tcA" id="udU-b2-XYf"/>
                 <outlet property="classOccurrenceLabel" destination="H5f-Hx-0fG" id="sCD-Z6-k0O"/>
                 <outlet property="classTimeLabel" destination="Tee-c2-XXO" id="IzJ-mL-kyI"/>
+                <outlet property="friendImage" destination="ClB-tg-ePa" id="eya-Ob-g4D"/>
                 <outlet property="meetingClassName" destination="UbK-FT-3A4" id="TbT-k6-ZGl"/>
             </connections>
             <point key="canvasLocation" x="170" y="262"/>

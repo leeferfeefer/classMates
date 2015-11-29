@@ -232,8 +232,6 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
             [self wrongLoginWithMessage:@"Username not found"];
         }
     }];
-    
-
 }
     
     
@@ -255,10 +253,15 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
 
     } errorBlock:^(QBResponse *response) {
         
-        NSLog(@"error signing up");
-        NSLog(@"the error respnse is %@", response);
+        NSLog(@"the errors are %@", response.error.reasons[@"errors"]);
+
         
         [_loginSpinner stopAnimating];
+        
+    
+        if (response.status == QBResponseStatusCodeValidationFailed) {
+            [self wrongLoginWithMessage:@"Username already taken"];
+        }
     }];
 }
     
@@ -312,9 +315,6 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
 
 
 #pragma mark - Data Methods
-
-
-
 
 -(void)getUserClasses:(NSMutableDictionary *)getRequest{
     
@@ -479,13 +479,14 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
         for (NSMutableDictionary *myClass in appDelegate.myClasses) {
             if ([myClass[@"className"] isEqualToString:friendClass[@"className"]]) {
                 
-                if (myClass[@"friendsInClass"] == nil) {
+                if (myClass[@"friends"] == nil) {
                     self.friendsInClass = [NSMutableArray new];
+                    self.matched = YES;
                 } else {
                     [self.friendsInClass addObject:friendClass[@"facebookID"]];
                 }
                 
-                [myClass setObject:self.friendsInClass forKey:@"friendsInClass"];
+                [myClass setObject:self.friendsInClass forKey:@"friends"];
             }
         }
     }
@@ -502,8 +503,10 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
 #pragma mark - Segue Methods
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    schedule *schedClass = [segue destinationViewController];
-    schedClass.matched = YES;
+    if (_matched) {
+        schedule *schedClass = [segue destinationViewController];
+        schedClass.matched = YES;
+    }
 }
 
 

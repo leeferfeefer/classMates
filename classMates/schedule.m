@@ -21,8 +21,6 @@
     [self.navigationController.navigationBar setHidden:NO];
     [self.navigationItem setHidesBackButton:YES];
     
-    //Match up here
-    //If match, show uialert view saying, hey you have a friend in your class!
     if (_matched) {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"classMates" message:@"You have friends in your classes!!!" preferredStyle:UIAlertControllerStyleAlert];
         
@@ -152,6 +150,12 @@
         
         NSMutableDictionary *classData = _classesForDay[indexPath.row];
         
+        if (classData[@"friends"] == nil) {
+            [cell.friendImage setHidden:YES];
+        } else {
+            [cell.friendImage setHidden:NO];
+        }
+        
         cell.classNameLabel.text = classData[@"className"];
         
         if (![cell.classNameLabel.text isEqualToString:@"No classes"]) {
@@ -166,6 +170,8 @@
         cell.classNameLabel.textColor = [UIColor whiteColor];
         cell.classTimeLabel.textColor = [UIColor whiteColor];
         cell.classOccurrenceLabel.textColor = [UIColor whiteColor];
+        [cell.friendImage setHidden:YES];
+
 
     } else {
         
@@ -178,23 +184,21 @@
         if (![cell.classNameLabel.text isEqualToString:@"No meetings"]) {
             NSArray *timeArray = [meetingData[@"dateAndTime"] componentsSeparatedByString:@" "];
             cell.classTimeLabel.text = [NSString stringWithFormat:@"%@ %@", timeArray[4], timeArray[5]];
-//            cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+            cell.selectionStyle = UITableViewCellSelectionStyleDefault;
         } else {
             cell.classTimeLabel.text = @"";
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-
         cell.classOccurrenceLabel.text = meetingData[@"meetingType"];
         cell.meetingClassName.text = meetingData[@"className"];
-
 
         cell.classNameLabel.textColor = [UIColor whiteColor];
         cell.classTimeLabel.textColor = [UIColor whiteColor];
         cell.classOccurrenceLabel.textColor = [UIColor whiteColor];
         cell.meetingClassName.textColor = [UIColor whiteColor];
+        [cell.friendImage setHidden:YES];
     }
-
     return cell;
 }
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -202,22 +206,21 @@
 }
 
 
+
 #pragma mark - UITableView Delegate Methods
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     scheduleCell *selectedCell = (scheduleCell *)[_classEventTableView cellForRowAtIndexPath:indexPath];
+    
     if (selectedCell.selectionStyle != UITableViewCellSelectionStyleNone) {
         //Classes
         if (indexPath.section == 0) {
-            self.selectedClass = _classesForDay[indexPath.row];
-            [self performSegueWithIdentifier:@"showDetailClass" sender:nil];
+            //        self.selectedClass = _classesForDay[indexPath.row];
+            //        [self performSegueWithIdentifier:@"showDetailClass" sender:nil];
             //Meetings
         } else {
-            //Present detail view for meeting
-            
-            
-            
-            
+            self.selectedMeeting = _meetingsForDay[indexPath.row];
+            [self presentDetailMeetingView];
         }
     }
 }
@@ -297,7 +300,8 @@
 -(void)presentAddClassView{
     
     _classEventTableView.userInteractionEnabled = NO;
-    
+    _addClassButton.enabled = NO;
+
     CGFloat classViewWidth = 350;
     CGFloat classViewHeight = 206;
     NSArray *nibContents = [[NSBundle mainBundle] loadNibNamed:@"addClassView" owner:self options:nil];
@@ -312,8 +316,6 @@
     [UIView animateWithDuration:.3 animations:^{
         _classView.frame = newFrame;
     }];
-    
-    _addClassButton.enabled = NO;
 }
 
 
@@ -336,6 +338,8 @@
         _classEventTableView.userInteractionEnabled = YES;
     }];
 }
+
+
 
 
 
@@ -418,12 +422,88 @@
 
 
 
+
+
+#pragma mark - Present Class Detail View MethodsSc
+
+-(void)presentDetailClassView {
+    
+}
+
+
+#pragma mark - Close Class Detail View Methods
+
+
+
+
+
+
+
+
+#pragma mark - Present Meeting Detail View Methods
+
+-(void)presentDetailMeetingView {
+    
+    _classEventTableView.userInteractionEnabled = NO;
+    _addClassButton.enabled = NO;
+    
+    CGFloat classViewWidth = 350;
+    CGFloat classViewHeight = 300;
+    NSArray *nibContents = [[NSBundle mainBundle] loadNibNamed:@"detailMeetingView" owner:self options:nil];
+    self.detailMeetingView = [[detailMeetingView alloc] init];
+    self.detailMeetingView = [nibContents lastObject];
+    self.detailMeetingView.frame = CGRectMake(self.view.frame.size.width/2 - classViewWidth/2, self.view.frame.size.height, classViewWidth, classViewHeight);
+    self.detailMeetingView.delegateDetailMeetingView = self;
+    self.detailMeetingView.selectedMeeting = _selectedMeeting;
+    [self.view addSubview:_detailMeetingView];
+    
+    CGRect newFrame = self.detailMeetingView.frame;
+    newFrame.origin.y = (self.view.frame.size.height/2 - _detailMeetingView.frame.size.height/2);
+    [UIView animateWithDuration:.3 animations:^{
+        _detailMeetingView.frame = newFrame;
+    }];
+}
+
+
+#pragma mark - Close Meeting Detail View Methods
+
+-(void)closeDetailMeetingViewIsEdit:(BOOL)edit {
+    
+    [_classEventTableView deselectRowAtIndexPath:[_classEventTableView indexPathForSelectedRow] animated:YES];
+    
+    CGRect newFrame = self.detailMeetingView.frame;
+    newFrame.origin.y = self.view.frame.size.height;
+    [UIView animateWithDuration:.3 animations:^{
+        self.detailMeetingView.frame = newFrame;
+    } completion:^(BOOL finished) {
+        [self.detailMeetingView removeFromSuperview];
+        self.detailMeetingView = nil;
+        _addClassButton.enabled = YES;
+        _classEventTableView.userInteractionEnabled = YES;
+        
+        if (edit) {
+            //Show edit
+            
+        }
+    }];
+}
+
+
+
+
+
+
+
+
+
+
+
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"showDetailClass"]) {
-        detailClass *detail = [segue destinationViewController];
-        detail.selectedClass = _selectedClass;
+        meetings *meetings = [segue destinationViewController];
+        meetings.selectedClass = _selectedClass;
     }
 }
 

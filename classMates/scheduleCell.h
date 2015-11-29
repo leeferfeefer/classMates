@@ -18,4 +18,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *meetingClassName;
 
 
+//Uiimages
+@property (strong, nonatomic) IBOutlet UIImageView *friendImage;
+
+
 @end

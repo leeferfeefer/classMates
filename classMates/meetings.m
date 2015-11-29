@@ -1,18 +1,18 @@
 //
-//  detailClass.m
+//  meetings.m
 //  classMates
 //
 //  Created by Lee Fincher on 11/1/15.
 //  Copyright © 2015 GT - CS 4261. All rights reserved.
 //
 
-#import "detailClass.h"
+#import "meetings.h"
 
-@interface detailClass ()
+@interface meetings ()
 
 @end
 
-@implementation detailClass
+@implementation meetings
 
 @synthesize appDelegate;
 
@@ -304,7 +304,7 @@
     self.meetingView = [[addMeetingView alloc] init];
     self.meetingView = [nibContents lastObject];
     self.meetingView.frame = CGRectMake(self.view.frame.size.width/2 - meetingViewWidth/2, self.view.frame.size.height, meetingViewWidth, meetingViewHeight);
-    self.meetingView.delegateMeetingView = self;
+    self.meetingView.delegateAddMeetingView = self;
     self.meetingView.selectedClassName = _selectedClass[@"className"];
     
     //Fill in data
