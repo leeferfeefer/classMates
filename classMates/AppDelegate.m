@@ -55,11 +55,17 @@
     [QBConnection registerServiceSecret:@"q2-4n7TYtWHL3pb"];
     [QBSettings setAccountKey:@"Q1o2xYSLQYmszqWRy2Da"];
     
+    
+    
     self.myMeetings = [NSMutableArray new];
+    self.myClasses = [NSMutableArray new];
+    
+
     self.myMeetingIDs = [NSMutableArray new];
     self.idForMeeting = [NSMutableDictionary new];
-    self.myClasses = [NSMutableArray new];
-    self.myClassIDs = [NSMutableArray new];
+//    self.myClassIDs = [NSMutableArray new];
+    
+    self.friendClasses = [NSMutableArray new];
     
     
     //    DISABLE LOG STATEMENTS

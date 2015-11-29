@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import "schedule.h"
 
 @interface logIn : UIViewController <UITextFieldDelegate>
 
@@ -19,7 +20,8 @@
 @property BOOL fromLogIn;
 @property (strong, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) NSString *sessionTicket;
-
+@property NSMutableArray *friendsInClass;
+@property NSMutableArray *friends;
 
 //Spinners
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loginSpinner;
@@ -27,6 +29,7 @@
 
 //Labels
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+@property (strong, nonatomic) IBOutlet UILabel *facebookInfoLabel;
 
 
 

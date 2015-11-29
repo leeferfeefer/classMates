@@ -24,9 +24,6 @@
     
     [self.doneButton setTitle:@"Done" forState:UIControlStateNormal];
     [self.doneButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
-    
-    [self.deleteMeetingButton setTitle:@"Delete Meeting" forState:UIControlStateNormal];
-    [self.deleteMeetingButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
 
 
     _locationField.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -34,8 +31,6 @@
     
     _doneButton.layer.cornerRadius = 5;
     _doneButton.layer.masksToBounds = YES;
-    _deleteMeetingButton.layer.cornerRadius = 5;
-    _deleteMeetingButton.layer.masksToBounds = YES;
     
     
     self.pickerDoneBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 414, 44)];
@@ -62,6 +57,7 @@
     [_typeField setInputAccessoryView:_pickerDoneBar];
     [_dateAndTimeField setInputView:_datePicker];
     [_dateAndTimeField setInputAccessoryView:_pickerDoneBar];
+    [_dateAndTimeField setDelegate:self];
     [_capacityField setInputView:_capacityPicker];
     [_capacityField setInputAccessoryView:_pickerDoneBar];
 }
@@ -74,49 +70,52 @@
 #pragma mark - Button Methods
 
 - (IBAction)doneButtonPressed:(UIButton *)sender {
-    if ([_locationField.text isEqualToString:@""] || [_dateAndTimeField.text isEqualToString:@""] || [_typeField.text isEqualToString:@""]) {
-        if (self.delegateMeetingView && [self.delegateMeetingView respondsToSelector:@selector(closeAddMeetingViewDidAdd:)]) {
-            [self.delegateMeetingView closeAddMeetingViewDidAdd:NO];
-        }
+    
+    [_doneButton setEnabled:NO];
+    
+    if ([_locationField.text isEqualToString:@""] || [_dateAndTimeField.text isEqualToString:@""] || [_typeField.text isEqualToString:@""] || [_capacityField.text isEqualToString:@""] | [_meetingNameField.text isEqualToString:@""]) {
+        [self closeMeetingViewDidAdd:NO];
     } else {
         
-        if (_editing) {
-            
-            QBCOCustomObject *meetingObject = [QBCOCustomObject customObject];
-            meetingObject.className = @"Meetings";
-            
-            [meetingObject.fields setObject:_meetingNameField.text forKey:@"meetingName"];
-            [meetingObject.fields setObject:_dateAndTimeField.text forKey:@"dateAndTime"];
-            [meetingObject.fields setObject:_locationField.text forKey:@"location"];
-            [meetingObject.fields setObject:_typeField.text forKey:@"meetingType"];
-            [meetingObject.fields setObject:_selectedClassName forKey:@"className"];
-            [meetingObject.fields setObject:_capacityField.text forKey:@"capacity"];
-            meetingObject.ID = _selectedMeeting[@"MeetingID"];
-            
-            [QBRequest updateObject:meetingObject successBlock:^(QBResponse * _Nonnull response, QBCOCustomObject * _Nullable object) {
-                
-                meetingObject.className = @"userMeetings";
-                meetingObject.ID = appDelegate.idForMeeting[_selectedMeeting];
+        [_meetingSpinner startAnimating];
         
+        if (_editing) {
+            if (!_changed) {
+                [self closeMeetingViewDidAdd:NO];
+            } else {
+                QBCOCustomObject *meetingObject = [QBCOCustomObject customObject];
+                meetingObject.className = @"Meetings";
+                
+                [meetingObject.fields setObject:_meetingNameField.text forKey:@"meetingName"];
+                [meetingObject.fields setObject:_dateAndTimeField.text forKey:@"dateAndTime"];
+                [meetingObject.fields setObject:_locationField.text forKey:@"location"];
+                [meetingObject.fields setObject:_typeField.text forKey:@"meetingType"];
+                [meetingObject.fields setObject:_selectedClassName forKey:@"className"];
+                [meetingObject.fields setObject:_capacityField.text forKey:@"capacity"];
+                meetingObject.ID = _selectedMeeting[@"MeetingID"];
+                
                 [QBRequest updateObject:meetingObject successBlock:^(QBResponse * _Nonnull response, QBCOCustomObject * _Nullable object) {
                     
-                    //Update meeting in list of meetings
-                    NSUInteger index = [appDelegate.myMeetings indexOfObject:_selectedMeeting];
+                    meetingObject.className = @"userMeetings";
+                    meetingObject.ID = appDelegate.idForMeeting[_selectedMeeting];
                     
-                    [appDelegate.myMeetings replaceObjectAtIndex:index withObject:object.fields];
-                    [appDelegate.idForMeeting setObject:object.ID forKey:object.fields];
-                    
-                    if (self.delegateMeetingView && [self.delegateMeetingView respondsToSelector:@selector(closeAddMeetingViewDidAdd:)]) {
-                        [self.delegateMeetingView closeAddMeetingViewDidAdd:YES];
-                    }
-                    
+                    [QBRequest updateObject:meetingObject successBlock:^(QBResponse * _Nonnull response, QBCOCustomObject * _Nullable object) {
+                        
+                        //Update meeting in list of meetings
+                        NSUInteger index = [appDelegate.myMeetings indexOfObject:_selectedMeeting];
+                        
+                        [appDelegate.myMeetings replaceObjectAtIndex:index withObject:object.fields];
+                        [appDelegate.idForMeeting setObject:object.ID forKey:object.fields];
+                        
+                        [self closeMeetingViewDidAdd:YES];
+                        
+                    } errorBlock:^(QBResponse * _Nonnull response) {
+                        NSLog(@"ERorr trying to update user  meeting");
+                    }];
                 } errorBlock:^(QBResponse * _Nonnull response) {
-                    NSLog(@"ERorr trying to update user  meeting");
+                    NSLog(@"error trying to update meeting");
                 }];
-            } errorBlock:^(QBResponse * _Nonnull response) {
-                NSLog(@"error trying to update meeting");
-            }];
-        
+            }
         } else {
             //Add Meeting to QB
             QBCOCustomObject *meetingObject = [QBCOCustomObject customObject];
@@ -132,6 +131,7 @@
             [meetingObject.fields setObject:_selectedClassName forKey:@"className"];
             [meetingObject.fields setObject:_capacityField.text forKey:@"capacity"];
             [meetingObject.fields setObject:@(0) forKey:@"participants"];
+            [meetingObject.fields setObject:[NSNumber numberWithInteger:appDelegate.userID] forKey:@"owner"];
 
             [QBRequest createObject:meetingObject successBlock:^(QBResponse * _Nonnull response, QBCOCustomObject * _Nullable object) {
                 
@@ -146,9 +146,7 @@
                     [appDelegate.myMeetingIDs addObject:object.ID];
                     [appDelegate.idForMeeting setObject:object.ID forKey:object.fields];
                     
-                    if (self.delegateMeetingView && [self.delegateMeetingView respondsToSelector:@selector(closeAddMeetingViewDidAdd:)]) {
-                        [self.delegateMeetingView closeAddMeetingViewDidAdd:YES];
-                    }
+                    [self closeMeetingViewDidAdd:YES];
 
                 } errorBlock:^(QBResponse * _Nonnull response) {
                     NSLog(@"error creating user meeting");
@@ -159,28 +157,7 @@
         }
     }
 }
-- (IBAction)deleteMeetingButtonPressed:(UIButton *)sender {
-    
-    [QBRequest deleteObjectWithID:_selectedMeeting[@"MeetingID"] className:@"Meetings" successBlock:^(QBResponse * _Nonnull response) {
-        
-        [QBRequest deleteObjectWithID:appDelegate.idForMeeting[_selectedMeeting] className:@"userMeetings" successBlock:^(QBResponse * _Nonnull response) {
-            
-            NSUInteger deletedIndex = [appDelegate.myMeetings indexOfObject:_selectedMeeting];
-            //Remove meeting from list of meetings
-            [appDelegate.myMeetings removeObjectAtIndex:deletedIndex];
-            [appDelegate.myMeetingIDs removeObjectAtIndex:deletedIndex];
-            [appDelegate.idForMeeting removeObjectForKey:_selectedMeeting];
-            
-            if (self.delegateMeetingView && [self.delegateMeetingView respondsToSelector:@selector(closeAddMeetingViewDidAdd:)]) {
-                [self.delegateMeetingView closeAddMeetingViewDidAdd:YES];
-            }
-        } errorBlock:^(QBResponse * _Nonnull response) {
-            NSLog(@"error deleting user meeting");
-        }];
-    } errorBlock:^(QBResponse * _Nonnull response) {
-        NSLog(@"error deleting Meeting");
-    }];
-}
+
 
 
 #pragma mark - UIPickerView Data Source Methods
@@ -215,11 +192,9 @@
 #pragma mark - Bar Button Methods
 
 -(void)pickerViewDoneButtonPressed {
-    
-    NSDateFormatter *dateFormatter = [NSDateFormatter new];
-    [dateFormatter setDateFormat:@"EEEE, MMMM dd, yyyy hh:mm a"];
-    
     if ([_dateAndTimeField isEditing]) {
+        NSDateFormatter *dateFormatter = [NSDateFormatter new];
+        [dateFormatter setDateFormat:@"EEEE, MMMM dd, yyyy hh:mm a"];
         [_dateAndTimeField setText:[dateFormatter stringFromDate:_datePicker.date]];
         [_dateAndTimeField endEditing:YES];
     } else if ([_typeField isEditing]) {
@@ -233,6 +208,19 @@
 
 
 
+#pragma mark - UITextField Delegate Methods
+
+-(void)textFieldDidBeginEditing:(UITextField *)textField {
+    if (_editing) {
+        _changed = YES;
+    }
+    if (textField == _dateAndTimeField) {
+        [_datePicker setMinimumDate:[NSDate date]];
+    }
+}
+
+
+
 #pragma mark - Helper Methods
 
 -(NSArray *)createTypeArray {
@@ -241,5 +229,18 @@
 -(NSArray *)createCapacityArray {
     return [NSArray arrayWithObjects:@"1", @"2", @"3", @"4", @"5", @"10", @"15", @"20", @"None", nil];
 }
+
+
+
+
+
+-(void)closeMeetingViewDidAdd:(BOOL)didAdd{
+    if (self.delegateMeetingView && [self.delegateMeetingView respondsToSelector:@selector(closeAddMeetingViewDidAdd:)]) {
+        [_meetingSpinner stopAnimating];
+        [_doneButton setEnabled:YES];
+        [self.delegateMeetingView closeAddMeetingViewDidAdd:didAdd];
+    }
+}
+
 
 @end

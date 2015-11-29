@@ -24,13 +24,22 @@ alpha:1.0]
 
 @property (strong, nonatomic) UIWindow *window;
 
+
+
 @property (strong, nonatomic) NSMutableDictionary *userInfo;
+@property NSUInteger userID;
+
+
+
 @property (strong, nonatomic) NSMutableArray *myMeetings;
+@property (strong, nonatomic) NSMutableArray *myClasses;
+
 @property (strong, nonatomic) NSMutableArray *myMeetingIDs;
 @property (strong, nonatomic) NSMutableDictionary *idForMeeting;
-@property (strong, nonatomic) NSMutableArray *myClasses;
-@property (strong, nonatomic) NSMutableArray *myClassIDs;
-@property NSUInteger userID;
+//@property (strong, nonatomic) NSMutableArray *myClassIDs;
+
+@property (strong, nonatomic) NSMutableArray *friendClasses;
+
 
 @end
 

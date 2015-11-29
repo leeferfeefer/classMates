@@ -73,8 +73,8 @@
     
     //Redo!!!
     if ([_courseNumberField.text isEqualToString:@""] || [_departmentField.text isEqualToString:@""]) {
-        if (self.delegateClassView && [self.delegateClassView respondsToSelector:@selector(closeAddClassView)]) {
-            [self.delegateClassView closeAddClassView];
+        if (self.delegateClassView && [self.delegateClassView respondsToSelector:@selector(closeAddClassViewDidAdd:)]) {
+            [self.delegateClassView closeAddClassViewDidAdd:NO];
         }
     } else {
      
@@ -86,14 +86,15 @@
         [classObject.fields setObject:_timeStartField.text forKey:@"timeStart"];
         [classObject.fields setObject:_timeEndField.text forKey:@"timeEnd"];
         [classObject.fields setObject:_weeklyOccurenceField.text forKey:@"weeklyOccurrence"];
+        [classObject.fields setObject:appDelegate.userInfo[@"facebookID"] forKey:@"facebookID"];
         
         [QBRequest createObject:classObject successBlock:^(QBResponse * _Nonnull response, QBCOCustomObject * _Nullable object) {
             
             [appDelegate.myClasses addObject:object.fields];
-            [appDelegate.myClassIDs addObject:object.ID];
+//            [appDelegate.myClassIDs addObject:object.ID];
             
-            if (self.delegateClassView && [self.delegateClassView respondsToSelector:@selector(closeAddClassView)]) {
-                [self.delegateClassView closeAddClassView];
+            if (self.delegateClassView && [self.delegateClassView respondsToSelector:@selector(closeAddClassViewDidAdd:)]) {
+                [self.delegateClassView closeAddClassViewDidAdd:YES];
             }
             
         } errorBlock:^(QBResponse * _Nonnull response) {
@@ -111,8 +112,7 @@
 }
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     if (textField == _courseNumberField) {
-        if(range.length + range.location > textField.text.length)
-        {
+        if (range.length + range.location > textField.text.length) {
             return NO;
         }
         
@@ -145,15 +145,7 @@
 
 #pragma mark - UIPickerView Delegate Methods
 
-//- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
-//    if (pickerView == _departmentPicker) {
-//        [_departmentField setText:_departments[row]];
-//        [_departmentField resignFirstResponder];
-//    } else {
-//        [_weeklyOccurenceField setText:_weeklyOccurrences[row]];
-//        [_weeklyOccurenceField resignFirstResponder];
-//    }
-//}
+
 
 
 

@@ -20,6 +20,21 @@
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar setHidden:NO];
     [self.navigationItem setHidesBackButton:YES];
+    
+    //Match up here
+    //If match, show uialert view saying, hey you have a friend in your class!
+    if (_matched) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"classMates" message:@"You have friends in your classes!!!" preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            [alertController dismissViewControllerAnimated:YES completion:nil];
+        }];
+        
+        [alertController addAction:cancelAction];
+        [self presentViewController:alertController animated:YES completion:nil];
+        _matched = false;
+    }
+
     [_classEventTableView deselectRowAtIndexPath:[_classEventTableView indexPathForSelectedRow] animated:YES];
     [_classEventTableView reloadData];
 }
@@ -201,6 +216,8 @@
             //Present detail view for meeting
             
             
+            
+            
         }
     }
 }
@@ -279,6 +296,8 @@
 
 -(void)presentAddClassView{
     
+    _classEventTableView.userInteractionEnabled = NO;
+    
     CGFloat classViewWidth = 350;
     CGFloat classViewHeight = 206;
     NSArray *nibContents = [[NSBundle mainBundle] loadNibNamed:@"addClassView" owner:self options:nil];
@@ -301,9 +320,11 @@
 
 #pragma mark - Add Class View Delegate Methods
 
--(void)closeAddClassView{
-    [self classesForDate:_selectedDate];
-    [_classEventTableView reloadData];
+-(void)closeAddClassViewDidAdd:(BOOL)didAdd{
+    if (didAdd) {
+        [self classesForDate:_selectedDate];
+        [_classEventTableView reloadData];
+    }
     CGRect newFrame = self.classView.frame;
     newFrame.origin.y = self.view.frame.size.height;
     [UIView animateWithDuration:.3 animations:^{
@@ -312,6 +333,7 @@
         [self.classView removeFromSuperview];
         self.classView = nil;
         _addClassButton.enabled = YES;
+        _classEventTableView.userInteractionEnabled = YES;
     }];
 }
 

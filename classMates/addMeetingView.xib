@@ -59,24 +59,16 @@
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ufj-aW-wkb">
-                            <rect key="frame" x="107" y="194" width="136" height="30"/>
-                            <animations/>
-                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                            <state key="normal" title="Button">
-                                <color key="titleColor" red="1" green="0.34901960780000002" blue="0.28235294119999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </state>
-                            <connections>
-                                <action selector="deleteMeetingButtonPressed:" destination="286-Ub-E7o" eventType="touchUpInside" id="8hJ-TP-LjE"/>
-                            </connections>
-                        </button>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Capacity" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4Wq-Jy-aQv">
                             <rect key="frame" x="223" y="134" width="97" height="30"/>
                             <animations/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
+                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="aHz-6G-c5B">
+                            <rect key="frame" x="165" y="195" width="20" height="20"/>
+                            <animations/>
+                        </activityIndicatorView>
                     </subviews>
                     <animations/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -88,10 +80,10 @@
             <connections>
                 <outlet property="capacityField" destination="4Wq-Jy-aQv" id="Vsm-Gq-nms"/>
                 <outlet property="dateAndTimeField" destination="xYV-32-dbH" id="FQm-6A-8Y6"/>
-                <outlet property="deleteMeetingButton" destination="ufj-aW-wkb" id="OJT-gz-eNE"/>
                 <outlet property="doneButton" destination="uFV-gO-Gpk" id="nXK-rt-Hkf"/>
                 <outlet property="locationField" destination="RQh-Eh-cNP" id="HdH-yw-dg0"/>
                 <outlet property="meetingNameField" destination="ZTc-c8-ewy" id="cw0-zr-MYM"/>
+                <outlet property="meetingSpinner" destination="aHz-6G-c5B" id="jUi-cr-7jh"/>
                 <outlet property="typeField" destination="N8t-wT-PBe" id="LPl-rz-TeR"/>
             </connections>
             <point key="canvasLocation" x="375" y="682"/>

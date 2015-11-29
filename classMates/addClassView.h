@@ -11,7 +11,7 @@
 @protocol classViewDelegate <NSObject>
 
 @optional
--(void)closeAddClassView;
+-(void)closeAddClassViewDidAdd:(BOOL)didAdd;
 @end
 
 

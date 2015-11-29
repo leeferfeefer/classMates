@@ -211,7 +211,6 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
     //Login user with Quickblox Authentication
     [QBRequest logInWithUserLogin:_usernameField.text password:_passwordField.text successBlock:^(QBResponse * _Nonnull response, QBUUser * _Nullable user) {
         
-        
         NSLog(@"login success");
         NSLog(@"Now pulling from QB");
         
@@ -220,7 +219,7 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
         //Request to pull user information
         NSMutableDictionary *getRequest = [NSMutableDictionary new];
         [getRequest setObject:[NSNumber numberWithInteger:user.ID] forKey:@"user_id"];
-        [self getUserData:getRequest];
+        [self getUserClasses:getRequest];
         
         
     } errorBlock:^(QBResponse * _Nonnull response) {
@@ -314,28 +313,9 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
 
 #pragma mark - Data Methods
 
--(void)getUserData:(NSMutableDictionary *)getRequest{
 
-    NSLog(@"pulling user data from quickblox");
-    
-    [QBRequest objectsWithClassName:@"userData" extendedRequest:getRequest successBlock:^(QBResponse * _Nonnull response, NSArray<QBCOCustomObject *> * _Nullable objects, QBResponsePage * _Nullable page) {
-        
-        if ([objects count] > 0) {
-            appDelegate.userInfo = objects[0].fields;
-            [appDelegate.userInfo setObject:objects[0].ID forKey:@"ID"];
-            
-            [self getUserClasses:getRequest];
-            
-        } else {
-            NSLog(@"creating user data object on quickblox");
-            [self createUserData];
-        }
-    
-    } errorBlock:^(QBResponse * _Nonnull response) {
-        [_loginSpinner stopAnimating];
-        NSLog(@"error pulling data from quicblox");
-    }];
-}
+
+
 -(void)getUserClasses:(NSMutableDictionary *)getRequest{
     
     NSLog(@"pulling user classes");
@@ -345,7 +325,7 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
         if ([objects count] > 0) {
             for (QBCOCustomObject *userClass in objects) {
                 [appDelegate.myClasses addObject:userClass.fields];
-                [appDelegate.myClassIDs addObject:userClass.ID];
+//                [appDelegate.myClassIDs addObject:userClass.ID];
             }
         }
         
@@ -366,20 +346,33 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
         
         if ([objects count] > 0) {
             for (QBCOCustomObject *userMeeting in objects) {
-                [userMeeting.fields setObject:[NSNumber numberWithInteger:appDelegate.userID] forKey:@"owner"];
                 [appDelegate.myMeetings addObject:userMeeting.fields];
                 [appDelegate.myMeetingIDs addObject:userMeeting.ID];
                 [appDelegate.idForMeeting setObject:userMeeting.ID forKey:userMeeting.fields];
             }
         }
-        [_loginSpinner stopAnimating];
-        [self performSegueWithIdentifier:@"loginSuccess" sender:nil];
+        
+        if ([_loginSwitch isOn]) {
+            NSLog(@"pulling from facebook");
+            [self pullFromFacebook];
+        } else {
+            [_loginSpinner stopAnimating];
+            [self performSegueWithIdentifier:@"loginSuccess" sender:nil];
+        }
+        
         
     } errorBlock:^(QBResponse * _Nonnull response) {
         [_loginSpinner stopAnimating];
         NSLog(@"error pulling user meetings");
     }];
 }
+
+
+
+
+
+#pragma mark - Facebook Methods
+
 -(void)pullFromFacebook{
     
     FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
@@ -410,28 +403,27 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
                                                                                          NSError *friendError) {
                                                 
                                                 if (!friendError) {
-                                                    NSMutableArray *friends = [NSMutableArray new];
+                                                    NSString *me = [NSString stringWithFormat:@"%@ - %@", meResult[@"name"], meResult[@"id"]];
+                                                    
+                                                    self.friends = [NSMutableArray new];
                                                     for (NSMutableDictionary *friend in friendResult[@"data"]) {
-                                                        [friends addObject: friend[@"id"]];
+                                                        NSString *friendInfo = [NSString stringWithFormat:@"%@ - %@", friend[@"name"], friend[@"id"]];
+                                                        [_friends addObject:friendInfo];
                                                     }
                                                     
-                                                    QBCOCustomObject *userObject = [QBCOCustomObject customObject];
-                                                    userObject.className = @"userData";
-                                                    userObject.ID = appDelegate.userInfo[@"ID"];
-                                                    [userObject.fields setObject:meResult[@"id"] forKey:@"facebookID"];
-                                                    [userObject.fields setObject:friends forKey:@"Friends"];
                                                     
-                                                    [QBRequest updateObject:userObject successBlock:^(QBResponse *response, QBCOCustomObject *object) {
-
+                                                    [appDelegate.userInfo setObject:me forKey:@"facebookID"];
+                                                    
+                                                    NSLog(@"me is %@", me);
+                                                    NSLog(@"friends are %@", _friends);
+                                                    
+                                                    if ([_friends count] > 0) {
+                                                        //Pull all facebook friend's classes
+                                                        [self pullFacebookFriendsClasses];
+                                                    } else {
                                                         [_loginSpinner stopAnimating];
                                                         [self performSegueWithIdentifier:@"loginSuccess" sender:nil];
-
-                                                    } errorBlock:^(QBResponse *response) {
-                                                        // error handling
-                                                        [_loginSpinner stopAnimating];
-                                                        NSLog(@"error updating user data object");
-                                                        NSLog(@"Response error: %@",response);
-                                                    }];
+                                                    }
                                                 } else {
                                                     NSLog(@"the error retrieving friends is %@", friendError);
                                                 }
@@ -444,47 +436,74 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
                             }];
     
 }
--(void)createUserData{
- 
-    QBCOCustomObject *userObject = [QBCOCustomObject customObject];
-    userObject.className = @"userData";
 
-    [QBRequest createObject:userObject successBlock:^(QBResponse * _Nonnull response, QBCOCustomObject * _Nullable object) {
+
+
+
+
+    
+    
+    
+-(void)pullFacebookFriendsClasses{
+    NSLog(@"pulling from facebook classes");
+    
+    NSMutableDictionary *getRequest = [NSMutableDictionary dictionary];
+
+    int counter = 0;
+    for (NSString *friend in _friends) {
+        counter++;
         
-        //Save user data custom object
-        appDelegate.userInfo = object.fields;
-        [appDelegate.userInfo setObject:object.ID forKey:@"ID"];
+        [getRequest setObject:friend forKey:@"facebookID"];
         
-        if ([_loginSwitch isOn]) {
-            //Pull facebook data from device
-            [self pullFromFacebook];
-        } else {
-            [_loginSpinner stopAnimating];
-            [self performSegueWithIdentifier:@"loginSuccess" sender:nil];
-        }
-    } errorBlock:^(QBResponse * _Nonnull response) {
-        
-        [_loginSpinner stopAnimating];
-        
-        NSLog(@"error creating userData object");
-        NSLog(@"the response is %@", response);
-    }];
+        [QBRequest objectsWithClassName:@"userClasses" extendedRequest:getRequest successBlock:^(QBResponse * _Nonnull response, NSArray<QBCOCustomObject *> * _Nullable objects, QBResponsePage * _Nullable page) {
+            
+            for (QBCOCustomObject *friendClassObject in objects) {
+                [appDelegate.friendClasses addObject:friendClassObject.fields];
+            }
+            
+            if (counter == [_friends count]) {
+                [self matchClasses];
+            }
+    
+        } errorBlock:^(QBResponse * _Nonnull response) {
+            NSLog(@"could not retrieve classes with friend %@", friend);
+        }];
+    }
 }
+
+-(void)matchClasses{
     
+    NSLog(@"matching classes");
     
+    for (NSMutableDictionary *friendClass in appDelegate.friendClasses) {
+        for (NSMutableDictionary *myClass in appDelegate.myClasses) {
+            if ([myClass[@"className"] isEqualToString:friendClass[@"className"]]) {
+                
+                if (myClass[@"friendsInClass"] == nil) {
+                    self.friendsInClass = [NSMutableArray new];
+                } else {
+                    [self.friendsInClass addObject:friendClass[@"facebookID"]];
+                }
+                
+                [myClass setObject:self.friendsInClass forKey:@"friendsInClass"];
+            }
+        }
+    }
     
-    
-    
-    
-    
-    
-    
-    
-    
+    [_loginSpinner stopAnimating];
+    [self performSegueWithIdentifier:@"loginSuccess" sender:nil];
+}
+
+
+
+
+
+
 #pragma mark - Segue Methods
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
+    schedule *schedClass = [segue destinationViewController];
+    schedClass.matched = YES;
 }
 
 

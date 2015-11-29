@@ -20,7 +20,7 @@
 
 //Protocol Properties
 @property (strong, nonatomic) id <addMeetingViewDelegate> delegateMeetingView;
-
+@property BOOL changed;
 
 //Class Properties
 @property (strong, nonatomic) AppDelegate *appDelegate;
@@ -41,12 +41,10 @@
 
 //Button Properties
 @property (strong, nonatomic) IBOutlet UIButton *doneButton;
-@property (strong, nonatomic) IBOutlet UIButton *deleteMeetingButton;
 
 
 //Button Methods
 - (IBAction)doneButtonPressed:(UIButton *)sender;
-- (IBAction)deleteMeetingButtonPressed:(UIButton *)sender;
 
 
 //Toolbar
@@ -58,5 +56,8 @@
 @property (strong, nonatomic) UIDatePicker *datePicker;
 
 
+
+//Spinners
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *meetingSpinner;
 
 @end

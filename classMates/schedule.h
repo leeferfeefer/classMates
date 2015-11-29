@@ -24,6 +24,7 @@
 @property (strong, nonatomic) NSMutableArray *classesForDay;
 @property (strong, nonatomic) NSMutableArray *meetingsForDay;
 @property (strong, nonatomic) NSDate *selectedDate;
+@property BOOL matched;
 
 
 //Button Properties
