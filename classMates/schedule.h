@@ -13,6 +13,7 @@
 #import "scheduleCell.h"
 #import "detailClassView.h"
 #import "detailMeetingView.h"
+#import "friends.h"
 
 @interface schedule : UIViewController <CLWeeklyCalendarViewDelegate, classViewDelegate, UITableViewDataSource, UITableViewDelegate, detailClassViewDelegate, detailMeetingViewDelegate>
 

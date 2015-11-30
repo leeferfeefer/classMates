@@ -167,11 +167,7 @@
         }
         cell.classOccurrenceLabel.text = classData[@"weeklyOccurrence"];
         
-        cell.classNameLabel.textColor = [UIColor whiteColor];
-        cell.classTimeLabel.textColor = [UIColor whiteColor];
-        cell.classOccurrenceLabel.textColor = [UIColor whiteColor];
         [cell.friendImage setHidden:YES];
-
 
     } else {
         
@@ -193,10 +189,6 @@
         cell.classOccurrenceLabel.text = meetingData[@"meetingType"];
         cell.meetingClassName.text = meetingData[@"className"];
 
-        cell.classNameLabel.textColor = [UIColor whiteColor];
-        cell.classTimeLabel.textColor = [UIColor whiteColor];
-        cell.classOccurrenceLabel.textColor = [UIColor whiteColor];
-        cell.meetingClassName.textColor = [UIColor whiteColor];
         [cell.friendImage setHidden:YES];
     }
     return cell;
@@ -215,9 +207,9 @@
     if (selectedCell.selectionStyle != UITableViewCellSelectionStyleNone) {
         //Classes
         if (indexPath.section == 0) {
-            //        self.selectedClass = _classesForDay[indexPath.row];
-            //        [self performSegueWithIdentifier:@"showDetailClass" sender:nil];
-            //Meetings
+            self.selectedClass = _classesForDay[indexPath.row];
+            [self presentDetailClassView];
+        //Meetings
         } else {
             self.selectedMeeting = _meetingsForDay[indexPath.row];
             [self presentDetailMeetingView];
@@ -428,13 +420,51 @@
 
 -(void)presentDetailClassView {
     
+    _classEventTableView.userInteractionEnabled = NO;
+    _addClassButton.enabled = NO;
+    
+    CGFloat classViewWidth = 300;
+    CGFloat classViewHeight = 300;
+    NSArray *nibContents = [[NSBundle mainBundle] loadNibNamed:@"detailClassView" owner:self options:nil];
+    self.detailClassView = [[detailClassView alloc] init];
+    self.detailClassView = [nibContents lastObject];
+    self.detailClassView.frame = CGRectMake(self.view.frame.size.width/2 - classViewWidth/2, self.view.frame.size.height, classViewWidth, classViewHeight);
+    self.detailClassView.delegateDetailClassView = self;
+    self.detailClassView.selectedClass = _selectedClass;
+    [self.view addSubview:_detailClassView];
+    
+    CGRect newFrame = self.detailClassView.frame;
+    newFrame.origin.y = (self.view.frame.size.height/2 - _detailClassView.frame.size.height/2);
+    [UIView animateWithDuration:.3 animations:^{
+        _detailClassView.frame = newFrame;
+    }];
 }
 
 
 #pragma mark - Close Class Detail View Methods
 
 
-
+-(void)closeDetailClassViewIsFriends:(BOOL)friends isMeetings:(BOOL)meetings {
+    
+    [_classEventTableView deselectRowAtIndexPath:[_classEventTableView indexPathForSelectedRow] animated:YES];
+    
+    CGRect newFrame = self.detailClassView.frame;
+    newFrame.origin.y = self.view.frame.size.height;
+    [UIView animateWithDuration:.3 animations:^{
+        self.detailClassView.frame = newFrame;
+    } completion:^(BOOL finished) {
+        [self.detailClassView removeFromSuperview];
+        self.detailClassView = nil;
+        _addClassButton.enabled = YES;
+        _classEventTableView.userInteractionEnabled = YES;
+        
+        if (friends) {
+            [self performSegueWithIdentifier:@"showFriends" sender:nil];
+        } else if (meetings) {
+            [self performSegueWithIdentifier:@"showMeetings" sender:nil];
+        }
+    }];
+}
 
 
 
@@ -467,7 +497,7 @@
 
 #pragma mark - Close Meeting Detail View Methods
 
--(void)closeDetailMeetingViewIsEdit:(BOOL)edit {
+-(void)closeDetailMeetingViewIsEdit:(BOOL)edit isUnJoin:(BOOL)unjoin isDelete:(BOOL)deleteMeeting{
     
     [_classEventTableView deselectRowAtIndexPath:[_classEventTableView indexPathForSelectedRow] animated:YES];
     
@@ -482,8 +512,31 @@
         _classEventTableView.userInteractionEnabled = YES;
         
         if (edit) {
-            //Show edit
             
+        
+        } else if (unjoin) {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"classMates" message:@"You have unjoined this meeting!" preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                [_classEventTableView deselectRowAtIndexPath:[_classEventTableView indexPathForSelectedRow] animated:YES];
+                [_classEventTableView reloadData];
+                [alertController dismissViewControllerAnimated:YES completion:nil];
+            }];
+            
+            [alertController addAction:cancelAction];
+            [self presentViewController:alertController animated:YES completion:nil];
+            
+        } else if (deleteMeeting) {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"classMates" message:@"You have removed this meeting!" preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                [_classEventTableView deselectRowAtIndexPath:[_classEventTableView indexPathForSelectedRow] animated:YES];
+                [_classEventTableView reloadData];
+                [alertController dismissViewControllerAnimated:YES completion:nil];
+            }];
+            
+            [alertController addAction:cancelAction];
+            [self presentViewController:alertController animated:YES completion:nil];
         }
     }];
 }
@@ -501,9 +554,12 @@
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"showDetailClass"]) {
+    if ([segue.identifier isEqualToString:@"showMeetings"]) {
         meetings *meetings = [segue destinationViewController];
         meetings.selectedClass = _selectedClass;
+    } else if ([segue.identifier isEqualToString:@"showFriends"]) {
+        friends *friends = [segue destinationViewController];
+        friends.selectedClass = _selectedClass;
     }
 }
 

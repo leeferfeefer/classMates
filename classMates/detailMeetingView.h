@@ -11,7 +11,7 @@
 @protocol detailMeetingViewDelegate <NSObject>
 
 @optional
--(void)closeDetailMeetingViewIsEdit:(BOOL)edit;
+-(void)closeDetailMeetingViewIsEdit:(BOOL)edit isUnJoin:(BOOL)unjoin isDelete:(BOOL)deleteMeeting;
 @end
 
 @interface detailMeetingView : UIView
@@ -21,6 +21,7 @@
 @property (strong, nonatomic) id <detailMeetingViewDelegate> delegateDetailMeetingView;
 
 //Class Properties
+@property (strong, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) NSMutableDictionary *selectedMeeting;
 
 

@@ -168,11 +168,65 @@
                     <connections>
                         <outlet property="addClassButton" destination="i5m-5K-JII" id="8Mf-pU-uwO"/>
                         <segue destination="VBV-lY-1aD" kind="show" identifier="showMeetings" id="27h-ij-cXS"/>
+                        <segue destination="NDs-jO-e2C" kind="show" identifier="showFriends" id="buQ-m2-iWM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gZX-e1-XDV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2631" y="138"/>
+        </scene>
+        <!--Friends-->
+        <scene sceneID="Bfl-yh-vpN">
+            <objects>
+                <tableViewController id="NDs-jO-e2C" customClass="friends" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="28" sectionFooterHeight="28" id="ust-nf-xgm">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="friendCell" rowHeight="70" id="gfq-wh-3Sc" customClass="friendCell">
+                                <rect key="frame" x="0.0" y="92" width="414" height="70"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gfq-wh-3Sc" id="2aq-La-zUd">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="69"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fdc-0G-V9x">
+                                            <rect key="frame" x="8" y="10" width="50" height="50"/>
+                                            <animations/>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GNv-XG-70g">
+                                            <rect key="frame" x="66" y="10" width="340" height="51"/>
+                                            <animations/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <animations/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </tableViewCellContentView>
+                                <animations/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="friendImage" destination="Fdc-0G-V9x" id="lWR-5G-fTZ"/>
+                                    <outlet property="friendNameLabel" destination="GNv-XG-70g" id="agu-FW-Wai"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="NDs-jO-e2C" id="RXM-iK-qIa"/>
+                            <outlet property="delegate" destination="NDs-jO-e2C" id="0ax-kl-VlW"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="friendsTableView" destination="ust-nf-xgm" id="hg4-L2-1Vq"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2iT-at-zXU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2057" y="557"/>
         </scene>
         <!--Meetings-->
         <scene sceneID="6dm-ys-zNb">
@@ -265,7 +319,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KYH-Q0-nZh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2157" y="138"/>
+            <point key="canvasLocation" x="-2057" y="-274"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="340-I6-q9U">

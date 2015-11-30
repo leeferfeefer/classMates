@@ -10,9 +10,52 @@
         <view contentMode="scaleToFill" id="CTv-ea-fCa" customClass="detailClassView">
             <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view alpha="0.84999999999999998" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vwQ-50-g3S">
+                    <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
+                    <animations/>
+                    <color key="backgroundColor" red="1" green="0.86446669990000002" blue="0.030696714730000001" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LJ0-nm-FNB">
+                    <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hlj-i0-2qR">
+                            <rect key="frame" x="127" y="262" width="46" height="30"/>
+                            <animations/>
+                            <state key="normal" title="Done"/>
+                            <connections>
+                                <action selector="doneButtonPressed:" destination="CTv-ea-fCa" eventType="touchUpInside" id="OCX-AQ-gxE"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KvT-eE-bGw">
+                            <rect key="frame" x="72" y="191" width="157" height="30"/>
+                            <animations/>
+                            <state key="normal" title="View Meetings"/>
+                            <connections>
+                                <action selector="viewMeetingsButtonPressed:" destination="CTv-ea-fCa" eventType="touchUpInside" id="OPs-dB-i0Z"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="34s-SZ-SFJ">
+                            <rect key="frame" x="72" y="112" width="157" height="30"/>
+                            <animations/>
+                            <state key="normal" title="View Friends"/>
+                            <connections>
+                                <action selector="viewFriendsButtonPressed:" destination="CTv-ea-fCa" eventType="touchUpInside" id="4u8-cb-bMj"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <animations/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
+            </subviews>
             <animations/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="doneButton" destination="hlj-i0-2qR" id="vP6-Wr-0c8"/>
+                <outlet property="viewFriendsButton" destination="34s-SZ-SFJ" id="pob-45-b3C"/>
+                <outlet property="viewMeetingsButton" destination="KvT-eE-bGw" id="avW-B0-0gh"/>
+            </connections>
             <point key="canvasLocation" x="326" y="28"/>
         </view>
     </objects>

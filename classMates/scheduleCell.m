@@ -11,7 +11,12 @@
 @implementation scheduleCell
 
 - (void)awakeFromNib {
-    self.friendImage.image = [UIImage imageNamed:@"friendIcon"];
+    _friendImage.image = [UIImage imageNamed:@"friendIcon"];
+    
+    _classNameLabel.textColor = [UIColor whiteColor];
+    _classTimeLabel.textColor = [UIColor whiteColor];
+    _classOccurrenceLabel.textColor = [UIColor whiteColor];
+    _meetingClassName.textColor = [UIColor whiteColor];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

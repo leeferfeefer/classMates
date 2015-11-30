@@ -482,10 +482,9 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
                 if (myClass[@"friends"] == nil) {
                     self.friendsInClass = [NSMutableArray new];
                     self.matched = YES;
-                } else {
-                    [self.friendsInClass addObject:friendClass[@"facebookID"]];
                 }
-                
+                [self.friendsInClass addObject:friendClass[@"facebookID"]];
+
                 [myClass setObject:self.friendsInClass forKey:@"friends"];
             }
         }

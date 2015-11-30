@@ -10,13 +10,43 @@
 
 @implementation detailClassView
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
+
+
+-(void)didMoveToSuperview {
+    
+    self.layer.cornerRadius = 10;
+    self.layer.masksToBounds = YES;
+
+
+
+
 }
-*/
+
+
+
+#pragma mark - Button Methods
+
+- (IBAction)viewFriendsButtonPressed:(UIButton *)sender {
+    [self closeDetailClassViewIsfriends:YES isMeetings:NO];
+}
+
+- (IBAction)viewMeetingsButtonPressed:(UIButton *)sender {
+    [self closeDetailClassViewIsfriends:NO isMeetings:YES];
+}
+
+- (IBAction)doneButtonPressed:(UIButton *)sender {
+    [self closeDetailClassViewIsfriends:NO isMeetings:NO];
+}
+
+
+
+#pragma mark - Close View
+
+-(void)closeDetailClassViewIsfriends:(BOOL)friends isMeetings:(BOOL)meetings {
+    if (self.delegateDetailClassView && [self.delegateDetailClassView respondsToSelector:@selector(closeDetailClassViewIsFriends:isMeetings:)]) {
+        [self.delegateDetailClassView closeDetailClassViewIsFriends:friends isMeetings:meetings];
+    }
+}
 
 
 

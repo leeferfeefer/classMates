@@ -11,6 +11,8 @@
 		171F1DE21C0B749500BE1606 /* detailClassView.m in Sources */ = {isa = PBXBuildFile; fileRef = 171F1DE11C0B749500BE1606 /* detailClassView.m */; };
 		171F1DE41C0B74AC00BE1606 /* detailMeetingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 171F1DE31C0B74AC00BE1606 /* detailMeetingView.xib */; };
 		171F1DE61C0B74B400BE1606 /* detailClassView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 171F1DE51C0B74B400BE1606 /* detailClassView.xib */; };
+		171F1DEB1C0CAE5300BE1606 /* friends.m in Sources */ = {isa = PBXBuildFile; fileRef = 171F1DEA1C0CAE5300BE1606 /* friends.m */; };
+		171F1DEE1C0CAEA500BE1606 /* friendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 171F1DED1C0CAEA500BE1606 /* friendCell.m */; };
 		174C20261BE72DA000B51129 /* addMeetingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 174C20251BE72DA000B51129 /* addMeetingView.m */; };
 		174C20281BE7310700B51129 /* addMeetingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 174C20271BE7310700B51129 /* addMeetingView.xib */; };
 		174C202B1BE7C81900B51129 /* scheduleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 174C202A1BE7C81900B51129 /* scheduleCell.xib */; };
@@ -67,6 +69,10 @@
 		171F1DE11C0B749500BE1606 /* detailClassView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = detailClassView.m; sourceTree = "<group>"; };
 		171F1DE31C0B74AC00BE1606 /* detailMeetingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = detailMeetingView.xib; sourceTree = "<group>"; };
 		171F1DE51C0B74B400BE1606 /* detailClassView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = detailClassView.xib; sourceTree = "<group>"; };
+		171F1DE91C0CAE5300BE1606 /* friends.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = friends.h; sourceTree = "<group>"; };
+		171F1DEA1C0CAE5300BE1606 /* friends.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = friends.m; sourceTree = "<group>"; };
+		171F1DEC1C0CAEA500BE1606 /* friendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = friendCell.h; sourceTree = "<group>"; };
+		171F1DED1C0CAEA500BE1606 /* friendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = friendCell.m; sourceTree = "<group>"; };
 		174C20241BE72DA000B51129 /* addMeetingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = addMeetingView.h; sourceTree = "<group>"; };
 		174C20251BE72DA000B51129 /* addMeetingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = addMeetingView.m; sourceTree = "<group>"; };
 		174C20271BE7310700B51129 /* addMeetingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = addMeetingView.xib; sourceTree = "<group>"; };
@@ -192,6 +198,25 @@
 				174C20331BE7CC0100B51129 /* meetingCell.m */,
 			);
 			name = "Meetings Cell";
+			sourceTree = "<group>";
+		};
+		171F1DE81C0CAE3D00BE1606 /* Friends */ = {
+			isa = PBXGroup;
+			children = (
+				171F1DE91C0CAE5300BE1606 /* friends.h */,
+				171F1DEA1C0CAE5300BE1606 /* friends.m */,
+				171F1DEF1C0CAEA800BE1606 /* Friend Cell */,
+			);
+			name = Friends;
+			sourceTree = "<group>";
+		};
+		171F1DEF1C0CAEA800BE1606 /* Friend Cell */ = {
+			isa = PBXGroup;
+			children = (
+				171F1DEC1C0CAEA500BE1606 /* friendCell.h */,
+				171F1DED1C0CAEA500BE1606 /* friendCell.m */,
+			);
+			name = "Friend Cell";
 			sourceTree = "<group>";
 		};
 		174C201F1BE72A0C00B51129 /* Meetings */ = {
@@ -367,8 +392,9 @@
 			children = (
 				1781964E1BD2DF4900702C2D /* Splash Screen */,
 				1781964F1BD2DF5700702C2D /* Log In */,
-				174C201F1BE72A0C00B51129 /* Meetings */,
 				1717854C1C0B694100C5580C /* Schedule */,
+				174C201F1BE72A0C00B51129 /* Meetings */,
+				171F1DE81C0CAE3D00BE1606 /* Friends */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -591,7 +617,9 @@
 				17F89A771BB0649A00E2A615 /* AppDelegate.m in Sources */,
 				17F89A741BB0649A00E2A615 /* main.m in Sources */,
 				174C202E1BE7C83900B51129 /* scheduleCell.m in Sources */,
+				171F1DEB1C0CAE5300BE1606 /* friends.m in Sources */,
 				178196521BD2DF7D00702C2D /* logIn.m in Sources */,
+				171F1DEE1C0CAEA500BE1606 /* friendCell.m in Sources */,
 				17C4A1B51BE67E08005F8EAF /* addClassView.m in Sources */,
 				174C20261BE72DA000B51129 /* addMeetingView.m in Sources */,
 				174C20341BE7CC0100B51129 /* meetingCell.m in Sources */,
