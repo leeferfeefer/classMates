@@ -83,12 +83,7 @@
         //Add Class to QB
         QBCOCustomObject *classObject = [QBCOCustomObject customObject];
         classObject.className = @"userClasses";
-        
-        
-        
-        
-        
-        
+    
         [classObject.fields setObject:[NSString stringWithFormat:@"%@ - %@", _departmentField.text, _courseNumberField.text] forKey:@"className"];
         [classObject.fields setObject:_timeStartField.text forKey:@"timeStart"];
         [classObject.fields setObject:_timeEndField.text forKey:@"timeEnd"];

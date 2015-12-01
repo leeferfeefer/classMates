@@ -21,6 +21,12 @@
     [_viewFriendsButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     [_viewMeetingsButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     [_doneButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    
+    if (_selectedClass[@"friends"] == nil) {
+        [_viewFriendsButton setTitle:@"No Friends" forState:UIControlStateNormal];
+        [_viewFriendsButton setEnabled:NO];
+        [_viewFriendsButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    }
 }
 
 

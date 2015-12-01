@@ -324,7 +324,7 @@
     [self.view addSubview:_meetingView];
     
     CGRect newFrame = _meetingView.frame;
-    newFrame.origin.y = (self.view.frame.size.height/2 - _meetingView.frame.size.height/2);
+    newFrame.origin.y = (self.view.frame.size.height/2 - _meetingView.frame.size.height/2 - 50);
     [UIView animateWithDuration:.3 animations:^{
         _meetingView.frame = newFrame;
     }];

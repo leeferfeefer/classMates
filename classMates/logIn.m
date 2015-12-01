@@ -115,6 +115,8 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
 #pragma mark - Button Methods
 
 - (IBAction)signUpButtonPressed:(UIButton *)sender {
+    
+    _signUpButton.enabled = NO;
 
     if (_fromLogIn) {
         
@@ -141,11 +143,13 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
             [self.logInButton setTitle:@"Cancel" forState:UIControlStateNormal];
             _usernameField.alpha = 1;
             _passwordField.alpha = 1;
-            
+            _signUpButton.enabled = YES;
         }];
     }
 }
 - (IBAction)logInButtonPressed:(UIButton *)sender {
+    
+    _logInButton.enabled = NO;
     
     //Cancel
     if (_fromSignUp || _fromLogIn) {
@@ -173,6 +177,7 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
         } completion:^(BOOL finished) {
             [_usernameField setHidden:YES];
             [_passwordField setHidden:YES];
+            _logInButton.enabled = YES;
         }];
     
         
@@ -192,6 +197,7 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
             
             _usernameField.alpha = 1;
             _passwordField.alpha = 1;
+            _logInButton.enabled = YES;
         }];
     }
 }
@@ -227,6 +233,7 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
         NSLog(@"the response is %@", response);
         
         [_loginSpinner stopAnimating];
+        _signUpButton.enabled = YES;
         
         if (response.status == QBResponseStatusCodeUnAuthorized) {
             [self wrongLoginWithMessage:@"Username not found"];
@@ -257,7 +264,7 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
 
         
         [_loginSpinner stopAnimating];
-        
+        _signUpButton.enabled = YES;
     
         if (response.status == QBResponseStatusCodeValidationFailed) {
             [self wrongLoginWithMessage:@"Username already taken"];

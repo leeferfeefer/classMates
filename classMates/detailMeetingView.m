@@ -22,16 +22,17 @@
     
     
     
-    self.classNameLabel.text = _selectedMeeting[@"className"];
-    self.meetingNameLabel.text = _selectedMeeting[@"meetingName"];
-    self.meetingType.text = _selectedMeeting[@"meetingType"];
-    self.locationLabel.text = _selectedMeeting[@"location"];
-    self.dateTimeLabel.text = _selectedMeeting[@"dateAndTime"];
-    self.participantsLabel.text = [NSString stringWithFormat:@"%@/%@", _selectedMeeting[@"participants"], _selectedMeeting[@"capacity"]];
+    _classNameLabel.text = _selectedMeeting[@"className"];
+    _meetingNameLabel.text = _selectedMeeting[@"meetingName"];
+    _meetingType.text = _selectedMeeting[@"meetingType"];
+    _locationLabel.text = _selectedMeeting[@"location"];
+    _dateTimeLabel.text = _selectedMeeting[@"dateAndTime"];
+    _participantsLabel.text = [NSString stringWithFormat:@"%@/%@", _selectedMeeting[@"participants"], _selectedMeeting[@"capacity"]];
     
     if ([_selectedMeeting[@"owner"] integerValue] == appDelegate.userID) {
         [self.unjoinButton setTitle:@"Delete" forState:UIControlStateNormal];
     }
+    
     
 
     [_doneButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];

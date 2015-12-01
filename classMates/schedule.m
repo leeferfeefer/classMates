@@ -34,6 +34,7 @@
     }
 
     [_classEventTableView deselectRowAtIndexPath:[_classEventTableView indexPathForSelectedRow] animated:YES];
+    [self meetingsForDate:_selectedDate];
     [_classEventTableView reloadData];
 }
 
@@ -58,8 +59,8 @@
     
     
     //Classes and Events Table view:
-    CGFloat tableViewY = 136;
-    self.classEventTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, tableViewY, 414, self.view.frame.size.height - tableViewY)];
+    CGFloat tableViewY = 116;
+    self.classEventTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, tableViewY, self.view.bounds.size.width, self.view.frame.size.height - tableViewY - 64)];
     self.classEventTableView.backgroundColor = [UIColor clearColor];
     [self.classEventTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     self.classEventTableView.dataSource = self;
@@ -150,12 +151,6 @@
         
         NSMutableDictionary *classData = _classesForDay[indexPath.row];
         
-        if (classData[@"friends"] == nil) {
-            [cell.friendImage setHidden:YES];
-        } else {
-            [cell.friendImage setHidden:NO];
-        }
-        
         cell.classNameLabel.text = classData[@"className"];
         
         if (![cell.classNameLabel.text isEqualToString:@"No classes"]) {
@@ -167,7 +162,11 @@
         }
         cell.classOccurrenceLabel.text = classData[@"weeklyOccurrence"];
         
-        [cell.friendImage setHidden:YES];
+        if (classData[@"friends"] == nil) {
+            [cell.friendImage setHidden:YES];
+        } else {
+            [cell.friendImage setHidden:NO];
+        }
 
     } else {
         
@@ -304,7 +303,7 @@
     [self.view addSubview:_classView];
     
     CGRect newFrame = self.classView.frame;
-    newFrame.origin.y = (self.view.frame.size.height/2 - _classView.frame.size.height/2);
+    newFrame.origin.y = (self.view.frame.size.height/2 - _classView.frame.size.height/2 - 50);
     [UIView animateWithDuration:.3 animations:^{
         _classView.frame = newFrame;
     }];
@@ -378,11 +377,24 @@
     
     
     //Sort classes Here
-    [self sortClasses];
+    if ([_classesForDay count] > 1) {
+        [self sortClasses];
+    }
 }
 -(void)sortClasses{
     
-    //Sort Classes here
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"hh:mm a"];
+    for (NSMutableDictionary *class in _classesForDay) {
+        [class setObject:[dateFormatter dateFromString:class[@"timeStart"]] forKey:@"timeStart"];
+    }
+    
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"timeStart" ascending:YES];
+    [_classesForDay sortUsingDescriptors:[NSArray arrayWithObject:descriptor]];
+    
+    for (NSMutableDictionary *class in _classesForDay) {
+        [class setObject:[dateFormatter stringFromDate:class[@"timeStart"]] forKey:@"timeStart"];
+    }
 }
 -(void)meetingsForDate:(NSDate *)date {
     
@@ -402,13 +414,26 @@
         }
     }
     
-    
     //Sort meetings Here
-    [self sortMeetings];
+    if ([_meetingsForDay count] > 1) {
+        [self sortMeetings];
+    }
 }
 -(void)sortMeetings{
     
-    //Sort Meetings here
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"EEEE, MMMM dd, yyyy hh:mm a"];
+    for (NSMutableDictionary *meeting in _meetingsForDay) {
+        [meeting setObject:[dateFormatter dateFromString:meeting[@"dateAndTime"]] forKey:@"dateAndTime"];
+    }
+    
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"dateAndTime" ascending:YES];
+    [_meetingsForDay sortUsingDescriptors:[NSArray arrayWithObject:descriptor]];
+    
+    for (NSMutableDictionary *meeting in _meetingsForDay) {
+        [meeting setObject:[dateFormatter stringFromDate:meeting[@"dateAndTime"]] forKey:@"dateAndTime"];
+    }
 }
 
 
