@@ -295,7 +295,7 @@
     _addClassButton.enabled = NO;
 
     CGFloat classViewWidth = 350;
-    CGFloat classViewHeight = 206;
+    CGFloat classViewHeight = 192;
     NSArray *nibContents = [[NSBundle mainBundle] loadNibNamed:@"addClassView" owner:self options:nil];
     self.classView = [[addClassView alloc] init];
     self.classView = [nibContents lastObject];
@@ -423,7 +423,7 @@
     _classEventTableView.userInteractionEnabled = NO;
     _addClassButton.enabled = NO;
     
-    CGFloat classViewWidth = 300;
+    CGFloat classViewWidth = 350;
     CGFloat classViewHeight = 300;
     NSArray *nibContents = [[NSBundle mainBundle] loadNibNamed:@"detailClassView" owner:self options:nil];
     self.detailClassView = [[detailClassView alloc] init];

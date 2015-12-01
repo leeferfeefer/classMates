@@ -15,6 +15,8 @@
 
 -(void)didMoveToSuperview {
     
+    appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
     self.layer.cornerRadius = 10;
     self.layer.masksToBounds = YES;
     
@@ -27,13 +29,13 @@
     self.dateTimeLabel.text = _selectedMeeting[@"dateAndTime"];
     self.participantsLabel.text = [NSString stringWithFormat:@"%@/%@", _selectedMeeting[@"participants"], _selectedMeeting[@"capacity"]];
     
-    
     if ([_selectedMeeting[@"owner"] integerValue] == appDelegate.userID) {
         [self.unjoinButton setTitle:@"Delete" forState:UIControlStateNormal];
     }
     
-    NSLog(@"the meeting object is  %@", _selectedMeeting);
 
+    [_doneButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    [_unjoinButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
 }
 
 

@@ -76,9 +76,17 @@
     NSMutableDictionary *friendInfo = _friends[friendID];
     
     cell.friendNameLabel.text = friendInfo[@"name"];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    //Call the sdwebimage here
+    [cell.friendCellSpinner startAnimating];
+    
+    [cell.friendImage sd_setImageWithURL:friendInfo[@"picture"][@"data"][@"url"] placeholderImage:[UIImage imageNamed:@"friendIcon"] options:SDWebImageRefreshCached completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        
+        [cell.friendCellSpinner stopAnimating];
+//        HideNetworkActivityIndicator();
+    }];
+
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
     
     
     return cell;
@@ -100,7 +108,6 @@
     }
     
     NSString *friends = [friendIDs componentsJoinedByString:@","];
-    NSLog(@"the friends is %@", friends);
     
     FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]
                                   initWithGraphPath:[NSString stringWithFormat:@"/?ids=%@",friends]

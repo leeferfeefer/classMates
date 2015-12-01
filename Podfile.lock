@@ -1,10 +1,15 @@
 PODS:
   - QuickBlox (2.4.5)
+  - SDWebImage (3.7.3):
+    - SDWebImage/Core (= 3.7.3)
+  - SDWebImage/Core (3.7.3)
 
 DEPENDENCIES:
   - QuickBlox
+  - SDWebImage
 
 SPEC CHECKSUMS:
   QuickBlox: 672f5eb8b2beeba1ff208807ddc42c2b2b3b1c49
+  SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
 
 COCOAPODS: 0.39.0

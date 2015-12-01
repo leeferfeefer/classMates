@@ -21,17 +21,13 @@
     
     self.types = [self createTypeArray];
     self.capacities = [self createCapacityArray];
-    
-    [self.doneButton setTitle:@"Done" forState:UIControlStateNormal];
-    [self.doneButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
 
 
     _locationField.autocorrectionType = UITextAutocorrectionTypeNo;
     _meetingNameField.autocorrectionType = UITextAutocorrectionTypeNo;
     
-    _doneButton.layer.cornerRadius = 5;
-    _doneButton.layer.masksToBounds = YES;
-    
+    [_doneButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+
     
     self.pickerDoneBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 414, 44)];
     [self.pickerDoneBar setBarTintColor:[UIColor grayColor]];

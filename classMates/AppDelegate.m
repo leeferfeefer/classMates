@@ -60,6 +60,8 @@
     self.myMeetings = [NSMutableArray new];
     self.myClasses = [NSMutableArray new];
     
+    self.userInfo = [NSMutableDictionary new];
+    
 
     self.myMeetingIDs = [NSMutableArray new];
     self.idForMeeting = [NSMutableDictionary new];

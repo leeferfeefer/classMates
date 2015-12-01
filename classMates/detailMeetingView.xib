@@ -40,22 +40,6 @@
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o4P-1a-Bqg">
-                            <rect key="frame" x="175" y="260" width="175" height="40"/>
-                            <animations/>
-                            <state key="normal" title="Done"/>
-                            <connections>
-                                <action selector="doneButtonPressed:" destination="s1R-A7-x5f" eventType="touchUpInside" id="3Sa-zR-XLO"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VtR-KY-T4y">
-                            <rect key="frame" x="0.0" y="260" width="175" height="40"/>
-                            <animations/>
-                            <state key="normal" title="Unjoin"/>
-                            <connections>
-                                <action selector="unjoinButtonPressed:" destination="s1R-A7-x5f" eventType="touchUpInside" id="cjz-1E-gyj"/>
-                            </connections>
-                        </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Type" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CTB-O2-vJN">
                             <rect key="frame" x="191" y="186" width="100" height="30"/>
                             <animations/>
@@ -77,6 +61,30 @@
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o4P-1a-Bqg">
+                            <rect key="frame" x="175" y="270" width="175" height="30"/>
+                            <animations/>
+                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                            <state key="normal" title="Done">
+                                <color key="titleColor" red="1" green="0.86446669990000002" blue="0.030696714730000001" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="doneButtonPressed:" destination="s1R-A7-x5f" eventType="touchUpInside" id="3Sa-zR-XLO"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VtR-KY-T4y">
+                            <rect key="frame" x="0.0" y="270" width="175" height="30"/>
+                            <animations/>
+                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                            <state key="normal" title="Unjoin">
+                                <color key="titleColor" red="1" green="0.86446669990000002" blue="0.030696714730000001" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="unjoinButtonPressed:" destination="s1R-A7-x5f" eventType="touchUpInside" id="cjz-1E-gyj"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <animations/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

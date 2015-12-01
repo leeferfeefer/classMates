@@ -20,4 +20,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *friendImage;
 
 
+//Spinner Properties
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *friendCellSpinner;
+
 @end

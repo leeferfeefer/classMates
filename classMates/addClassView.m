@@ -17,16 +17,14 @@
     
     appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
+    
     self.layer.cornerRadius = 10;
     self.layer.masksToBounds = YES;
 
 
-    [self.closeButton addTarget:self action:@selector(doneButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    [self.closeButton setTitle:@"Done" forState:UIControlStateNormal];
-    [self.closeButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    [_closeButton addTarget:self action:@selector(doneButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    [_closeButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     
-    _closeButton.layer.cornerRadius = 5;
-    _closeButton.layer.masksToBounds = YES;
     
     _courseNumberField.delegate = self;
     _departmentField.delegate = self;
@@ -71,16 +69,25 @@
 
 -(void)doneButtonPressed{
     
+    [_closeButton setEnabled:NO];
+    
     //Redo!!!
     if ([_courseNumberField.text isEqualToString:@""] || [_departmentField.text isEqualToString:@""]) {
         if (self.delegateClassView && [self.delegateClassView respondsToSelector:@selector(closeAddClassViewDidAdd:)]) {
-            [self.delegateClassView closeAddClassViewDidAdd:NO];
+            [self closeClassViewDidAdd:NO];
         }
     } else {
+        
+        [_classSpinner startAnimating];
      
         //Add Class to QB
         QBCOCustomObject *classObject = [QBCOCustomObject customObject];
         classObject.className = @"userClasses";
+        
+        
+        
+        
+        
         
         [classObject.fields setObject:[NSString stringWithFormat:@"%@ - %@", _departmentField.text, _courseNumberField.text] forKey:@"className"];
         [classObject.fields setObject:_timeStartField.text forKey:@"timeStart"];
@@ -93,9 +100,7 @@
             [appDelegate.myClasses addObject:object.fields];
 //            [appDelegate.myClassIDs addObject:object.ID];
             
-            if (self.delegateClassView && [self.delegateClassView respondsToSelector:@selector(closeAddClassViewDidAdd:)]) {
-                [self.delegateClassView closeAddClassViewDidAdd:YES];
-            }
+            [self closeClassViewDidAdd:YES];
             
         } errorBlock:^(QBResponse * _Nonnull response) {
             NSLog(@"error creating class object");
@@ -104,6 +109,14 @@
 }
 
 
+
+-(void)closeClassViewDidAdd:(BOOL)didAdd{
+    if (self.delegateClassView && [self.delegateClassView respondsToSelector:@selector(closeAddClassViewDidAdd:)]) {
+        [_closeButton setEnabled:YES];
+        [_classSpinner stopAnimating];
+        [self.delegateClassView closeAddClassViewDidAdd:didAdd];
+    }
+}
 
 #pragma mark - UITextField Delegate Methods
 

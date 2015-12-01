@@ -18,8 +18,9 @@
     self.layer.masksToBounds = YES;
 
 
-
-
+    [_viewFriendsButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    [_viewMeetingsButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    [_doneButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
 }
 
 

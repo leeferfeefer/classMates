@@ -299,7 +299,7 @@
     _meetingsTableView.userInteractionEnabled = NO;
     
     CGFloat meetingViewWidth = 350;
-    CGFloat meetingViewHeight = 270;
+    CGFloat meetingViewHeight = 230;
     NSArray *nibContents = [[NSBundle mainBundle] loadNibNamed:@"addMeetingView" owner:self options:nil];
     self.meetingView = [[addMeetingView alloc] init];
     self.meetingView = [nibContents lastObject];

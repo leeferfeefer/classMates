@@ -51,9 +51,13 @@
 @property (strong, nonatomic) UIPickerView *weeklyOccurencePicker;
 
 
+
 //Button Properties
 @property (strong, nonatomic) IBOutlet UIButton *closeButton;
 
+
+//Spinner Properties
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *classSpinner;
 
 
 

@@ -26,4 +26,5 @@
     #import <FBSDKCoreKit/FBSDKCoreKit.h>
     #import <Accounts/Accounts.h>
     #import "AppDelegate.h"
+    #import <UIImageView+WebCache.h>
 #endif

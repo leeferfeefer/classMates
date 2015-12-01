@@ -12,6 +12,9 @@
 
 - (void)awakeFromNib {
     _friendNameLabel.textColor = [UIColor whiteColor];
+    
+    _friendImage.layer.cornerRadius = 5;
+    _friendImage.layer.masksToBounds = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
