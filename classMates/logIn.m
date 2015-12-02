@@ -36,6 +36,8 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
+    [self.navigationController.navigationBar setHidden:YES];
+    
     [_statusLabel setHidden:YES];
     
     _usernameField.alpha = 0;
@@ -65,7 +67,6 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
     _signUpButton.layer.cornerRadius = 5;
     _logInButton.layer.cornerRadius = 5;
     
-//    [self performSegueWithIdentifier:@"loginSuccess" sender:nil];
 
 }
 - (void)didReceiveMemoryWarning {

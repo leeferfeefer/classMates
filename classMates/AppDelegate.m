@@ -17,6 +17,12 @@
 
 
 
+
+//Save state objects
+//Load state objects
+
+
+
     /*
             Facebook
      */
@@ -116,5 +122,30 @@
 {
     return YES;
 }
+
+//-(UIViewController *)application:(UIApplication *)application viewControllerWithRestorationIdentifierPath:(NSArray *)identifierComponents coder:(NSCoder *)coder {
+
+//
+//    UIViewController* theController = nil;
+//    NSString* lastID = [identifierComponents lastObject];
+//    if (!lastID) return nil;
+//    if ([lastID isEqualToString:@"nav"]) {
+//        theController = _window.rootViewController;
+//    } else if ([lastID isEqualToString:@"splash"]) {
+//        theController = [[(UINavigationController*)_window.rootViewController viewControllers] objectAtIndex:0];
+//    } else if ([lastID isEqualToString:@"login"]) {
+//        theController = [[(UINavigationController*)_window.rootViewController viewControllers] objectAtIndex:0];
+//    } else if ([lastID isEqualToString:@"schedule"]) {
+//        theController = [[(UINavigationController*)_window.rootViewController viewControllers] objectAtIndex:0];
+//    } else if ([lastID isEqualToString:@"meetings"]) {
+//        theController = [[(UINavigationController*)_window.rootViewController viewControllers] objectAtIndex:0];
+//    } else if ([lastID isEqualToString:@"friends"]) {
+//        theController = [[(UINavigationController*)_window.rootViewController viewControllers] objectAtIndex:0];
+//    }
+//    
+//                          
+//                          
+//    return theController;
+//}
 
 @end

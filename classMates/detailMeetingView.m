@@ -33,7 +33,6 @@
         [self.unjoinButton setTitle:@"Delete" forState:UIControlStateNormal];
     }
     
-    
 
     [_doneButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     [_unjoinButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
