@@ -20,8 +20,6 @@
     self.layer.cornerRadius = 10;
     self.layer.masksToBounds = YES;
     
-    
-    
     _classNameLabel.text = _selectedMeeting[@"className"];
     _meetingNameLabel.text = _selectedMeeting[@"meetingName"];
     _meetingType.text = _selectedMeeting[@"meetingType"];
@@ -29,13 +27,18 @@
     _dateTimeLabel.text = _selectedMeeting[@"dateAndTime"];
     _participantsLabel.text = [NSString stringWithFormat:@"%@/%@", _selectedMeeting[@"participants"], _selectedMeeting[@"capacity"]];
     
+    //Add edit button
+    //Shrink delete and done buttons
     if ([_selectedMeeting[@"owner"] integerValue] == appDelegate.userID) {
-        [self.unjoinButton setTitle:@"Delete" forState:UIControlStateNormal];
+        [_unjoinButton setTitle:@"Delete" forState:UIControlStateNormal];
+    } else {
+        [_editButton setHidden:YES];
     }
     
 
     [_doneButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     [_unjoinButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    [_editButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
 }
 
 
@@ -99,6 +102,10 @@
 
 - (IBAction)doneButtonPressed:(UIButton *)sender {
     [self closeDetailMeetingViewIsEdit:NO didUnJoin:NO didDelete:NO];
+}
+
+- (IBAction)editButtonPressed:(UIButton *)sender {
+    [self closeDetailMeetingViewIsEdit:YES didUnJoin:NO didDelete:NO];
 }
 
 

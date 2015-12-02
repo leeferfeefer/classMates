@@ -315,6 +315,7 @@
 
 -(void)closeAddClassViewDidAdd:(BOOL)didAdd{
     if (didAdd) {
+        [self pullFacebookFriendsClasses];
         [self classesForDate:_selectedDate];
         [_classEventTableView reloadData];
     }
@@ -441,6 +442,69 @@
 
 
 
+#pragma mark - Facebook Matching
+
+-(void)pullFacebookFriendsClasses{
+    NSLog(@"pulling from facebook classes");
+    
+    [appDelegate.friendClasses removeAllObjects];
+    
+    NSMutableDictionary *getRequest = [NSMutableDictionary dictionary];
+    
+    int counter = 0;
+    for (NSString *friend in appDelegate.friends) {
+        counter++;
+        
+        [getRequest setObject:friend forKey:@"facebookID"];
+        
+        [QBRequest objectsWithClassName:@"userClasses" extendedRequest:getRequest successBlock:^(QBResponse * _Nonnull response, NSArray<QBCOCustomObject *> * _Nullable objects, QBResponsePage * _Nullable page) {
+            
+            for (QBCOCustomObject *friendClassObject in objects) {
+                [appDelegate.friendClasses addObject:friendClassObject.fields];
+            }
+            if (counter == [appDelegate.friends count]) {
+                [self matchClasses];
+            }
+        } errorBlock:^(QBResponse * _Nonnull response) {
+            NSLog(@"could not retrieve classes with friend %@", friend);
+        }];
+    }
+}
+-(void)matchClasses{
+    
+    NSLog(@"matching classes");
+    
+    for (NSMutableDictionary *friendClass in appDelegate.friendClasses) {
+        for (NSMutableDictionary *myClass in appDelegate.myClasses) {
+            if ([myClass[@"className"] isEqualToString:friendClass[@"className"]]) {
+                
+                if (myClass[@"friends"] == nil) {
+                    self.friendsInClass = [NSMutableArray new];
+                    self.matched = YES;
+                }
+                [self.friendsInClass addObject:friendClass[@"facebookID"]];
+                
+                [myClass setObject:self.friendsInClass forKey:@"friends"];
+            }
+        }
+    }
+    
+    if (_matched) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"classMates" message:@"You have friends in your classes!!!" preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            [alertController dismissViewControllerAnimated:YES completion:nil];
+        }];
+        
+        [alertController addAction:cancelAction];
+        [self presentViewController:alertController animated:YES completion:nil];
+        _matched = false;
+    }
+}
+
+
+
+
 #pragma mark - Present Class Detail View MethodsSc
 
 -(void)presentDetailClassView {
@@ -449,7 +513,7 @@
     _addClassButton.enabled = NO;
     
     CGFloat classViewWidth = 350;
-    CGFloat classViewHeight = 300;
+    CGFloat classViewHeight = 254;
     NSArray *nibContents = [[NSBundle mainBundle] loadNibNamed:@"detailClassView" owner:self options:nil];
     self.detailClassView = [[detailClassView alloc] init];
     self.detailClassView = [nibContents lastObject];
@@ -503,13 +567,14 @@
     _addClassButton.enabled = NO;
     
     CGFloat classViewWidth = 350;
-    CGFloat classViewHeight = 300;
+    CGFloat classViewHeight = 254;
     NSArray *nibContents = [[NSBundle mainBundle] loadNibNamed:@"detailMeetingView" owner:self options:nil];
     self.detailMeetingView = [[detailMeetingView alloc] init];
     self.detailMeetingView = [nibContents lastObject];
     self.detailMeetingView.frame = CGRectMake(self.view.frame.size.width/2 - classViewWidth/2, self.view.frame.size.height, classViewWidth, classViewHeight);
     self.detailMeetingView.delegateDetailMeetingView = self;
     self.detailMeetingView.selectedMeeting = _selectedMeeting;
+    
     [self.view addSubview:_detailMeetingView];
     
     CGRect newFrame = self.detailMeetingView.frame;
@@ -538,6 +603,32 @@
         
         if (edit) {
             
+            _classEventTableView.userInteractionEnabled = NO;
+            
+            CGFloat meetingViewWidth = 350;
+            CGFloat meetingViewHeight = 230;
+            NSArray *nibContents = [[NSBundle mainBundle] loadNibNamed:@"addMeetingView" owner:self options:nil];
+            self.meetingView = [[addMeetingView alloc] init];
+            self.meetingView = [nibContents lastObject];
+            self.meetingView.frame = CGRectMake(self.view.frame.size.width/2 - meetingViewWidth/2, self.view.frame.size.height, meetingViewWidth, meetingViewHeight);
+            self.meetingView.delegateAddMeetingView = self;
+            
+            self.meetingView.selectedMeeting = _selectedMeeting;
+            self.meetingView.editing = YES;
+            self.meetingView.meetingNameField.text = _selectedMeeting[@"meetingName"];
+            self.meetingView.typeField.text = _selectedMeeting[@"meetingType"];
+            self.meetingView.dateAndTimeField.text = _selectedMeeting[@"dateAndTime"];
+            self.meetingView.locationField.text = _selectedMeeting[@"location"];
+            self.meetingView.capacityField.text = _selectedMeeting[@"capacity"];
+
+            
+            [self.view addSubview:_meetingView];
+            
+            CGRect newFrame = _meetingView.frame;
+            newFrame.origin.y = (self.view.frame.size.height/2 - _meetingView.frame.size.height/2 - 50);
+            [UIView animateWithDuration:.3 animations:^{
+                _meetingView.frame = newFrame;
+            }];
         
         } else if (unjoin) {
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"classMates" message:@"You have unjoined this meeting!" preferredStyle:UIAlertControllerStyleAlert];
@@ -568,9 +659,26 @@
 
 
 
+#pragma mark - Create Meeting View Delegate Methods
 
-
-
+-(void)closeAddMeetingViewDidAdd:(BOOL)didAdd{
+    if (didAdd) {
+        [self meetingsForDate:_selectedDate];
+        [_classEventTableView reloadData];
+    }
+    CGRect newFrame = _meetingView.frame;
+    newFrame.origin.y = self.view.frame.size.height;
+    [UIView animateWithDuration:.3 animations:^{
+        _meetingView.frame = newFrame;
+    } completion:^(BOOL finished) {
+        [self.meetingView removeFromSuperview];
+        self.meetingView = nil;
+//        _addMeetingButton.enabled = YES;
+        [self.navigationController.navigationBar setUserInteractionEnabled:YES];
+        [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+        _classEventTableView.userInteractionEnabled = YES;
+    }];
+}
 
 
 

@@ -73,7 +73,9 @@
     self.idForMeeting = [NSMutableDictionary new];
 //    self.myClassIDs = [NSMutableArray new];
     
+    self.friends = [NSMutableArray new];
     self.friendClasses = [NSMutableArray new];
+    
     
     
     //    DISABLE LOG STATEMENTS
@@ -112,16 +114,17 @@
 
 
 #pragma mark - State Preservation
+//
+//-(BOOL)application:(UIApplication *)application shouldRestoreApplicationState:(NSCoder *)coder
+//{
+//    return YES;
+//}
+//
+//-(BOOL)application:(UIApplication *)application shouldSaveApplicationState:(NSCoder *)coder
+//{
+//    return YES;
+//}
 
--(BOOL)application:(UIApplication *)application shouldRestoreApplicationState:(NSCoder *)coder
-{
-    return YES;
-}
-
--(BOOL)application:(UIApplication *)application shouldSaveApplicationState:(NSCoder *)coder
-{
-    return YES;
-}
 
 //-(UIViewController *)application:(UIApplication *)application viewControllerWithRestorationIdentifierPath:(NSArray *)identifierComponents coder:(NSCoder *)coder {
 

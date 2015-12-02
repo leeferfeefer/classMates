@@ -16,6 +16,12 @@
     
     self.layer.cornerRadius = 10;
     self.layer.masksToBounds = YES;
+    
+    
+    
+    _classNameLabel.text = _selectedClass[@"className"];
+    _timeLabel.text = [NSString stringWithFormat:@"%@ - %@", _selectedClass[@"timeStart"], _selectedClass[@"timeEnd"]];
+    _weeklyOccurrenceLabel.text = _selectedClass[@"weeklyOccurrence"];
 
 
     [_viewFriendsButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
@@ -26,6 +32,8 @@
         [_viewFriendsButton setTitle:@"No Friends" forState:UIControlStateNormal];
         [_viewFriendsButton setEnabled:NO];
         [_viewFriendsButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    } else {
+        _friendIcon.image = [UIImage imageNamed:@"friendIcon"];
     }
 }
 

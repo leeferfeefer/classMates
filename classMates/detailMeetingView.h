@@ -40,12 +40,14 @@
 //Button Properties
 @property (strong, nonatomic) IBOutlet UIButton *unjoinButton;
 @property (strong, nonatomic) IBOutlet UIButton *doneButton;
+@property (strong, nonatomic) IBOutlet UIButton *editButton;
 
 
 
 //Button Methods
 - (IBAction)unjoinButtonPressed:(UIButton *)sender;
 - (IBAction)doneButtonPressed:(UIButton *)sender;
+- (IBAction)editButtonPressed:(UIButton *)sender;
 
 
 

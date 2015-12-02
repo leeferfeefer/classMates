@@ -11,7 +11,11 @@
 @implementation meetingCell
 
 - (void)awakeFromNib {
-    // Initialization code
+    _meetingNameLabel.textColor = [UIColor whiteColor];
+    _meetingLocationLabel.textColor = [UIColor whiteColor];
+    _meetingTimeLabel.textColor = [UIColor whiteColor];
+    _meetingTypeLabel.textColor = [UIColor whiteColor];
+    _capacityLabel.textColor = [UIColor whiteColor];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

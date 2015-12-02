@@ -49,13 +49,22 @@
     self.datePicker = [[UIDatePicker alloc] init];
     self.datePicker.datePickerMode = UIDatePickerModeDateAndTime;
 
+    [_meetingNameField setDelegate:self];
+    [_locationField setDelegate:self];
+
     [_typeField setInputView:_typePicker];
     [_typeField setInputAccessoryView:_pickerDoneBar];
+    [_typeField setDelegate:self];
     [_dateAndTimeField setInputView:_datePicker];
     [_dateAndTimeField setInputAccessoryView:_pickerDoneBar];
     [_dateAndTimeField setDelegate:self];
     [_capacityField setInputView:_capacityPicker];
     [_capacityField setInputAccessoryView:_pickerDoneBar];
+    [_capacityField setDelegate:self];
+    
+    
+    [_errorLabel setHidden:YES];
+    [_errorLabel setAdjustsFontSizeToFitWidth:YES];
 }
 
 
@@ -79,38 +88,47 @@
             if (!_changed) {
                 [self closeMeetingViewDidAdd:NO];
             } else {
-                QBCOCustomObject *meetingObject = [QBCOCustomObject customObject];
-                meetingObject.className = @"Meetings";
-                
-                [meetingObject.fields setObject:_meetingNameField.text forKey:@"meetingName"];
-                [meetingObject.fields setObject:_dateAndTimeField.text forKey:@"dateAndTime"];
-                [meetingObject.fields setObject:_locationField.text forKey:@"location"];
-                [meetingObject.fields setObject:_typeField.text forKey:@"meetingType"];
-                [meetingObject.fields setObject:_selectedClassName forKey:@"className"];
-                [meetingObject.fields setObject:_capacityField.text forKey:@"capacity"];
-                meetingObject.ID = _selectedMeeting[@"MeetingID"];
-                
-                [QBRequest updateObject:meetingObject successBlock:^(QBResponse * _Nonnull response, QBCOCustomObject * _Nullable object) {
+                if ([_capacityField.text integerValue] < [_selectedMeeting[@"participants"] integerValue]) {
+                    //Warn user that it cannot be done
                     
-                    meetingObject.className = @"userMeetings";
-                    meetingObject.ID = appDelegate.idForMeeting[_selectedMeeting];
+                    [_meetingSpinner stopAnimating];
+                    [_errorLabel setText:@"Capacity cannot be lowered due to participants"];
+                    [_errorLabel setHidden:NO];
+                    [_doneButton setEnabled:YES];
+
+                } else {
+                    QBCOCustomObject *meetingObject = [QBCOCustomObject customObject];
+                    meetingObject.className = @"Meetings";
+                    
+                    [meetingObject.fields setObject:_meetingNameField.text forKey:@"meetingName"];
+                    [meetingObject.fields setObject:_dateAndTimeField.text forKey:@"dateAndTime"];
+                    [meetingObject.fields setObject:_locationField.text forKey:@"location"];
+                    [meetingObject.fields setObject:_typeField.text forKey:@"meetingType"];
+                    [meetingObject.fields setObject:_capacityField.text forKey:@"capacity"];
+                    meetingObject.ID = _selectedMeeting[@"MeetingID"];
                     
                     [QBRequest updateObject:meetingObject successBlock:^(QBResponse * _Nonnull response, QBCOCustomObject * _Nullable object) {
                         
-                        //Update meeting in list of meetings
-                        NSUInteger index = [appDelegate.myMeetings indexOfObject:_selectedMeeting];
+                        meetingObject.className = @"userMeetings";
+                        meetingObject.ID = appDelegate.idForMeeting[_selectedMeeting];
                         
-                        [appDelegate.myMeetings replaceObjectAtIndex:index withObject:object.fields];
-                        [appDelegate.idForMeeting setObject:object.ID forKey:object.fields];
-                        
-                        [self closeMeetingViewDidAdd:YES];
-                        
+                        [QBRequest updateObject:meetingObject successBlock:^(QBResponse * _Nonnull response, QBCOCustomObject * _Nullable object) {
+                            
+                            //Update meeting in list of meetings
+                            NSUInteger index = [appDelegate.myMeetings indexOfObject:_selectedMeeting];
+                            
+                            [appDelegate.myMeetings replaceObjectAtIndex:index withObject:object.fields];
+                            [appDelegate.idForMeeting setObject:object.ID forKey:object.fields];
+                            
+                            [self closeMeetingViewDidAdd:YES];
+                            
+                        } errorBlock:^(QBResponse * _Nonnull response) {
+                            NSLog(@"ERorr trying to update user  meeting");
+                        }];
                     } errorBlock:^(QBResponse * _Nonnull response) {
-                        NSLog(@"ERorr trying to update user  meeting");
+                        NSLog(@"error trying to update meeting");
                     }];
-                } errorBlock:^(QBResponse * _Nonnull response) {
-                    NSLog(@"error trying to update meeting");
-                }];
+                }
             }
         } else {
             //Add Meeting to QB
@@ -207,6 +225,7 @@
 #pragma mark - UITextField Delegate Methods
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField {
+    [_errorLabel setHidden:YES];
     if (_editing) {
         _changed = YES;
     }
@@ -214,8 +233,13 @@
         [_datePicker setMinimumDate:[NSDate date]];
     }
 }
-
-
+-(void)textFieldDidEndEditing:(UITextField *)textField {
+    if ([textField.text isEqualToString:@""]) {
+        if (_changed) {
+            _changed = NO;
+        }
+    }
+}
 
 #pragma mark - Helper Methods
 

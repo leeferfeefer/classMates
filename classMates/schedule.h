@@ -14,8 +14,9 @@
 #import "detailClassView.h"
 #import "detailMeetingView.h"
 #import "friends.h"
+#import "addMeetingView.h"
 
-@interface schedule : UIViewController <CLWeeklyCalendarViewDelegate, classViewDelegate, UITableViewDataSource, UITableViewDelegate, detailClassViewDelegate, detailMeetingViewDelegate>
+@interface schedule : UIViewController <CLWeeklyCalendarViewDelegate, classViewDelegate, UITableViewDataSource, UITableViewDelegate, detailClassViewDelegate, detailMeetingViewDelegate, addMeetingViewDelegate>
 
 
 //Class Properties
@@ -24,6 +25,7 @@
 @property (strong, nonatomic) addClassView *classView;
 @property (strong, nonatomic) detailMeetingView *detailMeetingView;
 @property (strong, nonatomic) detailClassView *detailClassView;
+@property (strong, nonatomic) addMeetingView *meetingView;
 @property (strong, nonatomic) UITableView *classEventTableView;
 @property (strong, nonatomic) NSMutableDictionary *selectedClass;
 @property (strong, nonatomic) NSMutableDictionary *selectedMeeting;
@@ -31,7 +33,7 @@
 @property (strong, nonatomic) NSMutableArray *meetingsForDay;
 @property (strong, nonatomic) NSDate *selectedDate;
 @property BOOL matched;
-
+@property (strong, nonatomic) NSMutableArray *friendsInClass;
 
 //Button Properties
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *addClassButton;

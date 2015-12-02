@@ -31,6 +31,13 @@
 
 
 //Label Properties
+@property (strong, nonatomic) IBOutlet UILabel *classNameLabel;
+@property (strong, nonatomic) IBOutlet UILabel *timeLabel;
+@property (strong, nonatomic) IBOutlet UILabel *weeklyOccurrenceLabel;
+
+
+//Uiimage Properties
+@property (strong, nonatomic) IBOutlet UIImageView *friendIcon;
 
 
 
@@ -45,6 +52,7 @@
 - (IBAction)viewFriendsButtonPressed:(UIButton *)sender;
 - (IBAction)viewMeetingsButtonPressed:(UIButton *)sender;
 - (IBAction)doneButtonPressed:(UIButton *)sender;
+
 
 
 

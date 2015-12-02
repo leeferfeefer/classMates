@@ -21,7 +21,6 @@
 @property (strong, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) NSString *sessionTicket;
 @property (strong, nonatomic) NSMutableArray *friendsInClass;
-@property (strong, nonatomic) NSMutableArray *friends;
 @property BOOL matched;
 
 //Spinners

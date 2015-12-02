@@ -117,8 +117,6 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
 
 - (IBAction)signUpButtonPressed:(UIButton *)sender {
     
-    _signUpButton.enabled = NO;
-
     if (_fromLogIn) {
         
         [self keyboardCloser];
@@ -144,13 +142,10 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
             [self.logInButton setTitle:@"Cancel" forState:UIControlStateNormal];
             _usernameField.alpha = 1;
             _passwordField.alpha = 1;
-            _signUpButton.enabled = YES;
         }];
     }
 }
 - (IBAction)logInButtonPressed:(UIButton *)sender {
-    
-    _logInButton.enabled = NO;
     
     //Cancel
     if (_fromSignUp || _fromLogIn) {
@@ -178,7 +173,6 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
         } completion:^(BOOL finished) {
             [_usernameField setHidden:YES];
             [_passwordField setHidden:YES];
-            _logInButton.enabled = YES;
         }];
     
         
@@ -198,7 +192,6 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
             
             _usernameField.alpha = 1;
             _passwordField.alpha = 1;
-            _logInButton.enabled = YES;
         }];
     }
 }
@@ -213,6 +206,8 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
 
 -(void)login{
     
+    _logInButton.enabled = NO;
+    _signUpButton.enabled = NO;
     [_loginSpinner startAnimating];
     
     //Login user with Quickblox Authentication
@@ -233,9 +228,10 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
         NSLog(@"Error logging in");
         NSLog(@"the response is %@", response);
         
-        [_loginSpinner stopAnimating];
+        _logInButton.enabled = YES;
         _signUpButton.enabled = YES;
-        
+        [_loginSpinner stopAnimating];
+
         if (response.status == QBResponseStatusCodeUnAuthorized) {
             [self wrongLoginWithMessage:@"Username not found"];
         }
@@ -248,6 +244,8 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
 
 -(void)signUp{
     
+    _logInButton.enabled = NO;
+    _signUpButton.enabled = NO;
     [_loginSpinner startAnimating];
     
     QBUUser *user = [QBUUser user];
@@ -264,8 +262,9 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
         NSLog(@"the errors are %@", response.error.reasons[@"errors"]);
 
         
-        [_loginSpinner stopAnimating];
+        _logInButton.enabled = YES;
         _signUpButton.enabled = YES;
+        [_loginSpinner stopAnimating];
     
         if (response.status == QBResponseStatusCodeValidationFailed) {
             [self wrongLoginWithMessage:@"Username already taken"];
@@ -342,6 +341,8 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
         [self getUserMeetings:getRequest];
 
     } errorBlock:^(QBResponse * _Nonnull response) {
+        _logInButton.enabled = YES;
+        _signUpButton.enabled = YES;
         [_loginSpinner stopAnimating];
         NSLog(@"Errorr pulling user classes");
     }];
@@ -370,6 +371,8 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
         
         
     } errorBlock:^(QBResponse * _Nonnull response) {
+        _logInButton.enabled = YES;
+        _signUpButton.enabled = YES;
         [_loginSpinner stopAnimating];
         NSLog(@"error pulling user meetings");
     }];
@@ -413,19 +416,18 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
                                                 if (!friendError) {
                                                     NSString *me = [NSString stringWithFormat:@"%@ - %@", meResult[@"name"], meResult[@"id"]];
                                                     
-                                                    self.friends = [NSMutableArray new];
                                                     for (NSMutableDictionary *friend in friendResult[@"data"]) {
                                                         NSString *friendInfo = [NSString stringWithFormat:@"%@ - %@", friend[@"name"], friend[@"id"]];
-                                                        [_friends addObject:friendInfo];
+                                                        [appDelegate.friends addObject:friendInfo];
                                                     }
                                                     
                                                     
                                                     [appDelegate.userInfo setObject:me forKey:@"facebookID"];
                                                     
                                                     NSLog(@"me is %@", me);
-                                                    NSLog(@"friends are %@", _friends);
+                                                    NSLog(@"friends are %@", appDelegate.friends);
                                                     
-                                                    if ([_friends count] > 0) {
+                                                    if ([appDelegate.friends count] > 0) {
                                                         //Pull all facebook friend's classes
                                                         [self pullFacebookFriendsClasses];
                                                     } else {
@@ -434,10 +436,16 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
                                                     }
                                                 } else {
                                                     NSLog(@"the error retrieving friends is %@", friendError);
+                                                    _logInButton.enabled = YES;
+                                                    _signUpButton.enabled = YES;
+                                                    [_loginSpinner stopAnimating];
                                                 }
                                             }];
                                         } else {
                                             NSLog(@"the error retrieving me is %@", meError);
+                                            _logInButton.enabled = YES;
+                                            _signUpButton.enabled = YES;
+                                            [_loginSpinner stopAnimating];
                                         }
                                     }];
                                 }
@@ -458,21 +466,21 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
     NSMutableDictionary *getRequest = [NSMutableDictionary dictionary];
 
     int counter = 0;
-    for (NSString *friend in _friends) {
+    for (NSString *friend in appDelegate.friends) {
         counter++;
         
         [getRequest setObject:friend forKey:@"facebookID"];
         
         [QBRequest objectsWithClassName:@"userClasses" extendedRequest:getRequest successBlock:^(QBResponse * _Nonnull response, NSArray<QBCOCustomObject *> * _Nullable objects, QBResponsePage * _Nullable page) {
             
+            NSLog(@"the pulled friends classes are %@", objects);
+            
             for (QBCOCustomObject *friendClassObject in objects) {
                 [appDelegate.friendClasses addObject:friendClassObject.fields];
             }
-            
-            if (counter == [_friends count]) {
+            if (counter == [appDelegate.friends count]) {
                 [self matchClasses];
             }
-    
         } errorBlock:^(QBResponse * _Nonnull response) {
             NSLog(@"could not retrieve classes with friend %@", friend);
         }];
@@ -483,9 +491,13 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
     
     NSLog(@"matching classes");
     
+    NSLog(@"the friend classes are %@", appDelegate.friendClasses);
+    
     for (NSMutableDictionary *friendClass in appDelegate.friendClasses) {
         for (NSMutableDictionary *myClass in appDelegate.myClasses) {
             if ([myClass[@"className"] isEqualToString:friendClass[@"className"]]) {
+                
+                NSLog(@"my classname is %@ and friends class name is %@", myClass[@"className"], friendClass[@"className"]);
                 
                 if (myClass[@"friends"] == nil) {
                     self.friendsInClass = [NSMutableArray new];

@@ -31,6 +31,13 @@
 @property BOOL changed;
 
 
+//Label Properties
+@property (strong, nonatomic) IBOutlet UILabel *errorLabel;
+
+
+
+
+
 //Text Fields
 @property (strong, nonatomic) IBOutlet UITextField *dateAndTimeField;
 @property (strong, nonatomic) IBOutlet UITextField *locationField;
