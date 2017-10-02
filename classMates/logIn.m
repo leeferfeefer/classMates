@@ -37,13 +37,17 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
     [super viewWillAppear:animated];
     
     [self.navigationController.navigationBar setHidden:YES];
-    
     [_statusLabel setHidden:YES];
+    
+    
+    //State Restoration
+//    [self handleSession];
     
     _usernameField.alpha = 0;
     _passwordField.alpha = 0;
     [_usernameField setHidden:YES];
     [_passwordField setHidden:YES];
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -217,6 +221,8 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
         NSLog(@"Now pulling from QB");
         
         appDelegate.userID = user.ID;
+
+        [self saveSession];
         
         //Request to pull user information
         NSMutableDictionary *getRequest = [NSMutableDictionary new];
@@ -531,4 +537,42 @@ static NSString *const other = @"http://m.gatech.edu/w/schedule/c/api/";
 
 
 
+
+
+#pragma mark - State Restoration
+
+-(void)saveSession{
+    [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:[QBSession currentSession]] forKey:@"session"];
+}
+-(QBSession *)getSession{
+    return [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"session"]];
+}
+
+-(void)saveAppDelegate{
+    NSMutableDictionary *delegate = [NSMutableDictionary new];
+    [delegate setObject:appDelegate.myClasses forKey:@"myClasses"];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:delegate] forKey:@"appDelegate"];
+}
+-(NSMutableDictionary *)getAppDelegate{
+    return [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"appDelegate"]];
+}
+
+
+
+-(void)handleSession{
+    //If token is valid
+    if ([self getSession].tokenValid) {
+        
+        NSLog(@"the app delegate is %@", [self getAppDelegate]);
+//        
+//        appDelegate = [self getAppDelegate];
+        
+//        appDelegate.myClasses = [self getAppDelegate].myClasses;
+//        appDelegate.myMeetings = [self getAppDelegate].myMeetings;
+//        appDelegate.myMeetingIDs = [self getAppDelegate].myMeetingIDs;
+//        appDelegate.myClasses = [self getAppDelegate].myClasses;
+
+        [self performSegueWithIdentifier:@"loginSuccess" sender:nil];
+    }
+}
 @end
